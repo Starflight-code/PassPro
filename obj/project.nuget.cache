@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NuIep7ZAXLpUjFjiZHPmkc5H9+mWab9fPExNp4E8QkiA9tck/Ahi9f70b9FPA4dBndLEBLkJ3A2Oa7DWl7HneQ==",
+  "dgSpecHash": "URsPw5iYU3AjQPnJMMSVMl1is7uDkIq5uGGZLWCSGpk7jm+y2chvKPPKSIHhZsYvbjY5WPQ0FzAX1CR2+IFEKg==",
   "success": true,
-  "projectFilePath": "/home/kobiske/vscode-school/PassPro/PassPro/PassPro.csproj",
+  "projectFilePath": "/home/kobiske/vscode-school/PassPro/PassPro.csproj",
   "expectedPackageFiles": [
     "/home/kobiske/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.22/microsoft.aspnetcore.app.ref.6.0.22.nupkg.sha512"
   ],

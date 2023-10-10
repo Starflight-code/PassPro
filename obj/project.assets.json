@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/kobiske/vscode-school/PassPro/PassPro/PassPro.csproj",
+      "projectUniqueName": "/home/kobiske/vscode-school/PassPro/PassPro.csproj",
       "projectName": "PassPro",
-      "projectPath": "/home/kobiske/vscode-school/PassPro/PassPro/PassPro.csproj",
+      "projectPath": "/home/kobiske/vscode-school/PassPro/PassPro.csproj",
       "packagesPath": "/home/kobiske/.nuget/packages/",
-      "outputPath": "/home/kobiske/vscode-school/PassPro/PassPro/obj/",
+      "outputPath": "/home/kobiske/vscode-school/PassPro/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/kobiske/.nuget/NuGet/NuGet.Config"
