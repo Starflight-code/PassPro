@@ -1,0 +1,15 @@
+/home/kobiske/vscode-school/PassPro/PassPro/bin/Debug/net6.0/PassPro
+/home/kobiske/vscode-school/PassPro/PassPro/bin/Debug/net6.0/PassPro.deps.json
+/home/kobiske/vscode-school/PassPro/PassPro/bin/Debug/net6.0/PassPro.runtimeconfig.json
+/home/kobiske/vscode-school/PassPro/PassPro/bin/Debug/net6.0/PassPro.dll
+/home/kobiske/vscode-school/PassPro/PassPro/bin/Debug/net6.0/ref/PassPro.dll
+/home/kobiske/vscode-school/PassPro/PassPro/bin/Debug/net6.0/PassPro.pdb
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.csproj.AssemblyReference.cache
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.GeneratedMSBuildEditorConfig.editorconfig
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.AssemblyInfoInputs.cache
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.AssemblyInfo.cs
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.csproj.CoreCompileInputs.cache
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.dll
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/ref/PassPro.dll
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.pdb
+/home/kobiske/vscode-school/PassPro/PassPro/obj/Debug/net6.0/PassPro.genruntimeconfig.cache
