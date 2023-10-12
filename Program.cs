@@ -22,6 +22,10 @@ int outStars;
 for (int i = 0; i < userNumber; i++)
 {
     outStars = i * 2 + 1;
+    for (int j = 0; j < userNumber - i; j++)
+    {
+        Console.Write(" ");
+    }
     for (int j = 0; j < outStars; j++)
     {
         Console.Write("*");
