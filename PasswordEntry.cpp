@@ -6,4 +6,5 @@ public:
     std::string name;
     std::string url;
     std::string username;
-}
+    std::string notes;
+};
