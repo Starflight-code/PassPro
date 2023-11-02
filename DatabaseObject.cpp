@@ -6,7 +6,7 @@
 
 class DatabaseObject {
 
-private:
+public:
     std::vector<std::string> name;
     std::vector<std::string> url;
     std::vector<std::string> password;
