@@ -25,10 +25,9 @@ public:
         this->name = name;
         this->notes = notes;
         this->url = url;
-        if (url.substr(0, 4) == "www.") { // www. prepend will be removed for later searching
+        if(url.substr(0, 4) == "www.") { // www. prepend will be removed for later searching
             url.replace(0, 4, "");
             this->seachableURL = url; // TODO: Add an area that removes HTTP(s):// prepends from the URL
         }
-
     }
 };

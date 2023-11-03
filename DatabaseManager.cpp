@@ -1,10 +1,10 @@
 #pragma once
 
+#include "DatabaseObject.cpp"
 #include "PasswordEntry.cpp"
+#include "nlohmann/json.hpp"
 #include <iostream>
 #include <vector>
-#include "nlohmann/json.hpp"
-#include "DatabaseObject.cpp"
 
 class DatabaseManager {
     std::vector<PasswordEntry> entries;
@@ -15,7 +15,7 @@ class DatabaseManager {
      */
     nlohmann::json generateJSON() {
         DatabaseObject db;
-        for (int i = 0; i < entries.size(); i++) {
+        for(int i = 0; i < entries.size(); i++) {
             db.addEntry(entries[i]);
         }
         nlohmann::json j;
@@ -34,7 +34,7 @@ class DatabaseManager {
     void writeDB() {
         auto j = generateJSON();
         std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
-        //std::cout << nlohmann::json::string_t(j);
+        // std::cout << nlohmann::json::string_t(j);
         std::cout << j;
     }
 };

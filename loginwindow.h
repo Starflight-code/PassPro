@@ -4,19 +4,18 @@
 #include <QMainWindow>
 
 namespace Ui {
-class LoginWindow;
+    class LoginWindow;
 }
 
-class LoginWindow : public QMainWindow
-{
+class LoginWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit LoginWindow(QWidget *parent = nullptr);
+    explicit LoginWindow(QWidget* parent = nullptr);
     ~LoginWindow();
 
 private:
-    Ui::LoginWindow *ui;
+    Ui::LoginWindow* ui;
 };
 
 #endif // LOGINWINDOW_H
