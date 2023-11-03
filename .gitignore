@@ -72,10 +72,12 @@ CMakeLists.txt.user*
 *.dll
 *.exe
 
-# Manually Placed
+# Project Specific
 PassPro/*
 PassPro\*
 build/*
 build\*
 .vscode/*
 .vscode\*
+.cache/*
+.cache\*
