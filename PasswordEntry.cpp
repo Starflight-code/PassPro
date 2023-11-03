@@ -13,21 +13,35 @@
  */
 struct PasswordEntry {
 public:
-    std::string password;
-    std::string name;
-    std::string url;
-    std::string username;
-    std::string notes;
-    std::string seachableURL;
-    PasswordEntry(std::string password, std::string name, std::string url, std::string username, std::string notes) {
-        this->password = password;
-        this->username = username;
-        this->name = name;
-        this->notes = notes;
-        this->url = url;
-        if(url.substr(0, 4) == "www.") { // www. prepend will be removed for later searching
-            url.replace(0, 4, "");
-            this->seachableURL = url; // TODO: Add an area that removes HTTP(s):// prepends from the URL
-        }
+  std::string password;
+  std::string name;
+  std::string url;
+  std::string username;
+  std::string notes;
+  std::string seachableURL;
+  /**
+   * @param password std::string: A string containg a user's password
+   * @param name std::string: A string containg the name for this entry
+   * @param url std::string: A string containg a url
+   * @param username std::string: A string containg a user's username
+   * @param notes std::string: A long string containg arbitrary text
+   * @param searchableURL std::string: A string containg a url, without the
+   * "www."
+   */
+  PasswordEntry(std::string password, std::string name, std::string url,
+                std::string username, std::string notes) {
+    this->password = password;
+    this->username = username;
+    this->name = name;
+    this->notes = notes;
+    this->url = url;
+    if (url.substr(0, 4) ==
+        "www.") { // www. prepend will be removed for later searching
+      url.replace(0, 4, "");
+      this->seachableURL = url; // TODO: Add an area that removes HTTP(s)://
+                                // prepends from the URL
+    } else {
+      this->seachableURL = url;
     }
+  }
 };
