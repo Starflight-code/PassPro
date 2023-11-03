@@ -10,10 +10,10 @@ class DatabaseManager {
     std::vector<PasswordEntry> entries;
 
     /**
-     * @brief writeDB: Sanitizes current DB state, converts
-     * to JSON, encrypts and pushes it to the disk
+     * @brief generateJSON: Generates JSON from embedded entries data
+     * @return nlohmann::json object containing all data from entries vector
      */
-    void writeDB() {
+    nlohmann::json generateJSON() {
         DatabaseObject db;
         for (int i = 0; i < entries.size(); i++) {
             db.addEntry(entries[i]);
@@ -25,8 +25,16 @@ class DatabaseManager {
         j["notes"] = db.notes;
         j["usernames"] = db.username;
         j["passwords"] = db.password;
-
+        return j;
+    }
+    /**
+     * @brief writeDB: Sanitizes current DB state, converts
+     * to JSON, encrypts and pushes it to the disk
+     */
+    void writeDB() {
+        auto j = generateJSON();
         std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
-        std::cout << nlohmann::json::string_t(j);
+        //std::cout << nlohmann::json::string_t(j);
+        std::cout << j;
     }
 };
