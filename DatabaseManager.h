@@ -6,14 +6,14 @@
 #endif // DATABASEMANAGER_H
 
 namespace DataProcessing {
-class DatabaseManager;
+  class DatabaseManager;
 }
 
 class DatabaseManager {
 
-private:
+  private:
   nlohmann::json generateJSON();
 
-public:
+  public:
   void writeDB();
 };

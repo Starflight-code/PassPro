@@ -2,9 +2,9 @@
 #include "ui_entryviewer.h"
 
 EntryViewer::EntryViewer(QWidget* parent) : QMainWindow(parent), ui(new Ui::EntryViewer) {
-    ui->setupUi(this);
+  ui->setupUi(this);
 }
 
 EntryViewer::~EntryViewer() {
-    delete ui;
+  delete ui;
 }
