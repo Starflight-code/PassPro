@@ -12,7 +12,7 @@ namespace DataProcessing {
 class DatabaseManager {
 
   private:
-  nlohmann::json generateJSON();
+  nlohmann::json sanitizeJSON();
 
   public:
   void writeDB();
