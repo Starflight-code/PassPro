@@ -1,26 +1,23 @@
 #include "CryptographyStorage.cpp"
-
-#include "CryptographyStorage.cpp"
-#include <cstring>
 #include <openssl/aes.h>
 #include <openssl/evp.h>
 #include <stdexcept>
 
 class Cryptography {
-  CryptographyStorage credManager;
-  // https://friendlyuser.github.io/posts/tech/cpp/Using_OpenSSL_in_C++_A_Comprehensive_Guide/
+  // CryptographyStorage credManager;
+  //  https://friendlyuser.github.io/posts/tech/cpp/Using_OpenSSL_in_C++_A_Comprehensive_Guide/
 
 public:
   Cryptography(const unsigned char *key) : key_(key) {
     // Initialize OpenSSL library
     OpenSSL_add_all_algorithms();
-    ERR_load_crypto_strings();
+    // ERR_load_crypto_strings();
   }
 
   ~Cryptography() {
     // Cleanup OpenSSL
     EVP_cleanup();
-    ERR_free_strings();
+    // ERR_free_strings();
   }
 
   void encryptAES256(const unsigned char *plaintext, int plaintextLength,

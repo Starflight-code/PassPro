@@ -7,4 +7,4 @@ class CryptographyStorage {
     this->user = user;
     this->key = password;
   }
-}
+};
