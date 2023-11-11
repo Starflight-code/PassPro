@@ -1,7 +1,7 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include "nlohmann/json.hpp"
+#include "include/json.hpp"
 
 #endif // DATABASEMANAGER_H
 

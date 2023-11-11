@@ -1,6 +1,8 @@
 #include "DatabaseManager.cpp"
+#include "include/BS_thread_pool.hpp"
 #include "mainwindow.h"
 #include "testing.cpp"
+#include <thread>
 
 #include <QApplication>
 
@@ -11,6 +13,7 @@ int main(int argc, char* argv[]) {
     testSuite.runAllTests();
     return 0;
   }
+  BS::thread_pool pool(3); // Pool has 3 threads, increase if required
   DatabaseManager data;
   // data.writeDB(); // uncomment for JSON DB sanitization/desanitization testing
   QApplication a(argc, argv);

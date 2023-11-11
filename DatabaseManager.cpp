@@ -2,7 +2,7 @@
 
 #include "DatabaseObject.cpp"
 #include "PasswordEntry.cpp"
-#include "nlohmann/json.hpp"
+#include "include/json.hpp"
 #include <iostream>
 #include <vector>
 
