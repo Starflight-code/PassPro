@@ -1,0 +1,9 @@
+﻿  Cryptography.cpp
+  CryptographyStorage.cpp
+  DatabaseManager.cpp
+  DatabaseObject.cpp
+  main.cpp
+  PasswordEntry.cpp
+  Testing.cpp
+  Generating Code...
+  Testing.vcxproj -> C:\Users\evana\source\repos\Testing\x64\Debug\Testing.exe
