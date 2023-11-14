@@ -10,6 +10,15 @@ public:
     std::string username;
     std::string notes;
     std::string seachableURL;
+    // added for testing
+    bool operator==(const PasswordEntry& other) const {
+      return password == other.password &&
+             name == other.name &&
+             url == other.url &&
+             username == other.username &&
+             notes == other.notes &&
+             seachableURL == other.seachableURL;
+    }
     PasswordEntry(std::string password, std::string name, std::string url, std::string username, std::string notes) {
         this->password = password;
         this->username = username;
