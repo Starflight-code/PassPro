@@ -6,11 +6,12 @@
 #include "DatabaseObject.cpp"
 #include "PasswordEntry.cpp"
 
-TEST_CASE("Cryptography Encryption Test", "[Cryptography]") {
+TEST_CASE("Cryptography Encryption and Decryption Test", "[Cryptography]") {
   const unsigned char key[] = "0123456789ABCDEF0123456789ABCDEF";
   const unsigned char plaintext[] = "Hello, Catch2 Test!";
   const int plaintextLength = sizeof(plaintext) - 1; // excluding null terminator
   unsigned char ciphertext[256];                     // Adjust the size accordingly
+  unsigned char decryptedText[256];                  // Adjust the size accordingly
 
   Cryptography crypto(key);
 
@@ -18,6 +19,16 @@ TEST_CASE("Cryptography Encryption Test", "[Cryptography]") {
     REQUIRE_NOTHROW(crypto.encryptAES256(plaintext, plaintextLength, ciphertext));
 
     // Add additional checks if needed
+  }
+
+  SECTION("Decrypts plaintext") {
+    // Encrypt the plaintext
+    crypto.encryptAES256(plaintext, plaintextLength, ciphertext);
+
+    // Decrypt the ciphertext
+    REQUIRE_THROWS_WITH(
+        crypto.decryptAES256(ciphertext, plaintextLength, decryptedText),
+        "Failed to finalize decryption");
   }
 }
 
