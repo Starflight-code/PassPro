@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>PassPro</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="dialog-password"/>
   </property>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
