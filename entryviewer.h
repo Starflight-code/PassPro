@@ -4,19 +4,18 @@
 #include <QMainWindow>
 
 namespace Ui {
-class EntryViewer;
+  class EntryViewer;
 }
 
-class EntryViewer : public QMainWindow
-{
-    Q_OBJECT
+class EntryViewer : public QMainWindow {
+  Q_OBJECT
 
-public:
-    explicit EntryViewer(QWidget *parent = nullptr);
-    ~EntryViewer();
+  public:
+  explicit EntryViewer(QWidget* parent = nullptr);
+  ~EntryViewer();
 
-private:
-    Ui::EntryViewer *ui;
+  private:
+  Ui::EntryViewer* ui;
 };
 
 #endif // ENTRYVIEWER_H
