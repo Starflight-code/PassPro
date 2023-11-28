@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "PasswordEntry.h"
 
 /**
  * @brief The PasswordEntry class: A struct containing password entry data
@@ -12,22 +12,23 @@
  * @part std::string searchableURL: A string containg a url, without the "www."
  */
 struct PasswordEntry {
+  private:
+  std::string RemovePrepend(std::string baseString, std::string prepend) {
+    std::string substring = baseString.substr(0, prepend.length());
+    if(substring == prepend) {
+      baseString.replace(0, prepend.length(), "");
+    }
+    return baseString;
+  }
+
   public:
   std::string password;
   std::string name;
   std::string url;
   std::string username;
   std::string notes;
-  std::string seachableURL;
-  /**
-   * @param password std::string: A string containg a user's password
-   * @param name std::string: A string containg the name for this entry
-   * @param url std::string: A string containg a url
-   * @param username std::string: A string containg a user's username
-   * @param notes std::string: A long string containg arbitrary text
-   * @param searchableURL std::string: A string containg a url, without the
-   * "www."
-   */
+  std::string searchableURL;
+
   PasswordEntry(std::string password, std::string name, std::string url,
                 std::string username, std::string notes) {
     this->password = password;
@@ -35,13 +36,14 @@ struct PasswordEntry {
     this->name = name;
     this->notes = notes;
     this->url = url;
-    if(url.substr(0, 4) ==
-       "www.") { // www. prepend will be removed for later searching
-      url.replace(0, 4, "");
-      this->seachableURL = url; // TODO: Add an area that removes HTTP(s)://
-                                // prepends from the URL
-    } else {
-      this->seachableURL = url;
+    std::string preURL = (url);
+    for(int i = 0; i < url.length(); i++) {
+      preURL[i] = tolower(preURL[i]);
     }
+    RemovePrepend(preURL, "https://");
+    RemovePrepend(preURL, "http://");
+    RemovePrepend(preURL, "ssh://");
+    RemovePrepend(preURL, "www.");
+    this->searchableURL = url;
   }
 };

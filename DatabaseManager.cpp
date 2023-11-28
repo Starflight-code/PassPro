@@ -1,18 +1,10 @@
 #pragma once
 
-#include "DatabaseObject.cpp"
-#include "PasswordEntry.cpp"
-#include "include/json.hpp"
-#include <iostream>
-#include <vector>
+#include "DatabaseManager.h"
 
 class DatabaseManager {
   std::vector<PasswordEntry> entries;
 
-  /**
-   * @brief generateJSON: Generates JSON from embedded entries data
-   * @return nlohmann::json object containing all data from entries vector
-   */
   nlohmann::json sanitizeJSON() {
     DatabaseObject db;
     /*PasswordEntry n1 = PasswordEntry("pass", "name", "url", "user", "notes");
@@ -50,22 +42,18 @@ class DatabaseManager {
   }
 
   public:
-  /**
-   * @brief writeDB: Sanitizes current DB state, converts
-   * to JSON, encrypts and pushes it to the disk
-   */
   void writeDB() {
-    auto j = sanitizeJSON();
+    nlohmann::json jsonData = sanitizeJSON();
     // std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
     // std::cout << nlohmann::json::string_t(j);
     // std::cout << j;
-    std::vector<PasswordEntry> entries = desanitizeJSON(j);
+    std::vector<PasswordEntry> entries = desanitizeJSON(jsonData);
     for(int i = 0; i < entries.size(); i++) {
       std::cout << "\n";
       std::cout << entries[i].name + " ";
       std::cout << entries[i].password + " ";
       std::cout << entries[i].notes + " ";
-      std::cout << entries[i].seachableURL + " ";
+      std::cout << entries[i].searchableURL + " ";
       std::cout << entries[i].username + " ";
     }
     std::cout << "\n";

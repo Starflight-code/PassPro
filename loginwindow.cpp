@@ -18,7 +18,7 @@ void LoginWindow::on_lineEdit_2_returnPressed() {
   username = ui->lineEdit->text().toStdString();
   // secure_string password(ui->lineEdit_2->text().toStdString());
   //  TODO: Add database unlocking code
-  data::string password(ui->lineEdit_2->text().toStdString());
+  DataProcessing::secureString password(ui->lineEdit_2->text().toStdString());
 }
 
 void LoginWindow::on_pushButton_clicked() {

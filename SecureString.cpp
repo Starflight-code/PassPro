@@ -1,7 +1,7 @@
 #include <openssl/crypto.h>
 #include <string>
 
-namespace data {
+namespace DataProcessing {
   template <class T>
   class allocator : public std::allocator<T> {
 public:
@@ -20,5 +20,5 @@ public:
     }
   };
 
-  typedef std::basic_string<char, std::char_traits<char>, allocator<char>> string;
+  typedef std::basic_string<char, std::char_traits<char>, allocator<char>> secureString;
 }
