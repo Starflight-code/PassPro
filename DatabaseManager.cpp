@@ -15,16 +15,17 @@ class DatabaseManager {
    */
   nlohmann::json sanitizeJSON() {
     DatabaseObject db;
-    PasswordEntry n1 = PasswordEntry("pass", "name", "url", "user", "notes");
+    /*PasswordEntry n1 = PasswordEntry("pass", "name", "url", "user", "notes");
     PasswordEntry n2 = PasswordEntry("pass2", "name2", "url2", "user2", "notes2");
-    PasswordEntry n3 = PasswordEntry("pass3", "name3", "url3", "user3", "notes3");
+    PasswordEntry n3 = PasswordEntry("pass3", "name3", "url3", "user3", "notes3");*/
 
     for(int i = 0; i < entries.size(); i++) {
       db.addEntry(entries[i]);
     }
-    db.addEntry(n1);
-    db.addEntry(n2);
-    db.addEntry(n3);
+
+    // db.addEntry(n1);
+    // db.addEntry(n2);
+    // db.addEntry(n3);
     nlohmann::json j;
     j["names"] = db.name;
     j["urls"] = db.url;
@@ -55,9 +56,9 @@ class DatabaseManager {
    */
   void writeDB() {
     auto j = sanitizeJSON();
-    std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
+    // std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
     // std::cout << nlohmann::json::string_t(j);
-    std::cout << j;
+    // std::cout << j;
     std::vector<PasswordEntry> entries = desanitizeJSON(j);
     for(int i = 0; i < entries.size(); i++) {
       std::cout << "\n";
