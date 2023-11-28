@@ -1,8 +1,8 @@
 #ifndef DATABASEOBJECT_H
 #define DATABASEOBJECT_H
 
+#include "../Data Structures/PasswordEntry.h"
 #include "DatabaseObject.h"
-#include "PasswordEntry.cpp"
 #include <string>
 #include <vector>
 

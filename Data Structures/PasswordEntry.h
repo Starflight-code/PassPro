@@ -38,7 +38,7 @@ struct PasswordEntry {
   /// User notes, TODO: Set a size limit
   std::string notes;
   /// A URL with the protocol (https://, http://, tcp://, ssh://) and prefix (www., server., about.) removed. For use with search module.
-  std::string seachableURL;
+  std::string searchableURL;
 
   /**
    * @param password std::string: A string containg a user's password
