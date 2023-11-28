@@ -4,10 +4,19 @@
 #include <string>
 
 namespace DataProcessing {
-  class PasswordEntry;
+  struct PasswordEntry;
 }
 
-class PasswordEntry {
+/**
+ * @brief The PasswordEntry class: A struct containing password entry data
+ * @internal std::string password: A string containg a user's password
+ * @internal std::string name: A string containg the name for this entry
+ * @internal std::string url: A string containg a url
+ * @internal std::string username: A string containg a user's username
+ * @internal std::string notes: A long string containg arbitrary text
+ * @internal std::string searchableURL: A string containg a url, without the "www."
+ */
+struct PasswordEntry {
   private:
   /**
    * @brief Removes the prepend string from the beginning, if it is the first part of the string

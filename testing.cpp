@@ -16,7 +16,7 @@ namespace Testing {
     std::vector<completedTest> testOutput;
 
 public:
-    void assert_true(std::string testName, bool assertion) {
+    void assert(std::string testName, bool assertion) {
       if(assertion) {
         testOutput.push_back(completedTest(testName, assertion));
       } else {
@@ -43,7 +43,7 @@ public:
 public:
     void runAllTests() {
       UnitTester unit;
-      unit.assert_true("Test1", true);
+      unit.assert("Test1", true);
       unit.finished();
     }
   };
