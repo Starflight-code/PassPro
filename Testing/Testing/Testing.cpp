@@ -1,10 +1,10 @@
 #define CATCH_CONFIG_MAIN
-#include "C:\Qt\6.6.0\mingw_64\include\QtQDocCatch\catch\catch.hpp"
-#include "Cryptography.cpp"
-#include "CryptographyStorage.h"
-#include "DatabaseManager.cpp"
-#include "DatabaseObject.cpp"
-#include "PasswordEntry.cpp"
+#include "..\catch\catch.hpp"
+#include "..\Cryptography\Cryptography.cpp"
+#include "..\Cryptography\CryptographyStorage.h"
+#include "..\Data Storage\DatabaseManager.cpp"
+#include "..\Data Storage\DatabaseObject.cpp"
+#include "..\Data Structures\PasswordEntry.cpp"
 
 TEST_CASE("Cryptography Encryption and Decryption Test", "[Cryptography]") {
   const unsigned char key[] = "0123456789ABCDEF0123456789ABCDEF";
