@@ -30,8 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         DatabaseManager.cpp
         DatabaseObject.cpp
         Cryptography.cpp
-        DatabaseManager.h
-        testing.cpp
+        CryptographyStorage.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
