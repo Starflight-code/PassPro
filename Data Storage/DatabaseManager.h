@@ -1,9 +1,9 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include "DatabaseObject.cpp"
-#include "PasswordEntry.cpp"
-#include "include/json.hpp"
+#include "../Data Structures/PasswordEntry.h"
+#include "../include/json.hpp"
+#include "DatabaseObject.h"
 #include <iostream>
 #include <vector>
 
@@ -14,24 +14,26 @@ namespace DataProcessing {
 class DatabaseManager {
 
   private:
+  std::vector<PasswordEntry> entries;
+
   /**
    * @brief generateJSON: Generates JSON from embedded entries data
    * @return nlohmann::json object containing all data from entries vector
    */
-  nlohmann::json sanitizeJSON();
+  inline nlohmann::json sanitizeJSON();
 
   /**
    * @brief desanitizeJSON: Generates a vector of PasswordEntry information from JSON data
    * @param jsonObject: A JSON object
    * @return std::vector<PasswordEntry> list of PasswordEntry objects
    */
-  std::vector<PasswordEntry> desanitizeJSON(nlohmann::json jsonObject);
+  inline std::vector<PasswordEntry> desanitizeJSON(nlohmann::json jsonObject);
 
   public:
   /**
    * @brief writeDB: Sanitizes current DB state, converts
    * to JSON, encrypts and pushes it to the disk
    */
-  void writeDB();
+  inline void writeDB();
 };
 #endif // DATABASEMANAGER_H

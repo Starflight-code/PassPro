@@ -23,14 +23,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(PassPro
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        PasswordEntry.cpp
+        "Data Structures/PasswordEntry.cpp"
 
         loginwindow.h loginwindow.cpp loginwindow.ui
         entryviewer.h entryviewer.cpp entryviewer.ui
-        DatabaseManager.cpp
-        DatabaseObject.cpp
-        Cryptography.cpp
-        CryptographyStorage.cpp
+        "Data Storage/DatabaseManager.cpp"
+        "Data Storage/DatabaseObject.cpp"
+        "Cryptography/Cryptography.cpp"
+        "Cryptography/CryptographyStorage.cpp"
 
     )
 # Define target properties for Android with Qt 6 as:

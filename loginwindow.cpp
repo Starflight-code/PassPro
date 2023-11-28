@@ -1,6 +1,6 @@
 #include "loginwindow.h"
 // #include "include/CryptoPP/secblock.h"
-#include "SecureString.cpp"
+#include "Data Structures/SecureString.cpp"
 #include "ui_loginwindow.h"
 #include <string>
 

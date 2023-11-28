@@ -1,4 +1,4 @@
-#include "DatabaseManager.cpp"
+#include "Data Storage/DatabaseManager.cpp"
 #include "include/BS_thread_pool.hpp"
 // #include "mainwindow.h"
 // #include "testing.cpp"
@@ -7,7 +7,7 @@
 
 #include <QApplication>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   /*if(argc == 2 && !strcmp(argv[1], "-test")) {
     std::cout << "Running Test Suite\n";
     Testing::TestSuite testSuite;
