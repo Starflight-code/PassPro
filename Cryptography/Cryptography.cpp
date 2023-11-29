@@ -1,7 +1,7 @@
 #include "Cryptography.h"
 
 // Function to generate RSA key pair
-EVP_PKEY* Cryptography::generate_key_pair() {
+EVP_PKEY* CryptographyUtils::generate_key_pair() {
   EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new_id(EVP_PKEY_RSA, nullptr);
   if(!ctx) {
     std::cerr << "Failed to create EVP_PKEY_CTX" << std::endl; // Error message if context creation fails
@@ -27,7 +27,7 @@ EVP_PKEY* Cryptography::generate_key_pair() {
   return key;
 }
 // Encryption Function
-bool Cryptography::encrypt(const unsigned char* plaintext, int plaintext_len, const unsigned char* key, const unsigned char* iv, unsigned char* ciphertext, int& ciphertext_len) {
+bool CryptographyUtils::encrypt(const unsigned char* plaintext, int plaintext_len, const unsigned char* key, const unsigned char* iv, unsigned char* ciphertext, int& ciphertext_len) {
   EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new(); // Allocate new EVP_CIPHER_CTX structure
   if(!ctx) {
     std::cerr << "Failed to create EVP_CIPHER_CTX" << std::endl; // Error message if context creation fails
@@ -47,7 +47,7 @@ bool Cryptography::encrypt(const unsigned char* plaintext, int plaintext_len, co
   return true;
 }
 // Decryption Function
-bool Cryptography::decrypt(const unsigned char* ciphertext, int ciphertext_len, const unsigned char* key, const unsigned char* iv, unsigned char* plaintext, int& plaintext_len) {
+bool CryptographyUtils::decrypt(const unsigned char* ciphertext, int ciphertext_len, const unsigned char* key, const unsigned char* iv, unsigned char* plaintext, int& plaintext_len) {
   EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new(); // Allocate new EVP_CIPHER_CTX structure
   if(!ctx) {
     std::cerr << "Failed to create EVP_CIPHER_CTX" << std::endl; // Error message if context creation fails
@@ -67,7 +67,7 @@ bool Cryptography::decrypt(const unsigned char* ciphertext, int ciphertext_len, 
   return true;
 }
 // Sign Message Function
-bool Cryptography::sign(EVP_PKEY* private_key, const unsigned char* message, int message_len, unsigned char* signature, unsigned int& signature_len) {
+bool CryptographyUtils::sign(EVP_PKEY* private_key, const unsigned char* message, int message_len, unsigned char* signature, unsigned int& signature_len) {
   EVP_MD_CTX* ctx = EVP_MD_CTX_new();
   if(!ctx) {
     std::cerr << "Failed to create EVP_MD_CTX" << std::endl; // Error message if context creation fails
@@ -92,7 +92,7 @@ bool Cryptography::sign(EVP_PKEY* private_key, const unsigned char* message, int
   return true;
 }
 // Verify Signature Function
-bool Cryptography::verify(EVP_PKEY* public_key, const unsigned char* message, int message_len, const unsigned char* signature, unsigned int signature_len) {
+bool CryptographyUtils::verify(EVP_PKEY* public_key, const unsigned char* message, int message_len, const unsigned char* signature, unsigned int signature_len) {
   EVP_MD_CTX* ctx = EVP_MD_CTX_new();
   if(!ctx) {
     std::cerr << "Failed to create EVP_MD_CTX" << std::endl; // Error message if context creation fails
