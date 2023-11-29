@@ -29,6 +29,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         entryviewer.h entryviewer.cpp entryviewer.ui
         "Data Storage/DatabaseManager.cpp"
         "Data Storage/DatabaseObject.cpp"
+        "Cryptography/CryptographyStorage.h"
         "Cryptography/Cryptography.cpp"
         "Cryptography/CryptographyStorage.cpp"
 
@@ -77,3 +78,6 @@ install(TARGETS PassPro
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(PassPro)
 endif()
+set (CMAKE_STATIC_LINKER_FLAGS "-lcrypto -lssl")
+#set (target_link_options(my_tgt PRIVATE "LINKER:-lcrypto -lssl"))
+#set(CMAKE_CXX_STANDARD_LIBRARIES -lcrypto -lssl)

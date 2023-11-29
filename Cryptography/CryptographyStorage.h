@@ -8,6 +8,7 @@ namespace Cryptography {
 }
 
 class CryptographyStorage {
+  public:
   std::string user;
   std::string key;
   /**

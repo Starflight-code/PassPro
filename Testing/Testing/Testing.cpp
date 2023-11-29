@@ -1,10 +1,10 @@
 #define CATCH_CONFIG_MAIN
-#include "..\catch\catch.hpp"
-#include "..\Cryptography\Cryptography.cpp"
-#include "..\Cryptography\CryptographyStorage.h"
-#include "..\Data Storage\DatabaseManager.cpp"
-#include "..\Data Storage\DatabaseObject.cpp"
-#include "..\Data Structures\PasswordEntry.cpp"
+#include "../../Cryptography/Cryptography.cpp"
+#include "../../Cryptography/CryptographyStorage.h"
+#include "../../Data Storage/DatabaseManager.h"
+#include "../../Data Storage/DatabaseObject.h"
+#include "../../Data Structures/PasswordEntry.h"
+#include "../Catch/catch.hpp"
 
 TEST_CASE("Cryptography Encryption and Decryption Test", "[Cryptography]") {
   const unsigned char key[] = "0123456789ABCDEF0123456789ABCDEF";
@@ -13,7 +13,7 @@ TEST_CASE("Cryptography Encryption and Decryption Test", "[Cryptography]") {
   unsigned char ciphertext[256];                     // Adjust the size accordingly
   unsigned char decryptedText[256];                  // Adjust the size accordingly
 
-  Cryptography crypto(key);
+  Cryptography::CryptographyUtils crypto(key);
 
   SECTION("Encrypts plaintext") {
     REQUIRE_NOTHROW(crypto.encryptAES256(plaintext, plaintextLength, ciphertext));
