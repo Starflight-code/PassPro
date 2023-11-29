@@ -1,10 +1,6 @@
-#include <string>
+#include "CryptographyStorage.h"
 
-class CryptographyStorage {
-  std::string user;
-  std::string key;
-  CryptographyStorage(std::string user, std::string password) {
-    this->user = user;
-    this->key = password;
-  }
-};
+CryptographyStorage::CryptographyStorage(std::string user, std::string password) {
+  this->user = user;
+  this->key = password;
+}
