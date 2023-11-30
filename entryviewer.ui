@@ -55,13 +55,16 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Enter Name)</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
    <property name="dragEnabled">
     <bool>false</bool>
+   </property>
+   <property name="placeholderText">
+    <string>Entry Name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -100,10 +103,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Username)</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>Username</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_3">
@@ -116,10 +122,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Password)</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>Password</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -145,10 +154,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>(URL)</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>URL</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -172,6 +184,18 @@
      <width>271</width>
      <height>121</height>
     </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="documentTitle">
+    <string/>
+   </property>
+   <property name="acceptRichText">
+    <bool>false</bool>
+   </property>
+   <property name="placeholderText">
+    <string>Notes</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
