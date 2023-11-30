@@ -9,6 +9,7 @@
 #include <iostream>
 namespace Cryptography {
   class CryptographyUtils {
+    public:
     // Function to generate RSA key pair
     EVP_PKEY* generate_key_pair() {
       EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new_id(EVP_PKEY_RSA, nullptr);

@@ -14,10 +14,10 @@ TEST_CASE("Cryptography Encryption and Decryption Test", "[Cryptography]") {
   unsigned char ciphertext[256];                     // Adjust the size accordingly
   unsigned char decryptedText[256];                  // Adjust the size accordingly
 
-  Cryptography::CryptographyUtils crypto();
+  Cryptography::CryptographyUtils crypto = Cryptography::CryptographyUtils();
 
   SECTION("Encrypts plaintext") {
-    REQUIRE_NOTHROW(Cryptography::CryptographyUtils crypto.encrypt(plaintext, plaintextLength, ciphertext));
+    REQUIRE_NOTHROW(crypto.encrypt(plaintext, plaintextLength, ciphertext));
 
     // Add additional checks if needed
   }
@@ -40,8 +40,8 @@ TEST_CASE("CryptographyStorage Constructor Test", "[CryptographyStorage]") {
   CryptographyStorage storage(testUser, testPassword);
 
   SECTION("Constructor initializes user and key") {
-    REQUIRE(storage.getUser() == testUser);
-    REQUIRE(storage.getKey() == testPassword);
+    REQUIRE(storage.user == testUser);
+    REQUIRE(storage.key == testPassword);
 
     // Add additional checks if needed
   }
@@ -49,12 +49,12 @@ TEST_CASE("CryptographyStorage Constructor Test", "[CryptographyStorage]") {
 TEST_CASE("PasswordObject and searchableURL Test") {
   SECTION("URL with www. prepended should have searchableURL without www.") {
     PasswordEntry entry("securePassword", "Example", "www.example.com", "user123", "Some notes");
-    REQUIRE(entry.seachableURL == "example.com");
+    REQUIRE(entry.searchableURL == "example.com");
   }
 
   SECTION("URL without www. should have searchableURL unchanged") {
     PasswordEntry entry("anotherPassword", "Another Example", "example.org", "user456", "More notes");
-    REQUIRE(entry.seachableURL == "example.org");
+    REQUIRE(entry.searchableURL == "example.org");
   }
 }
 TEST_CASE("DatabaseObject add and DatabaseManager JSON Sanitization and Desanitization Test", "[DatabaseManager]") {

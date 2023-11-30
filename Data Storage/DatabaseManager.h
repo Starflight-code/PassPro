@@ -35,5 +35,11 @@ class DatabaseManager {
    * to JSON, encrypts and pushes it to the disk
    */
   inline void writeDB();
+
+  /**
+   * @brief getEntries: Returns a list of contained password entries
+   * @return std::vector<PasswordEntry> of contained entries
+   */
+  inline std::vector<PasswordEntry> getEntries();
 };
 #endif // DATABASEMANAGER_H

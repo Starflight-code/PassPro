@@ -25,6 +25,10 @@ nlohmann::json DatabaseManager::sanitizeJSON() {
   return j;
 }
 
+std::vector<PasswordEntry> DatabaseManager::getEntries() {
+  return entries;
+}
+
 std::vector<PasswordEntry> DatabaseManager::desanitizeJSON(nlohmann::json jsonObject) {
   std::vector<PasswordEntry> entries;
   for(int i = 0; i < jsonObject["names"].size(); i++) {
