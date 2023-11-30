@@ -2,6 +2,7 @@
 #define LOGINWINDOW_H
 
 // #include "include/CryptoPP/secblock.h"
+#include "mainwindow.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -26,6 +27,7 @@ class LoginWindow : public QMainWindow {
 
   private:
   Ui::LoginWindow* ui;
+  MainWindow window;
 };
 
 #endif // LOGINWINDOW_H

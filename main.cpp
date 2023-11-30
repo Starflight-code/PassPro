@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
   // testing
   QApplication a(argc, argv);
   // MainWindow w;
-  LoginWindow log;
+  LoginWindow login;
   // w.show();
-  log.show();
+  login.show();
   return a.exec();
 }
