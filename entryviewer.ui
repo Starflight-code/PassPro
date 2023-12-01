@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="Close">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -45,7 +45,7 @@
     <string>Apply and Close</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="Name">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -93,7 +93,7 @@
     <string>Username</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="Username">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -112,7 +112,7 @@
     <string>Username</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="Password">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -144,7 +144,7 @@
     <string>Password</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="URL">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -176,28 +176,6 @@
     <string>TOTP</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>180</y>
-     <width>271</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="documentTitle">
-    <string/>
-   </property>
-   <property name="acceptRichText">
-    <bool>false</bool>
-   </property>
-   <property name="placeholderText">
-    <string>Notes</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
@@ -209,6 +187,16 @@
    </property>
    <property name="text">
     <string>Notes</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Notes">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>190</y>
+     <width>271</width>
+     <height>121</height>
+    </rect>
    </property>
   </widget>
  </widget>

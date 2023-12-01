@@ -4,18 +4,25 @@
 #include <QMainWindow>
 
 namespace Ui {
-  class EntryViewer;
+class EntryViewer;
 }
 
 class EntryViewer : public QMainWindow {
   Q_OBJECT
 
-  public:
-  explicit EntryViewer(QWidget* parent = nullptr);
+public:
+  explicit EntryViewer(QWidget *parent = nullptr);
   ~EntryViewer();
+  void onDatabaseUpdateFinished();
 
-  private:
-  Ui::EntryViewer* ui;
+private slots:
+  void on_Close_clicked();
+
+private slots:
+  void on_pushButton_2_clicked();
+
+private:
+  Ui::EntryViewer *ui;
 };
 
 #endif // ENTRYVIEWER_H
