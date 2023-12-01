@@ -1,5 +1,3 @@
-#pragma once
-
 #include "DatabaseManager.h"
 
 nlohmann::json DatabaseManager::sanitizeJSON() {

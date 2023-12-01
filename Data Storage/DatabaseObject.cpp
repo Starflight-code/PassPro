@@ -1,5 +1,3 @@
-#pragma once
-
 #include "DatabaseObject.h"
 
 void DatabaseObject::addEntry(PasswordEntry entry) {

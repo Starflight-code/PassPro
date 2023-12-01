@@ -28,7 +28,7 @@ TEST_CASE("Cryptography Encryption and Decryption Test", "[Cryptography]") {
 
     // Decrypt the ciphertext
     REQUIRE_THROWS_WITH(
-        crypto.decryptAES256(ciphertext, plaintextLength, decryptedText),
+        crypto.decrypt(ciphertext, plaintextLength, decryptedText),
         "Failed to finalize decryption");
   }
 }

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "PasswordEntry.h"
 
 std::string PasswordEntry::RemovePrepend(std::string baseString, std::string prepend) {
@@ -26,4 +24,12 @@ PasswordEntry::PasswordEntry(std::string password, std::string name, std::string
   RemovePrepend(preURL, "ssh://");
   RemovePrepend(preURL, "www.");
   this->searchableURL = url;
+}
+
+bool PasswordEntry::operator==(PasswordEntry otherEntry) {
+  bool out = out ? this->name == otherEntry.name : false;
+  out = out ? this->username == otherEntry.username : false;
+  out = out ? this->password == otherEntry.password : false;
+  out = out ? this->url == otherEntry.url : false;
+  return out;
 }

@@ -51,6 +51,8 @@ struct PasswordEntry {
    */
   PasswordEntry(std::string password, std::string name, std::string url,
                 std::string username, std::string notes);
+
+  bool operator==(PasswordEntry otherEntry);
 };
 
 #endif
