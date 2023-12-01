@@ -15,6 +15,10 @@ int main(int argc, char* argv[]) {
     return 0;
   }*/
   BS::thread_pool pool(3); // Pool has 3 threads, increase if required
+  auto func = [&pool]() {
+    int y = 1;
+  };
+  pool.push_task(func);
   DatabaseManager data;
   // data.writeDB(); // uncomment for JSON DB sanitization/desanitization
   // testing
