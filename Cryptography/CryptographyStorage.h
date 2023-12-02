@@ -3,10 +3,6 @@
 
 #include <string>
 
-namespace Cryptography {
-  class CryptographyStorage;
-}
-
 class CryptographyStorage {
   public:
   std::string user;

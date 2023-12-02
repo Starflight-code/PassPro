@@ -1,130 +1,98 @@
-#include "CryptographyStorage.cpp"
-
-#include <openssl/conf.h>
-#include <openssl/err.h>
+#include "CryptographyStorage.h"
+#include <openssl/aes.h>
 #include <openssl/evp.h>
-#include <openssl/rand.h>
-#include <openssl/ssl.h>
+#include <stdexcept>
 
-#include <iostream>
-namespace Cryptography {
-  class CryptographyUtils {
-    public:
-    // Function to generate RSA key pair
-    EVP_PKEY* generate_key_pair() {
-      EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new_id(EVP_PKEY_RSA, nullptr);
-      if(!ctx) {
-        std::cerr << "Failed to create EVP_PKEY_CTX" << std::endl; // Error message if context creation fails
-        return nullptr;
-      }
-      if(EVP_PKEY_keygen_init(ctx) <= 0) {
-        std::cerr << "Failed to initialize keygen" << std::endl; // Error message if keygen initialization fails
-        EVP_PKEY_CTX_free(ctx);
-        return nullptr;
-      }
-      if(EVP_PKEY_CTX_set_rsa_keygen_bits(ctx, 2048) <= 0) {
-        std::cerr << "Failed to set key length" << std::endl; // Error message if setting key length fails
-        EVP_PKEY_CTX_free(ctx);
-        return nullptr;
-      }
-      EVP_PKEY* key = nullptr;
-      if(EVP_PKEY_keygen(ctx, &key) <= 0) {
-        std::cerr << "Failed to generate key pair" << std::endl; // Error message if key pair generation fails
-        EVP_PKEY_CTX_free(ctx);
-        return nullptr;
-      }
-      EVP_PKEY_CTX_free(ctx);
-      return key;
+class Cryptography {
+  public:
+  Cryptography(const unsigned char* key) : key_(key) {
+    OpenSSL_add_all_algorithms();
+  }
+
+  ~Cryptography() {
+    EVP_cleanup();
+  }
+
+  /**
+   * @brief Encrypts the File using openssl
+   * @param plaintext character pointer that is to be encrypted
+   * @param plaintextLength int length of the message
+   * @param ciphertext character pointer of the encrypted character
+   */
+  void encryptAES256(const unsigned char* plaintext, int plaintextLength,
+                     unsigned char* ciphertext)
+
+  {
+    EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
+
+    if(ctx == nullptr) {
+      throw std::runtime_error("Failed to create encryption context");
     }
-    // Encryption Function
-    bool encrypt(const unsigned char* plaintext, int plaintext_len, const unsigned char* key, const unsigned char* iv, unsigned char* ciphertext, int& ciphertext_len) {
-      EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new(); // Allocate new EVP_CIPHER_CTX structure
-      if(!ctx) {
-        std::cerr << "Failed to create EVP_CIPHER_CTX" << std::endl; // Error message if context creation fails
-        return false;
-      }
-      if(EVP_EncryptInit_ex(ctx, EVP_aes_256_gcm(), nullptr, key, iv) != 1) { // Initialize encryption context
-        std::cerr << "Failed to initialize encryption" << std::endl;          // Error message if encryption initialization fails
-        EVP_CIPHER_CTX_free(ctx);
-        return false;
-      }
-      if(EVP_EncryptUpdate(ctx, ciphertext, &ciphertext_len, plaintext, plaintext_len) != 1) {
-        std::cerr << "Failed to encrypt data" << std::endl; // Error message if data encryption fails
-        EVP_CIPHER_CTX_free(ctx);
-        return false;
-      }
+
+    if(EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) !=
+       1) {
       EVP_CIPHER_CTX_free(ctx);
-      return true;
+      throw std::runtime_error("Failed to initialize encryption context");
     }
-    // Decryption Function
-    bool decrypt(const unsigned char* ciphertext, int ciphertext_len, const unsigned char* key, const unsigned char* iv, unsigned char* plaintext, int& plaintext_len) {
-      EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new(); // Allocate new EVP_CIPHER_CTX structure
-      if(!ctx) {
-        std::cerr << "Failed to create EVP_CIPHER_CTX" << std::endl; // Error message if context creation fails
-        return false;
-      }
-      if(EVP_DecryptInit_ex(ctx, EVP_aes_256_gcm(), nullptr, key, iv) != 1) {
-        std::cerr << "Failed to initialize decryption" << std::endl; // Error message if decryption initialization fails
-        EVP_CIPHER_CTX_free(ctx);
-        return false;
-      }
-      if(EVP_DecryptUpdate(ctx, plaintext, &plaintext_len, ciphertext, ciphertext_len) != 1) {
-        std::cerr << "Failed to decrypt data" << std::endl; // Error message if data decryption fails
-        EVP_CIPHER_CTX_free(ctx);
-        return false;
-      }
+
+    int len;
+    int ciphertextLength;
+
+    if(EVP_EncryptUpdate(ctx, ciphertext, &len, plaintext, plaintextLength) !=
+       1) {
       EVP_CIPHER_CTX_free(ctx);
-      return true;
+      throw std::runtime_error("Failed to encrypt data");
     }
-    // Sign Message Function
-    bool sign(EVP_PKEY* private_key, const unsigned char* message, int message_len, unsigned char* signature, unsigned int& signature_len) {
-      EVP_MD_CTX* ctx = EVP_MD_CTX_new();
-      if(!ctx) {
-        std::cerr << "Failed to create EVP_MD_CTX" << std::endl; // Error message if context creation fails
-        return false;
-      }
-      if(EVP_DigestSignInit(ctx, nullptr, EVP_sha256(), nullptr, private_key) != 1) {
-        std::cerr << "Failed to initialize signing" << std::endl; // Error message if signing initialization fails
-        EVP_MD_CTX_destroy(ctx);
-        return false;
-      }
-      if(EVP_DigestSignUpdate(ctx, message, message_len) != 1) {
-        std::cerr << "Failed to update signing" << std::endl; // Error message if signing update fails
-        EVP_MD_CTX_destroy(ctx);
-        return false;
-      }
-      if(EVP_DigestSignFinal(ctx, signature, (size_t*)signature_len) != 1) {
-        std::cerr << "Failed to finalize signing" << std::endl; // Error message if signing finalization fails
-        EVP_MD_CTX_destroy(ctx);
-        return false;
-      }
-      EVP_MD_CTX_destroy(ctx);
-      return true;
+    ciphertextLength = len;
+
+    if(EVP_EncryptFinal_ex(ctx, ciphertext + len, &len) != 1) {
+      EVP_CIPHER_CTX_free(ctx);
+      throw std::runtime_error("Failed to finalize encryption");
     }
-    // Verify Signature Function
-    bool verify(EVP_PKEY* public_key, const unsigned char* message, int message_len, const unsigned char* signature, unsigned int signature_len) {
-      EVP_MD_CTX* ctx = EVP_MD_CTX_new();
-      if(!ctx) {
-        std::cerr << "Failed to create EVP_MD_CTX" << std::endl; // Error message if context creation fails
-        return false;
-      }
-      if(EVP_DigestVerifyInit(ctx, nullptr, EVP_sha256(), nullptr, public_key) != 1) {
-        std::cerr << "Failed to initialize verification" << std::endl; // Error message if verification initialization fails
-        EVP_MD_CTX_destroy(ctx);
-        return false;
-      }
-      if(EVP_DigestVerifyUpdate(ctx, message, message_len) != 1) {
-        std::cerr << "Failed to update verification" << std::endl; // Error message if verification update fails
-        EVP_MD_CTX_destroy(ctx);
-        return false;
-      }
-      int result = EVP_DigestVerifyFinal(ctx, signature, signature_len);
-      EVP_MD_CTX_destroy(ctx);
-      if(result != 1) {
-        std::cerr << "Failed to finalize verification" << std::endl; // Error message if verification finalization fails
-        return false;
-      }
-      return true;
+    ciphertextLength += len;
+
+    EVP_CIPHER_CTX_free(ctx);
+  }
+
+  /**
+   * @brief Dencrypts the File using openssl
+   * @param ciphertext character pointer of the encrypted character
+   * @param ciphertextLength int length of the message
+   * @param plaintext character pointer that is to be decrypted
+   */
+  void decryptAES256(const unsigned char* ciphertext, int ciphertextLength,
+                     unsigned char* plaintext) {
+    EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
+
+    if(ctx == nullptr) {
+      throw std::runtime_error("Failed to create decryption context");
     }
-  };
-}
+
+    if(EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) !=
+       1) {
+      EVP_CIPHER_CTX_free(ctx);
+      throw std::runtime_error("Failed to initialize decryption context");
+    }
+
+    int len;
+    int plaintextLength;
+
+    if(EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertextLength) !=
+       1) {
+      EVP_CIPHER_CTX_free(ctx);
+      throw std::runtime_error("Failed to decrypt data");
+    }
+    plaintextLength = len;
+
+    if(EVP_DecryptFinal_ex(ctx, plaintext + len, &len) != 1) {
+      EVP_CIPHER_CTX_free(ctx);
+      throw std::runtime_error("Failed to finalize decryption");
+    }
+    plaintextLength += len;
+
+    EVP_CIPHER_CTX_free(ctx);
+  }
+
+  private:
+  const unsigned char* key_;
+};

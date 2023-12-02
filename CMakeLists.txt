@@ -11,12 +11,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(OpenSSL REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -24,7 +25,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         "Data Structures/PasswordEntry.cpp"
-
         loginwindow.h loginwindow.cpp loginwindow.ui
         entryviewer.h entryviewer.cpp entryviewer.ui
         "Data Storage/DatabaseManager.cpp"
@@ -32,34 +32,46 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         "Cryptography/CryptographyStorage.h"
         "Cryptography/Cryptography.cpp"
         "Cryptography/CryptographyStorage.cpp"
-
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET PassPro APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
         add_library(PassPro SHARED
             ${PROJECT_SOURCES}
         )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(PassPro
             ${PROJECT_SOURCES}
+            entryviewer.h
+            entryviewer.ui
+            loginwindow.cpp
+            loginwindow.h
+            loginwindow.ui
+            mainwindow.cpp
+            entryviewer.cpp
+            Cryptography/Cryptography.cpp
+            Cryptography/CryptographyStorage.cpp
+            Cryptography/CryptographyStorage.h
+            Data_Storage/DatabaseManager.cpp
+            Data_Storage/DatabaseManager.h
+            Data_Storage/DatabaseObject.cpp
+            Data_Storage/DatabaseObject.h
+            Data_Structures/PasswordEntry.cpp
+            Data_Structures/PasswordEntry.h
+            Data_Structures/SecureString.cpp
         )
     endif()
 endif()
 
-target_link_libraries(PassPro PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(PassPro PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    OpenSSL::SSL
+    OpenSSL::Crypto
+)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
   set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.PassPro)
 endif()
+
 set_target_properties(PassPro PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
@@ -78,6 +90,5 @@ install(TARGETS PassPro
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(PassPro)
 endif()
+
 set (CMAKE_STATIC_LINKER_FLAGS "-lcrypto -lssl")
-#set (target_link_options(my_tgt PRIVATE "LINKER:-lcrypto -lssl"))
-#set(CMAKE_CXX_STANDARD_LIBRARIES -lcrypto -lssl)
