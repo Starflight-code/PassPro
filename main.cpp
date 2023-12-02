@@ -1,7 +1,6 @@
+#include "Data Structures/SecureString.cpp"
 #include "Data_Storage/DatabaseManager.cpp"
 #include "include/BS_thread_pool.hpp"
-// #include "mainwindow.h"
-// #include "testing.cpp"
 #include "loginwindow.h"
 #include <thread>
 

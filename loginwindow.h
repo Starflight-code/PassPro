@@ -2,6 +2,7 @@
 #define LOGINWINDOW_H
 
 // #include "include/CryptoPP/secblock.h"
+#include "Cryptography/CryptographyStorage.h"
 #include "mainwindow.h"
 #include <QMainWindow>
 
@@ -27,6 +28,7 @@ class LoginWindow : public QMainWindow {
 
   private:
   Ui::LoginWindow* ui;
+  CryptographyStorage* userCredentials;
   MainWindow window;
 };
 

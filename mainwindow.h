@@ -1,9 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Cryptography/CryptographyStorage.h"
+#include "entryviewer.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
-#include "entryviewer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,5 +26,6 @@ class MainWindow : public QMainWindow {
   private:
   Ui::MainWindow* ui;
   EntryViewer entry;
+  CryptographyStorage* userCredentials;
 };
 #endif // MAINWINDOW_H

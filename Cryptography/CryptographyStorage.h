@@ -1,12 +1,13 @@
 #ifndef CRYPTOGRAPHYSTORAGE_H
 #define CRYPTOGRAPHYSTORAGE_H
 
+#include "../Data Structures/SecureString.cpp"
 #include <string>
 
 class CryptographyStorage {
   public:
   std::string user;
-  std::string key;
+  DataProcessing::secureString key;
   /**
    * @brief Stores a username and password for database saving/loading and cryptography
    * @param user a username, used as the database filename
