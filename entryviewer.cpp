@@ -9,19 +9,19 @@
 
 DatabaseManager databaseManager;
 
-class DatabaseUpdateThread : public QThread {
+/*class DatabaseUpdateThread : public QThread {
 public:
   void run() override { updateDatabase(); }
-};
+};*/
 
-EntryViewer::EntryViewer(QWidget *parent)
+EntryViewer::EntryViewer(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::EntryViewer) {
   ui->setupUi(this);
 
-  connect(ui->pushButton_2, &QPushButton::clicked, this,
-          &EntryViewer::on_pushButton_2_clicked);
-  connect(ui->Password, &QLineEdit::editingFinished, this,
-          &EntryViewer::on_Password_editingFinished);
+  // connect(ui->pushButton_2, &QPushButton::clicked, this,
+  //         &EntryViewer::on_pushButton_2_clicked);
+  // connect(ui->Password, &QLineEdit::editingFinished, this,
+  //         &EntryViewer::on_Password_editingFinished);
 }
 
 EntryViewer::~EntryViewer() { delete ui; }
@@ -35,14 +35,14 @@ void EntryViewer::on_pushButton_2_clicked() {
       ui->Notes->text().toStdString());
   databaseObject.addEntry(newEntry);
 
-  DatabaseUpdateThread *updateThread = new DatabaseUpdateThread;
+  /*DatabaseUpdateThread* updateThread = new DatabaseUpdateThread;
   connect(updateThread, &QThread::finished, this,
           &EntryViewer::onDatabaseUpdateFinished);
   updateThread->start();
 
   databaseManager.writeDB();
   main::updateDatabase();
-  update();
+  update();*/
 }
 
 void EntryViewer::onDatabaseUpdateFinished() { update(); }
