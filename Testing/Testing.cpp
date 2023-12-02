@@ -81,8 +81,8 @@ TEST_CASE("DatabaseObject add and DatabaseManager JSON Sanitization and Desaniti
 
     // Verify that the desanitized entries match the original entries
     REQUIRE(desanitizedEntries.size() == 2);
-    REQUIRE(desanitizedEntries[0] == entry1);
-    REQUIRE(desanitizedEntries[1] == entry2);
+    REQUIRE(desanitizedEntries[0].equals(entry1));
+    REQUIRE(desanitizedEntries[1].equals(entry2));
   }
 }
 TEST_CASE("Memory Leak Test for PasswordEntry", "[MemoryLeak]") {

@@ -33,3 +33,19 @@ bool PasswordEntry::operator==(PasswordEntry otherEntry) {
   out = out ? this->url == otherEntry.url : false;
   return out;
 }
+
+bool PasswordEntry::equals(PasswordEntry otherEntry) {
+  bool out = out ? this->name == otherEntry.name : false;
+  out = out ? this->username == otherEntry.username : false;
+  out = out ? this->password == otherEntry.password : false;
+  out = out ? this->url == otherEntry.url : false;
+  return out;
+}
+
+bool PasswordEntry::equals(const PasswordEntry otherEntry) {
+  bool out = out ? this->name == otherEntry.name : false;
+  out = out ? this->username == otherEntry.username : false;
+  out = out ? this->password == otherEntry.password : false;
+  out = out ? this->url == otherEntry.url : false;
+  return out;
+}
