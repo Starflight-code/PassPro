@@ -1,5 +1,5 @@
-#include "Data Structures/SecureString.cpp"
 #include "Data_Storage/DatabaseManager.cpp"
+#include "Data_Structures/SecureString.cpp"
 #include "include/BS_thread_pool.hpp"
 #include "loginwindow.h"
 #include <thread>
@@ -19,7 +19,6 @@ int main(int argc, char* argv[]) {
   };
   pool.push_task(func);
   DatabaseManager data;
-  CryptographyStorage credentialStorage();
   // data.writeDB(); // uncomment for JSON DB sanitization/desanitization
   // testing
   QApplication a(argc, argv);

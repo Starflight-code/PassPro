@@ -24,7 +24,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(PassPro
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        "Data Structures/PasswordEntry.cpp"
+        Data_Structures/PasswordEntry.cpp
         loginwindow.h loginwindow.cpp loginwindow.ui
         entryviewer.h entryviewer.cpp entryviewer.ui
         "Data Storage/DatabaseManager.cpp"

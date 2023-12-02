@@ -1,3 +1,6 @@
+#ifndef SECURESTRING_CPP
+#define SECURESTRING_CPP
+
 #include <openssl/crypto.h>
 #include <string>
 
@@ -22,3 +25,4 @@ public:
 
   typedef std::basic_string<char, std::char_traits<char>, allocator<char>> secureString;
 }
+#endif

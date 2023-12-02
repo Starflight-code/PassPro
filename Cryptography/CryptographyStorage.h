@@ -1,7 +1,7 @@
 #ifndef CRYPTOGRAPHYSTORAGE_H
 #define CRYPTOGRAPHYSTORAGE_H
 
-#include "../Data Structures/SecureString.cpp"
+#include "../Data_Structures/SecureString.cpp"
 #include <string>
 
 class CryptographyStorage {
@@ -13,7 +13,7 @@ class CryptographyStorage {
    * @param user a username, used as the database filename
    * @param password a key, used as the database's cryptography key
    */
-  inline CryptographyStorage(std::string user, std::string password);
+  CryptographyStorage(std::string user, DataProcessing::secureString password);
 };
 
 #endif

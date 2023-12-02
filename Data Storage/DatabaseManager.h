@@ -1,7 +1,7 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include "../Data Structures/PasswordEntry.h"
+#include "../Data_Structures/PasswordEntry.h"
 #include "../include/json.hpp"
 #include "DatabaseObject.h"
 #include <iostream>
