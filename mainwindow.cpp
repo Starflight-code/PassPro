@@ -5,32 +5,37 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->setupUi(this);
   bool inClassDemo = true;
 
-  if (inClassDemo) {
+  if(inClassDemo) {
     ui->tableView->hide();
   } else {
-  ui->columnView->hide();
-  ui->columnView_2->hide();
-  ui->columnView_3->hide();
-  ui->columnView_4->hide();
+    ui->columnView->hide();
+    ui->columnView_2->hide();
+    ui->columnView_3->hide();
+    ui->columnView_4->hide();
   }
 
   QStandardItemModel tableContent(2, 2);
-  for (int row = 0; row < tableContent.rowCount(); ++row) {
-    for (int column = 0; column < tableContent.columnCount(); ++column) {
-      QStandardItem *item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
+  for(int row = 0; row < tableContent.rowCount(); ++row) {
+    for(int column = 0; column < tableContent.columnCount(); ++column) {
+      QStandardItem* item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
       tableContent.setItem(row, column, item);
     }
   }
   ui->tableView->setModel(&tableContent);
-  //ui->tableView->update();
+  // ui->tableView->update();
 }
 
 MainWindow::~MainWindow() {
   delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
-{
+void MainWindow::on_pushButton_clicked() {
   entry.show();
 }
 
+void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database) {
+  this->userCredentials = userCredentials;
+  this->pool = pool;
+  this->database = database;
+  entry.tricklePointers(this->userCredentials, this->pool, this->database);
+};

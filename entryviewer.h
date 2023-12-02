@@ -2,6 +2,8 @@
 #define ENTRYVIEWER_H
 
 #include "Cryptography/CryptographyStorage.h"
+#include "Data Storage/DatabaseManager.h"
+#include "include/BS_thread_pool.hpp"
 #include <QMainWindow>
 
 namespace Ui {
@@ -25,6 +27,11 @@ class EntryViewer : public QMainWindow {
   private:
   Ui::EntryViewer* ui;
   CryptographyStorage* userCredentials;
+  BS::thread_pool* pool;
+  DatabaseManager* database;
+
+  public:
+  void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);
 };
 
 #endif // ENTRYVIEWER_H

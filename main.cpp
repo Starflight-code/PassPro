@@ -19,6 +19,7 @@ int main(int argc, char* argv[]) {
   };
   pool.push_task(func);
   DatabaseManager data;
+  CryptographyStorage credentialStorage();
   // data.writeDB(); // uncomment for JSON DB sanitization/desanitization
   // testing
   QApplication a(argc, argv);
@@ -26,5 +27,6 @@ int main(int argc, char* argv[]) {
   LoginWindow login;
   // w.show();
   login.show();
+  login.tricklePointers(&pool, &data);
   return a.exec();
 }

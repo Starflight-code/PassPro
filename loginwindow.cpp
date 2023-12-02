@@ -15,20 +15,28 @@ LoginWindow::LoginWindow(QWidget* parent)
 
 LoginWindow::~LoginWindow() { delete ui; }
 
-void LoginWindow::on_lineEdit_2_returnPressed() {
+void LoginWindow::submit() {
   username = ui->lineEdit->text().toStdString();
   // secure_string password(ui->lineEdit_2->text().toStdString());
   //  TODO: Add database unlocking code
   DataProcessing::secureString password(ui->lineEdit_2->text().toStdString());
+
+  CryptographyStorage cryptoStorage(username, password);
   this->hide();
+  // window.tricklePointers
+  window.tricklePointers(&cryptoStorage, pool, database);
   window.show();
 }
 
-void LoginWindow::on_pushButton_clicked() {
-  username = ui->lineEdit->text().toStdString();
-  // secure_string password(ui->lineEdit_2->text().toStdString());
-  //  TODO: Add database unlocking code
-  DataProcessing::secureString password(ui->lineEdit_2->text().toStdString());
-  this->hide();
-  window.show();
+void LoginWindow::on_lineEdit_2_returnPressed() {
+  submit();
 }
+
+void LoginWindow::on_pushButton_clicked() {
+  submit();
+}
+
+void LoginWindow::tricklePointers(BS::thread_pool* pool, DatabaseManager* database) {
+  this->pool = pool;
+  this->database = database;
+};

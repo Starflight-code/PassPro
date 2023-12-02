@@ -3,6 +3,8 @@
 
 // #include "include/CryptoPP/secblock.h"
 #include "Cryptography/CryptographyStorage.h"
+#include "Data Storage/DatabaseManager.h"
+#include "include/BS_thread_pool.hpp"
 #include "mainwindow.h"
 #include <QMainWindow>
 
@@ -27,9 +29,16 @@ class LoginWindow : public QMainWindow {
   void on_pushButton_clicked();
 
   private:
+  void submit();
+
   Ui::LoginWindow* ui;
   CryptographyStorage* userCredentials;
   MainWindow window;
+  BS::thread_pool* pool;
+  DatabaseManager* database;
+
+  public:
+  void tricklePointers(BS::thread_pool* pool, DatabaseManager* database);
 };
 
 #endif // LOGINWINDOW_H
