@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "Data_Storage/DatabaseManager.h"
+#include "Data_Storage/DatabaseManager.cpp"
 #include "ui_mainwindow.h"
 #include "Data_Storage/DatabaseObject.h" // Include the header for your DatabaseObject class
 #include "Cryptography/Cryptography.cpp"  // Include the header for your Cryptography class
@@ -8,7 +9,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->setupUi(this);
 
   ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+  DatabaseManager databaseManager;
+  std::vector<PasswordEntry> entries = databaseManager.getEntries();
+  populateTableWidget(std::move(databaseManager.getEntries()));
+  //entries, crypto
     //  Cryptography Cryptography();
 
            // Fetch data from the database (assuming you have appropriate methods in your DatabaseObject class)
@@ -42,7 +46,30 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
  // }
  // ui->tableView->setModel(&tableContent);
   // ui->tableView->update();
+  void MainWindow::populateTableWidget(const std::vector<PasswordEntry>& entries) {
+    // Clear existing table content
+    ui->tableWidget->clearContents();
 
+           // Set table headers
+    QStringList headers({"Name", "Username", "URL"});
+    ui->tableWidget->setHorizontalHeaderLabels(headers);
+
+           // Set number of rows and columns
+    ui->tableWidget->setRowCount(entries.size());
+    ui->tableWidget->setColumnCount(3);
+
+           // Populate each cell with corresponding data
+    for (int row = 0; row < entries.size(); ++row) {
+      const PasswordEntry& entry = entries.at(row);
+      ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
+      ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.username)));
+      ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.url)));
+    }
+
+           // Update and show the table
+    ui->tableWidget->resizeColumnsToContents();
+    ui->tableWidget->show();
+  }
 
 void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database) {
   this->userCredentials = userCredentials;

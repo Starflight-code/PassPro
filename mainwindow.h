@@ -24,7 +24,8 @@ class MainWindow : public QMainWindow {
 
   private slots:
   void on_pushButton_clicked();
-
+  public:
+      void populateTableWidget(const std::vector<PasswordEntry>& entries);
   private:
   Ui::MainWindow* ui;
   EntryViewer entry;
@@ -33,6 +34,7 @@ class MainWindow : public QMainWindow {
   DatabaseManager* database;
   private slots:
   void on_tableWidget_cellClicked(int row, int column);
+
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);

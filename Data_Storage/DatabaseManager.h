@@ -13,11 +13,7 @@ namespace DataProcessing {
 
 class DatabaseManager {
   public:
-  /**
-   * @brief generateJSON: Generates JSON from embedded entries data
-   * @return nlohmann::json object containing all data from entries vector
-   */
-  inline nlohmann::json sanitizeJSON();
+
   private:
   std::vector<PasswordEntry> entries;
 
@@ -31,11 +27,17 @@ class DatabaseManager {
   inline std::vector<PasswordEntry> desanitizeJSON(nlohmann::json jsonObject);
 
   public:
+  inline nlohmann::json sanitizeJSON();
   /**
    * @brief getEntries: Returns a list of contained password entries
    * @return std::vector<PasswordEntry> of contained entries
    */
   inline std::vector<PasswordEntry> getEntries();
+      /**
+       * @brief generateJSON: Generates JSON from embedded entries data
+       * @return nlohmann::json object containing all data from entries vector
+       */
+  //inline nlohmann::json sanitizeJSON();
 
 
   /**
