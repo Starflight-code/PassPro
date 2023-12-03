@@ -21,7 +21,7 @@ EntryViewer::~EntryViewer() { delete ui; }
 
 void EntryViewer::on_pushButton_2_clicked() {
 
-  data->addEntry(PasswordEntry(
+  data->entries.push_back(PasswordEntry(
       ui->Password->text().toStdString(), ui->Name->text().toStdString(),
       ui->URL->text().toStdString(), ui->Username->text().toStdString(),
       ui->Notes->text().toStdString()));

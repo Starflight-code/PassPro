@@ -1,4 +1,7 @@
-//#include "CryptographyStorage.h"
+#ifndef CRYPTOGRAPHY_CPP
+#define CRYPTOGRAPHY_CPP
+
+// #include "CryptographyStorage.h"
 #include <openssl/aes.h>
 #include <openssl/evp.h>
 #include <stdexcept>
@@ -96,3 +99,4 @@ class Cryptography {
   private:
   const unsigned char* key_;
 };
+#endif

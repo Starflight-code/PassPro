@@ -15,9 +15,15 @@ find_package(OpenSSL REQUIRED)
 
 set(PROJECT_SOURCES
     main.cpp
-    mainwindow.cpp
     mainwindow.h
+    mainwindow.cpp
     mainwindow.ui
+    entryviewer.h
+    entryviewer.cpp
+    entryviewer.ui
+    loginwindow.h
+    loginwindow.cpp
+    loginwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -27,11 +33,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Data_Structures/PasswordEntry.cpp
         loginwindow.h loginwindow.cpp loginwindow.ui
         entryviewer.h entryviewer.cpp entryviewer.ui
-        "Data Storage/DatabaseManager.cpp"
-        "Data Storage/DatabaseObject.cpp"
-        "Cryptography/CryptographyStorage.h"
-        "Cryptography/Cryptography.cpp"
-        "Cryptography/CryptographyStorage.cpp"
+        Data_Storage/DatabaseManager.h
+        Data_Storage/DatabaseObject.h
+        Data_Storage/DatabaseManager.cpp
+        Data_Storage/DatabaseObject.cpp
+        Cryptography/CryptographyStorage.h
+        Cryptography/Cryptography.cpp
+        Cryptography/CryptographyStorage.cpp
     )
 else()
     if(ANDROID)
@@ -41,22 +49,15 @@ else()
     else()
         add_executable(PassPro
             ${PROJECT_SOURCES}
-            entryviewer.h
-            entryviewer.ui
-            loginwindow.cpp
-            loginwindow.h
-            loginwindow.ui
-            mainwindow.cpp
-            entryviewer.cpp
             Cryptography/Cryptography.cpp
-            Cryptography/CryptographyStorage.cpp
             Cryptography/CryptographyStorage.h
-            Data_Storage/DatabaseManager.cpp
+            Cryptography/CryptographyStorage.cpp
             Data_Storage/DatabaseManager.h
-            Data_Storage/DatabaseObject.cpp
+            Data_Storage/DatabaseManager.cpp
             Data_Storage/DatabaseObject.h
-            Data_Structures/PasswordEntry.cpp
+            Data_Storage/DatabaseObject.cpp
             Data_Structures/PasswordEntry.h
+            Data_Structures/PasswordEntry.cpp
             Data_Structures/SecureString.cpp
         )
     endif()

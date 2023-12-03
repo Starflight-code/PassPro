@@ -1,8 +1,11 @@
+#ifndef DATABASEMANAGER_CPP
+#define DATABASEMANAGER_CPP
+
 #include "DatabaseManager.h"
 
 nlohmann::json DatabaseManager::sanitizeJSON() {
   DatabaseObject db;
-   PasswordEntry n1 = PasswordEntry("pass", "name", "url", "user", "notes");
+  PasswordEntry n1 = PasswordEntry("pass", "name", "url", "user", "notes");
   // PasswordEntry n2 = PasswordEntry("pass2", "name2", "url2", "user2", "notes2");
   // PasswordEntry n3 = PasswordEntry("pass3", "name3", "url3", "user3", "notes3");
 
@@ -10,7 +13,7 @@ nlohmann::json DatabaseManager::sanitizeJSON() {
     db.addEntry(entries[i]);
   }
 
-   db.addEntry(n1);
+  db.addEntry(n1);
   // db.addEntry(n2);
   // db.addEntry(n3);
   nlohmann::json j;
@@ -60,3 +63,4 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   }
   std::cout << "\n";
 }
+#endif

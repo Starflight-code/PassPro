@@ -1,10 +1,8 @@
 #ifndef ENTRYVIEWER_H
 #define ENTRYVIEWER_H
 
-#include "Cryptography/Cryptography.cpp"
 #include "Cryptography/CryptographyStorage.h"
-#include "Data_Storage/DatabaseManager.h"
-#include "Data_Storage/DatabaseObject.h"
+#include "Data_Storage/DatabaseManager.cpp"
 #include "Data_Structures/PasswordEntry.h"
 #include "include/BS_thread_pool.hpp"
 #include "ui_entryviewer.h"

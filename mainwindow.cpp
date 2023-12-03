@@ -3,12 +3,12 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
-  ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  DatabaseManager databaseManager;
-  std::vector<PasswordEntry> entries = databaseManager.getEntries();
-  populateTableWidget(std::move(databaseManager.getEntries()));
-  // entries, crypto
-  //   Cryptography Cryptography();
+  // ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  // DatabaseManager databaseManager;
+  //  std::vector<PasswordEntry> entries = databaseManager.getEntries();
+  //  populateTableWidget(std::move(databaseManager.getEntries()));
+  //   entries, crypto
+  //     Cryptography Cryptography();
 
   // Fetch data from the database (assuming you have appropriate methods in your DatabaseObject class)
   // This is a simplified example, replace it with your actual logic
