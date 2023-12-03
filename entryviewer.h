@@ -31,10 +31,11 @@ class EntryViewer : public QMainWindow {
   CryptographyStorage* userCredentials;
   BS::thread_pool* pool;
   DatabaseManager* data;
+  MainWindow* mainWindow;
   void clearAll();
 
   public:
-  void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);
+  void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, MainWindow* window);
   void setPasswordText(const QString& text);
   void setNameText(const QString& text);
   void setURLText(const QString& text);

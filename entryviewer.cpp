@@ -1,4 +1,5 @@
 #include "entryviewer.h"
+#include "mainwindow.h"
 
 DatabaseManager databaseManager;
 
@@ -31,6 +32,8 @@ void EntryViewer::on_pushButton_2_clicked() {
   };
 
   pool->push_task(saveTask, data, userCredentials);
+
+  mainWindow->refresh();
 
   /*const unsigned char exampleKey[] = {
       0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
@@ -75,10 +78,11 @@ void EntryViewer::on_Close_clicked() {
   hide();
 }
 
-void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database) {
+void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, MainWindow* window) {
   this->userCredentials = userCredentials;
   this->pool = pool;
   this->data = database;
+  this->mainWindow = window;
 };
 
 void EntryViewer::clearAll() {
