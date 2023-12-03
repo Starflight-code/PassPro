@@ -1,9 +1,4 @@
 #include "mainwindow.h"
-#include "Data_Storage/DatabaseManager.h"
-#include "Data_Storage/DatabaseManager.cpp"
-#include "ui_mainwindow.h"
-#include "Data_Storage/DatabaseObject.h" // Include the header for your DatabaseObject class
-#include "Cryptography/Cryptography.cpp"  // Include the header for your Cryptography class
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
@@ -12,64 +7,62 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   DatabaseManager databaseManager;
   std::vector<PasswordEntry> entries = databaseManager.getEntries();
   populateTableWidget(std::move(databaseManager.getEntries()));
-  //entries, crypto
-    //  Cryptography Cryptography();
+  // entries, crypto
+  //   Cryptography Cryptography();
 
-           // Fetch data from the database (assuming you have appropriate methods in your DatabaseObject class)
-           // This is a simplified example, replace it with your actual logic
-    // QList<PasswordEntry> entries = databaseManager.getEntries();
+  // Fetch data from the database (assuming you have appropriate methods in your DatabaseObject class)
+  // This is a simplified example, replace it with your actual logic
+  // QList<PasswordEntry> entries = databaseManager.getEntries();
 
-           // Populate the QTableWidget with decrypted data
-    // populateTableWidget(entries, crypto);
+  // Populate the QTableWidget with decrypted data
+  // populateTableWidget(entries, crypto);
+}
+
+MainWindow::~MainWindow() {
+  delete ui;
+}
+
+void MainWindow::on_pushButton_clicked() {
+  entry.show();
+}
+
+void MainWindow::on_tableWidget_cellClicked(int row, int column) {
+  entry.show();
+}
+
+// QStandardItemModel tableContent(2, 2);
+// for(int row = 0; row < tableContent.rowCount(); ++row) {
+//   for(int column = 0; column < tableContent.columnCount(); ++column) {
+//    QStandardItem* item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
+//     tableContent.setItem(row, column, item);
+//   }
+// }
+// ui->tableView->setModel(&tableContent);
+// ui->tableView->update();
+void MainWindow::populateTableWidget(const std::vector<PasswordEntry>& entries) {
+  // Clear existing table content
+  ui->tableWidget->clearContents();
+
+  // Set table headers
+  QStringList headers({"Name", "Username", "URL"});
+  ui->tableWidget->setHorizontalHeaderLabels(headers);
+
+  // Set number of rows and columns
+  ui->tableWidget->setRowCount(entries.size());
+  ui->tableWidget->setColumnCount(3);
+
+  // Populate each cell with corresponding data
+  for(int row = 0; row < entries.size(); ++row) {
+    const PasswordEntry& entry = entries.at(row);
+    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
+    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.username)));
+    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.url)));
   }
 
-
-  MainWindow::~MainWindow() {
-    delete ui;
-  }
-
-  void MainWindow::on_pushButton_clicked() {
-    entry.show();
-  }
-
-  void MainWindow::on_tableWidget_cellClicked(int row, int column)
-  {
-    entry.show();
-  }
-
- // QStandardItemModel tableContent(2, 2);
- // for(int row = 0; row < tableContent.rowCount(); ++row) {
- //   for(int column = 0; column < tableContent.columnCount(); ++column) {
-  //    QStandardItem* item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
- //     tableContent.setItem(row, column, item);
- //   }
- // }
- // ui->tableView->setModel(&tableContent);
-  // ui->tableView->update();
-  void MainWindow::populateTableWidget(const std::vector<PasswordEntry>& entries) {
-    // Clear existing table content
-    ui->tableWidget->clearContents();
-
-           // Set table headers
-    QStringList headers({"Name", "Username", "URL"});
-    ui->tableWidget->setHorizontalHeaderLabels(headers);
-
-           // Set number of rows and columns
-    ui->tableWidget->setRowCount(entries.size());
-    ui->tableWidget->setColumnCount(3);
-
-           // Populate each cell with corresponding data
-    for (int row = 0; row < entries.size(); ++row) {
-      const PasswordEntry& entry = entries.at(row);
-      ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
-      ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.username)));
-      ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.url)));
-    }
-
-           // Update and show the table
-    ui->tableWidget->resizeColumnsToContents();
-    ui->tableWidget->show();
-  }
+  // Update and show the table
+  ui->tableWidget->resizeColumnsToContents();
+  ui->tableWidget->show();
+}
 
 void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database) {
   this->userCredentials = userCredentials;
