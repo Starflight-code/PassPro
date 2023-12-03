@@ -76,6 +76,21 @@
     <property name="editTriggers">
      <set>QAbstractItemView::NoEditTriggers</set>
     </property>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>253</number>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
     <row>
      <property name="text">
       <string>Entry1</string>
@@ -105,8 +120,6 @@
    <zorder>tableWidget</zorder>
    <zorder>pushButton</zorder>
    <zorder>Logout</zorder>
-   <zorder>horizontalSpacer</zorder>
-   <zorder>horizontalSpacer_2</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
