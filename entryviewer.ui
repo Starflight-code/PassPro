@@ -173,7 +173,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TOTP</string>
+    <string>URL</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">

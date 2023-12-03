@@ -31,6 +31,8 @@ class MainWindow : public QMainWindow {
   CryptographyStorage* userCredentials;
   BS::thread_pool* pool;
   DatabaseManager* database;
+  private slots:
+  void on_tableWidget_cellClicked(int row, int column);
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);

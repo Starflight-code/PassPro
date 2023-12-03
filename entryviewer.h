@@ -29,6 +29,7 @@ class EntryViewer : public QMainWindow {
   CryptographyStorage* userCredentials;
   BS::thread_pool* pool;
   DatabaseManager* database;
+  void clearAll();
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);

@@ -43,20 +43,20 @@ void EntryViewer::on_pushButton_2_clicked() {
     unsigned char encryptedPassword[256];
     unsigned char encryptedUsername[256];
     unsigned char encryptedNotes[256];
-    unsigned char encryptedSearchableURL[256];
+    //unsigned char encryptedSearchableURL[256];
 
     Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.name.c_str()),
                                newEntry.name.length(), encryptedName);
-    Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.url.c_str()),
-                               newEntry.url.length(), encryptedUrl);
-    Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.password.c_str()),
-                               newEntry.password.length(), encryptedPassword);
-    Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.username.c_str()),
-                               newEntry.username.length(), encryptedUsername);
-    Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.notes.c_str()),
-                               newEntry.notes.length(), encryptedNotes);
-    Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.searchableURL.c_str()),
-                               newEntry.searchableURL.length(), encryptedSearchableURL);
+  //  Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.url.c_str()),
+   //                            newEntry.url.length(), encryptedUrl);
+  //  Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.password.c_str()),
+    //                           newEntry.password.length(), encryptedPassword);
+  //  Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.username.c_str()),
+   //                            newEntry.username.length(), encryptedUsername);
+  //  Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.notes.c_str()),
+    //                           newEntry.notes.length(), encryptedNotes);
+  //  Cryptography.encryptAES256(reinterpret_cast<const unsigned char*>(newEntry.searchableURL.c_str()),
+    //                           newEntry.searchableURL.length(), encryptedSearchableURL);
 
     // Update the DatabaseObject with the encrypted data
     databaseObject.addEntry(PasswordEntry(
@@ -84,15 +84,27 @@ void EntryViewer::on_pushButton_2_clicked() {
   // updateThread->start();
 
   // Close the current window
+  clearAll();
   close();
 }
 
 void EntryViewer::onDatabaseUpdateFinished() { update(); }
 
-void EntryViewer::on_Close_clicked() { close(); }
+void EntryViewer::on_Close_clicked() {
+  clearAll();
+  close(); }
 
 void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database) {
   this->userCredentials = userCredentials;
   this->pool = pool;
   this->database = database;
 };
+
+void EntryViewer::clearAll()
+{
+  ui->Password->setText("");
+  ui->Name->setText("");
+  ui->URL->setText("");
+  ui->Username->setText("");
+  ui->Notes->setText("");
+}
