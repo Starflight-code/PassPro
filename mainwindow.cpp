@@ -14,13 +14,13 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   // This is a simplified example, replace it with your actual logic
   PasswordEntry entry("password", "name", " url", "username", "notes");
   PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");
-  //database->addEntry(entry);
-  //database->addEntry(entry2);
-  //std::vector<PasswordEntry> entries;
-  entries.push_back(entry); //database->getEntries();
-  entries.push_back(entry2);
+  // database->addEntry(entry);
+  // database->addEntry(entry2);
+  // std::vector<PasswordEntry> entries;
+  database->entries.push_back(entry); // database->getEntries();
+  database->entries.push_back(entry2);
   // Populate the QTableWidget with decrypted data
-  populateTableWidget(entries);
+  populateTableWidget(database->entries);
 }
 
 MainWindow::~MainWindow() {
@@ -33,7 +33,7 @@ void MainWindow::on_pushButton_clicked() {
 }
 
 void MainWindow::on_tableWidget_cellClicked(int row, int column) {
-  //std::vector<PasswordEntry> entries = database->getEntries();
+  // std::vector<PasswordEntry> entries = database->getEntries();
   const PasswordEntry entryObject = entries.at(row);
   entry.setPasswordText(QString::fromStdString(entryObject.password));
   entry.setNameText(QString::fromStdString(entryObject.name));
