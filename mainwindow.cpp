@@ -32,12 +32,13 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_pushButton_clicked() {
   entry.show();
-  ui->tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
+  //ui->tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
 
   PasswordEntry entry("password", "name", " url", "username", "notes");
   // PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");
   database->addEntry(entry);
   // database->addEntry(entry2);
+
 }
 
 void MainWindow::on_tableWidget_cellClicked(int row, int column) {
@@ -91,4 +92,10 @@ void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::threa
   this->pool = pool;
   this->database = database;
   entry.tricklePointers(this->userCredentials, this->pool, this->database);
+  refresh();
 };
+
+void MainWindow::refresh()
+{
+ populateTableWidget(*database->getEntries());
+}

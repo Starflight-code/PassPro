@@ -44,5 +44,6 @@ class MainWindow : public QMainWindow {
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);
+  void refresh();
 };
 #endif // MAINWINDOW_H
