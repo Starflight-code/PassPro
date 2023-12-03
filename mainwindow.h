@@ -8,6 +8,7 @@
 #include "entryviewer.h"
 #include "include/BS_thread_pool.hpp"
 #include "ui_mainwindow.h"
+#include "Data_Structures/PasswordEntry.h" // only in for testing and development
 #include <QMainWindow>
 #include <QStandardItemModel>
 
@@ -35,6 +36,8 @@ class MainWindow : public QMainWindow {
   CryptographyStorage* userCredentials;
   BS::thread_pool* pool;
   DatabaseManager* database;
+  std::vector<PasswordEntry> entries;
+
   private slots:
   void on_tableWidget_cellClicked(int row, int column);
 

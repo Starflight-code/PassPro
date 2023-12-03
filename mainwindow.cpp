@@ -12,10 +12,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 
   // Fetch data from the database (assuming you have appropriate methods in your DatabaseObject class)
   // This is a simplified example, replace it with your actual logic
-  // QList<PasswordEntry> entries = databaseManager.getEntries();
-
+  PasswordEntry entry("password", "name", " url", "username", "notes");
+  PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");
+  //database->addEntry(entry);
+  //database->addEntry(entry2);
+  //std::vector<PasswordEntry> entries;
+  entries.push_back(entry); //database->getEntries();
+  entries.push_back(entry2);
   // Populate the QTableWidget with decrypted data
-  // populateTableWidget(entries, crypto);
+  populateTableWidget(entries);
 }
 
 MainWindow::~MainWindow() {
@@ -24,9 +29,17 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_pushButton_clicked() {
   entry.show();
+  ui->tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
 }
 
 void MainWindow::on_tableWidget_cellClicked(int row, int column) {
+  //std::vector<PasswordEntry> entries = database->getEntries();
+  const PasswordEntry entryObject = entries.at(row);
+  entry.setPasswordText(QString::fromStdString(entryObject.password));
+  entry.setNameText(QString::fromStdString(entryObject.name));
+  entry.setURLText(QString::fromStdString(entryObject.url));
+  entry.setUsernameText(QString::fromStdString(entryObject.username));
+  entry.setNotesText(QString::fromStdString(entryObject.notes));
   entry.show();
 }
 
@@ -54,14 +67,15 @@ void MainWindow::populateTableWidget(const std::vector<PasswordEntry>& entries) 
   // Populate each cell with corresponding data
   for(int row = 0; row < entries.size(); ++row) {
     const PasswordEntry& entry = entries.at(row);
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.username)));
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.url)));
+    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.name)));
+    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(entry.username)));
+    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(entry.url)));
   }
 
   // Update and show the table
   ui->tableWidget->resizeColumnsToContents();
   ui->tableWidget->show();
+  ui->tableWidget->update();
 }
 
 void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database) {

@@ -35,6 +35,11 @@ class EntryViewer : public QMainWindow {
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);
+  void setPasswordText(const QString& text);
+  void setNameText(const QString& text);
+  void setURLText(const QString& text);
+  void setUsernameText(const QString& text);
+  void setNotesText(const QString& text);
 };
 
 #endif // ENTRYVIEWER_H

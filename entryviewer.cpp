@@ -88,3 +88,27 @@ void EntryViewer::clearAll() {
   ui->Username->setText("");
   ui->Notes->setText("");
 }
+void EntryViewer::setPasswordText(const QString& text)
+{
+  ui->Password->setText(text);
+}
+
+void EntryViewer::setNameText(const QString& text)
+{
+  ui->Name->setText(text);
+}
+
+void EntryViewer::setURLText(const QString& text)
+{
+  ui->URL->setText(text);
+}
+
+void EntryViewer::setUsernameText(const QString& text)
+{
+  ui->Username->setText(text);
+}
+
+void EntryViewer::setNotesText(const QString& text)
+{
+  ui->Notes->setText(text);
+}
