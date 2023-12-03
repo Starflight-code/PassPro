@@ -3,10 +3,14 @@
 
 // #include "include/CryptoPP/secblock.h"
 #include "Cryptography/CryptographyStorage.h"
-#include "Data Storage/DatabaseManager.h"
+#include "Data_Storage/DatabaseManager.h"
+#include "Data_Structures/SecureString.cpp"
 #include "include/BS_thread_pool.hpp"
 #include "mainwindow.h"
+#include "ui_loginwindow.h"
 #include <QMainWindow>
+#include <iostream>
+#include <string>
 
 namespace Ui {
   class LoginWindow;

@@ -1,10 +1,4 @@
 #include "entryviewer.h"
-#include "ui_entryviewer.h"
-
-#include "Cryptography/Cryptography.cpp"
-#include "Data_Storage/DatabaseManager.h"
-#include "Data_Storage/DatabaseObject.h"
-#include "Data_Structures/PasswordEntry.h"
 
 DatabaseManager databaseManager;
 
@@ -25,14 +19,20 @@ EntryViewer::EntryViewer(QWidget* parent)
 
 EntryViewer::~EntryViewer() { delete ui; }
 
-DatabaseObject databaseObject;
 void EntryViewer::on_pushButton_2_clicked() {
 
-  PasswordEntry newEntry(
+  data->addEntry(PasswordEntry(
       ui->Password->text().toStdString(), ui->Name->text().toStdString(),
       ui->URL->text().toStdString(), ui->Username->text().toStdString(),
-      ui->Notes->text().toStdString());
-  const unsigned char exampleKey[] = {
+      ui->Notes->text().toStdString()));
+
+  auto saveTask = [](DatabaseManager* data, CryptographyStorage* credentials) {
+    data->writeDB(credentials);
+  };
+
+  pool->push_task(saveTask, data, userCredentials);
+
+  /*const unsigned char exampleKey[] = {
       0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
       0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10};
   Cryptography Cryptography(exampleKey);
@@ -81,27 +81,27 @@ void EntryViewer::on_pushButton_2_clicked() {
   // connect(updateThread, &QThread::finished, this, &EntryViewer::onDatabaseUpdateFinished);
 
   // Start the thread
-  // updateThread->start();
+  // updateThread->start();*/
 
   // Close the current window
   clearAll();
-  close();
+  hide();
 }
 
 void EntryViewer::onDatabaseUpdateFinished() { update(); }
 
 void EntryViewer::on_Close_clicked() {
   clearAll();
-  close(); }
+  hide();
+}
 
 void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database) {
   this->userCredentials = userCredentials;
   this->pool = pool;
-  this->database = database;
+  this->data = database;
 };
 
-void EntryViewer::clearAll()
-{
+void EntryViewer::clearAll() {
   ui->Password->setText("");
   ui->Name->setText("");
   ui->URL->setText("");

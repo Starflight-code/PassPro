@@ -1,12 +1,4 @@
 #include "loginwindow.h"
-// #include "include/CryptoPP/secblock.h"
-#include "Data_Structures/SecureString.cpp"
-#include "ui_loginwindow.h"
-#include <iostream>
-#include <string>
-
-// using secure_string = std::basic_string<char, std::char_traits<char>,
-//                                         CryptoPP::AllocatorWithCleanup<char>>;
 
 LoginWindow::LoginWindow(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::LoginWindow) {

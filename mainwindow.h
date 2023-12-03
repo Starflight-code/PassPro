@@ -1,10 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Cryptography/Cryptography.cpp" // Include the header for your Cryptography class
 #include "Cryptography/CryptographyStorage.h"
-#include "Data Storage/DatabaseManager.h"
+#include "Data_Storage/DatabaseManager.h"
+#include "Data_Storage/DatabaseObject.h" // Include the header for your DatabaseObject class
 #include "entryviewer.h"
 #include "include/BS_thread_pool.hpp"
+#include "ui_mainwindow.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
 

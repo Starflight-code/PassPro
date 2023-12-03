@@ -27,6 +27,10 @@ std::vector<PasswordEntry> DatabaseManager::getEntries() {
   return entries;
 }
 
+void DatabaseManager::addEntry(PasswordEntry entry) {
+  entries.push_back(entry);
+}
+
 std::vector<PasswordEntry> DatabaseManager::desanitizeJSON(nlohmann::json jsonObject) {
   std::vector<PasswordEntry> entries;
   for(int i = 0; i < jsonObject["names"].size(); i++) {
@@ -40,7 +44,7 @@ std::vector<PasswordEntry> DatabaseManager::desanitizeJSON(nlohmann::json jsonOb
   return entries;
 }
 
-void DatabaseManager::writeDB() {
+void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   nlohmann::json jsonData = sanitizeJSON();
   // std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
   // std::cout << nlohmann::json::string_t(j);
