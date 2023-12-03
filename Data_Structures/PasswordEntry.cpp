@@ -26,6 +26,27 @@ PasswordEntry::PasswordEntry(std::string password, std::string name, std::string
   this->searchableURL = url;
 }
 
+PasswordEntry::PasswordEntry(const PasswordEntry& otherEntry) {
+  this->password = otherEntry.password;
+  this->username = otherEntry.username;
+  this->name = otherEntry.name;
+  this->notes = otherEntry.notes;
+  this->url = otherEntry.url;
+  this->searchableURL = otherEntry.searchableURL;
+}
+
+PasswordEntry::PasswordEntry() {
+  this->password = "";
+  this->username = "";
+  this->name = "";
+  this->notes = "";
+  this->url = "";
+  this->searchableURL = "";
+}
+
+PasswordEntry::~PasswordEntry() {
+}
+
 bool PasswordEntry::operator==(PasswordEntry otherEntry) {
   bool out = out ? this->name == otherEntry.name : false;
   out = out ? this->username == otherEntry.username : false;
@@ -42,10 +63,10 @@ bool PasswordEntry::equals(PasswordEntry otherEntry) {
   return out;
 }
 
-//bool PasswordEntry::equals(const PasswordEntry otherEntry) {
-//  bool out = out ? this->name == otherEntry.name : false;
-//  out = out ? this->username == otherEntry.username : false;
-//  out = out ? this->password == otherEntry.password : false;
-//  out = out ? this->url == otherEntry.url : false;
-//  return out;
-//}
+// bool PasswordEntry::equals(const PasswordEntry otherEntry) {
+//   bool out = out ? this->name == otherEntry.name : false;
+//   out = out ? this->username == otherEntry.username : false;
+//   out = out ? this->password == otherEntry.password : false;
+//   out = out ? this->url == otherEntry.url : false;
+//   return out;
+// }

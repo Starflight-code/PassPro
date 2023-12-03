@@ -1,7 +1,11 @@
 #include "mainwindow.h"
+#include <chrono>
+#include <thread>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+
+  DatabaseManager noPointer;
 
   // ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
   // DatabaseManager databaseManager;
@@ -12,15 +16,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 
   // Fetch data from the database (assuming you have appropriate methods in your DatabaseObject class)
   // This is a simplified example, replace it with your actual logic
-  PasswordEntry entry("password", "name", " url", "username", "notes");
-  PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");
   // database->addEntry(entry);
   // database->addEntry(entry2);
   // std::vector<PasswordEntry> entries;
-  database->entries.push_back(entry); // database->getEntries();
-  database->entries.push_back(entry2);
-  // Populate the QTableWidget with decrypted data
-  populateTableWidget(database->entries);
+  // database->entries.push_back(entry); // database->getEntries();
+  // database->entries.push_back(entry2);
+  // database->addEntry(&entry2);
+  //  Populate the QTableWidget with decrypted data
+  //  populateTableWidget(database->entries);
 }
 
 MainWindow::~MainWindow() {
@@ -30,6 +33,11 @@ MainWindow::~MainWindow() {
 void MainWindow::on_pushButton_clicked() {
   entry.show();
   ui->tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
+
+  // PasswordEntry entry("password", "name", " url", "username", "notes");
+  // PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");
+  // database->addEntry(entry);
+  // database->addEntry(entry2);
 }
 
 void MainWindow::on_tableWidget_cellClicked(int row, int column) {

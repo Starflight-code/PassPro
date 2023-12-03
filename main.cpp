@@ -13,11 +13,16 @@ int main(int argc, char* argv[]) {
     testSuite.runAllTests();
     return 0;
   }*/
+  DatabaseObject dbo;
+  PasswordEntry entry("password", "name", " url", "username", "notes");
+  PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");
+  // dbo.addEntry(entry);
+  // dbo.addEntry(entry2);
   BS::thread_pool pool(3); // Pool has 3 threads, increase if required
-  auto func = [&pool]() {
+  auto func = []() {
     int y = 1;
   };
-  pool.push_task(func);
+  // pool.push_task(func);
   DatabaseManager data;
   // data.writeDB(); // uncomment for JSON DB sanitization/desanitization
   // testing

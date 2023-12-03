@@ -92,4 +92,4 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(PassPro)
 endif()
 
-set (CMAKE_STATIC_LINKER_FLAGS "-lcrypto -lssl")
+set (CMAKE_STATIC_LINKER_FLAGS "-lcrypto -lssl -fstack-protector")

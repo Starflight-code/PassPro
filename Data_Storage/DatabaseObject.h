@@ -2,6 +2,7 @@
 #define DATABASEOBJECT_H
 
 #include "../Data_Structures/PasswordEntry.h"
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -29,5 +30,16 @@ class DatabaseObject {
    * @param entry: a PasswordEntry instance
    */
   void addEntry(PasswordEntry entry);
+
+  void addEntry(PasswordEntry* entry);
+
+  void addEntry(std::shared_ptr<PasswordEntry> entry);
+
+  /**
+   * @brief fetches an entry by index
+   * @param index: an integer to fetch a PasswordEntry from
+   * @return PasswordEntry object containing the data from the index specified
+   */
+  PasswordEntry fetchEntry(int index);
 };
 #endif

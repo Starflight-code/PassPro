@@ -16,7 +16,7 @@ namespace DataProcessing {
  * @internal std::string notes: A long string containg arbitrary text
  * @internal std::string searchableURL: A string containg a url, without the "www."
  */
-struct PasswordEntry {
+class PasswordEntry {
   private:
   /**
    * @brief Removes the prepend string from the beginning, if it is the first part of the string
@@ -52,8 +52,13 @@ struct PasswordEntry {
   PasswordEntry(std::string password, std::string name, std::string url,
                 std::string username, std::string notes);
 
+  PasswordEntry(const PasswordEntry& otherEntry);
+
+  PasswordEntry();
+  ~PasswordEntry();
+
   bool operator==(PasswordEntry otherEntry);
-  //bool equals(PasswordEntry otherEntry);
+  // bool equals(PasswordEntry otherEntry);
   bool equals(const PasswordEntry otherEntry);
   bool equals(PasswordEntry* otherEntry);
 };

@@ -21,7 +21,7 @@ EntryViewer::~EntryViewer() { delete ui; }
 
 void EntryViewer::on_pushButton_2_clicked() {
 
-  data->entries.push_back(PasswordEntry(
+  data->addEntry(PasswordEntry(
       ui->Password->text().toStdString(), ui->Name->text().toStdString(),
       ui->URL->text().toStdString(), ui->Username->text().toStdString(),
       ui->Notes->text().toStdString()));
@@ -88,27 +88,22 @@ void EntryViewer::clearAll() {
   ui->Username->setText("");
   ui->Notes->setText("");
 }
-void EntryViewer::setPasswordText(const QString& text)
-{
+void EntryViewer::setPasswordText(const QString& text) {
   ui->Password->setText(text);
 }
 
-void EntryViewer::setNameText(const QString& text)
-{
+void EntryViewer::setNameText(const QString& text) {
   ui->Name->setText(text);
 }
 
-void EntryViewer::setURLText(const QString& text)
-{
+void EntryViewer::setURLText(const QString& text) {
   ui->URL->setText(text);
 }
 
-void EntryViewer::setUsernameText(const QString& text)
-{
+void EntryViewer::setUsernameText(const QString& text) {
   ui->Username->setText(text);
 }
 
-void EntryViewer::setNotesText(const QString& text)
-{
+void EntryViewer::setNotesText(const QString& text) {
   ui->Notes->setText(text);
 }
