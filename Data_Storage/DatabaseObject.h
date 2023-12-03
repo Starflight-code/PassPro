@@ -33,8 +33,6 @@ class DatabaseObject {
 
   void addEntry(PasswordEntry* entry);
 
-  void addEntry(std::shared_ptr<PasswordEntry> entry);
-
   /**
    * @brief fetches an entry by index
    * @param index: an integer to fetch a PasswordEntry from

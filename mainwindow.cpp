@@ -34,9 +34,9 @@ void MainWindow::on_pushButton_clicked() {
   entry.show();
   ui->tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
 
-  // PasswordEntry entry("password", "name", " url", "username", "notes");
+  PasswordEntry entry("password", "name", " url", "username", "notes");
   // PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");
-  // database->addEntry(entry);
+  database->addEntry(entry);
   // database->addEntry(entry2);
 }
 

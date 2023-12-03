@@ -2,10 +2,6 @@
 #define DATABASEMANAGER_CPP
 
 #include "DatabaseManager.h"
-#include <memory>
-
-DatabaseManager::DatabaseManager() {
-}
 
 nlohmann::json DatabaseManager::sanitizeJSON() {
   DatabaseObject db;
@@ -30,17 +26,12 @@ nlohmann::json DatabaseManager::sanitizeJSON() {
   return j;
 }
 
-std::vector<PasswordEntry*> DatabaseManager::getEntries() {
-  // return entries;
-  return std::vector<PasswordEntry*>();
+std::vector<PasswordEntry>* DatabaseManager::getEntries() {
+  return &entries;
 }
 
 void DatabaseManager::addEntry(PasswordEntry entry) {
-  dbo.addEntry(&entry);
-}
-
-void DatabaseManager::addEntry(std::shared_ptr<PasswordEntry> entry) {
-  dbo.addEntry(entry);
+  entries.push_back(entry);
 }
 
 std::vector<PasswordEntry> DatabaseManager::desanitizeJSON(nlohmann::json jsonObject) {

@@ -6,8 +6,6 @@
 #include "../include/json.hpp"
 #include "DatabaseObject.h"
 #include <iostream>
-#include <list>
-#include <memory>
 #include <vector>
 
 namespace DataProcessing {
@@ -16,17 +14,17 @@ namespace DataProcessing {
 
 class DatabaseManager {
   public:
-  inline DatabaseManager();
-
   /**
    * @brief addEntry: Adds an entry to the list of contained password entries
-   * @param entry to add to entries std::vector<PasswordEntries>
+   * @param entry to append to std::vector<PasswordEntry>
    */
   inline void addEntry(PasswordEntry entry);
 
+  /**
+   * @brief addEntry: Adds an entry to the list of contained password entries
+   * @param entry to append to std::vector<PasswordEntry> (dereferenced before append)
+   */
   inline void addEntry(PasswordEntry* entry);
-
-  inline void addEntry(std::shared_ptr<PasswordEntry> entry);
 
   /**
    * @brief writeDB: Sanitizes current DB state, converts
@@ -39,10 +37,11 @@ class DatabaseManager {
    * @brief getEntries: Returns a list of contained password entries
    * @return std::vector<PasswordEntry> of contained entries
    */
-  inline std::vector<PasswordEntry*> getEntries();
+  inline std::vector<PasswordEntry>* getEntries();
 
   private:
-  DatabaseObject dbo;
+  /// @brief Vector containing current database of PasswordEntry objects
+  std::vector<PasswordEntry> entries;
 
   /**
    * @brief desanitizeJSON: Generates a vector of PasswordEntry information from JSON data

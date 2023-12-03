@@ -44,9 +44,6 @@ PasswordEntry::PasswordEntry() {
   this->searchableURL = "";
 }
 
-PasswordEntry::~PasswordEntry() {
-}
-
 bool PasswordEntry::operator==(PasswordEntry otherEntry) {
   bool out = out ? this->name == otherEntry.name : false;
   out = out ? this->username == otherEntry.username : false;
