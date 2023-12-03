@@ -2,6 +2,7 @@
 #define DATABASEMANAGER_H
 
 #include "../Cryptography/CryptographyStorage.h"
+#include "../Cryptography/Cryptography.cpp"
 #include "../Data_Structures/PasswordEntry.h"
 #include "../include/json.hpp"
 #include "DatabaseObject.h"
@@ -38,10 +39,9 @@ class DatabaseManager {
    * @return std::vector<PasswordEntry> of contained entries
    */
   inline std::vector<PasswordEntry>* getEntries();
-
-  private:
   /// @brief Vector containing current database of PasswordEntry objects
   std::vector<PasswordEntry> entries;
+
 
   /**
    * @brief desanitizeJSON: Generates a vector of PasswordEntry information from JSON data

@@ -52,6 +52,10 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   // std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
   // std::cout << nlohmann::json::string_t(j);
   // std::cout << j;
+  unsigned char key[16] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+                           0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10};
+  Cryptography Cryptography(key);
+  Cryptography.encryptAES256(jsonData, jsonData.size());
   std::vector<PasswordEntry> entries = desanitizeJSON(jsonData);
   for(int i = 0; i < entries.size(); i++) {
     std::cout << "\n";
