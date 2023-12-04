@@ -49,13 +49,25 @@ std::vector<PasswordEntry> DatabaseManager::desanitizeJSON(nlohmann::json jsonOb
 
 void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   nlohmann::json jsonData = sanitizeJSON();
-  // std::cout << "JSON Data Stored (DEVELOPMENT ONLY / DO NOT LEAVE THIS IN PRODUCTION)";
-  // std::cout << nlohmann::json::string_t(j);
-  // std::cout << j;
-  unsigned char key[16] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                           0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10};
+
+  unsigned char key[credentials->key.length()];
+  //DataProcessing::secureString
+  for(int i=0; i < credentials->key.length(); i++)
+  {
+    key[i] = credentials->key[i];
+  }
   Cryptography Cryptography(key);
-  Cryptography.encryptAES256(jsonData, jsonData.size());
+
+  std::string notEncryptedJson = jsonData.dump();
+
+  unsigned char* plaintext = (unsigned char*)notEncryptedJson.c_str();
+  int plaintextLength = notEncryptedJson.length();
+
+  std::string encryptedJsonData = "";
+  unsigned char* ciphertext = (unsigned char*)encryptedJsonData.c_str();
+
+  Cryptography.encryptAES256(plaintext, plaintextLength, ciphertext);
+
   std::vector<PasswordEntry> entries = desanitizeJSON(jsonData);
   for(int i = 0; i < entries.size(); i++) {
     std::cout << "\n";

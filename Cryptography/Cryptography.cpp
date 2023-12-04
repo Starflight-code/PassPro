@@ -23,7 +23,7 @@ class Cryptography {
    * @param ciphertext character pointer of the encrypted character
    */
   void encryptAES256(const unsigned char* plaintext, int plaintextLength,
-                     unsigned char* ciphertext)
+                    unsigned char* ciphertext)
 
   {
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
