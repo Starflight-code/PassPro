@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="Logo.qrc">
+    <normaloff>:/new/branding/PassPro Logo.png</normaloff>:/new/branding/PassPro Logo.png</iconset>
+  </property>
   <widget class="QPushButton" name="Close">
    <property name="geometry">
     <rect>
@@ -213,6 +217,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Logo.qrc"/>
+ </resources>
  <connections/>
 </ui>

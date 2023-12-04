@@ -14,7 +14,10 @@
    <string>PassPro</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="dialog-password"/>
+   <iconset resource="Logo.qrc">
+    <normaloff>:/new/branding/PassPro Logo.png</normaloff>
+    <normalon>:/new/branding/PassPro Logo.png</normalon>
+    <disabledoff>:/new/branding/PassPro Logo.png</disabledoff>:/new/branding/PassPro Logo.png</iconset>
   </property>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
@@ -90,6 +93,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Logo.qrc"/>
+ </resources>
  <connections/>
 </ui>

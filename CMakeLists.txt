@@ -40,6 +40,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Cryptography/CryptographyStorage.h
         Cryptography/Cryptography.cpp
         Cryptography/CryptographyStorage.cpp
+        Logo.qrc
     )
 else()
     if(ANDROID)

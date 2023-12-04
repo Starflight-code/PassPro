@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/branding">
+        <file>PassPro Logo.png</file>
+    </qresource>
+</RCC>
