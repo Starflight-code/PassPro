@@ -87,9 +87,7 @@ void EntryViewer::setNotesText(const QString& text) {
   ui->Notes->setText(text);
 }
 
-void EntryViewer::on_ApplyAndClose_clicked()
-{
-
+void EntryViewer::on_ApplyAndClose_clicked() {
 
   if(updateCell == -1) {
 
@@ -116,14 +114,12 @@ void EntryViewer::on_ApplyAndClose_clicked()
   hide();
 }
 
-
-void EntryViewer::on_Delete_clicked()
-{
-  if (updateCell == -1) {
+void EntryViewer::on_Delete_clicked() {
+  hide();
+  if(updateCell == -1) {
     return;
   } else {
     entries->erase(entries->begin() + updateCell);
     refreshTable();
   }
 }
-

@@ -13,7 +13,7 @@ void LoginWindow::submit() {
   //  TODO: Add database unlocking code
   DataProcessing::secureString password(ui->lineEdit_2->text().toStdString());
 
-  CryptographyStorage cryptoStorage(username, password);
+  cryptoStorage = CryptographyStorage(username, password);
   this->hide();
   // window.tricklePointers
   window.tricklePointers(&cryptoStorage, pool, database);

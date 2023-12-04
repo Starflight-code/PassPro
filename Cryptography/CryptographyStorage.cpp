@@ -4,3 +4,5 @@ CryptographyStorage::CryptographyStorage(std::string user, DataProcessing::secur
   this->user = user;
   this->key = password;
 }
+
+CryptographyStorage::CryptographyStorage() {}

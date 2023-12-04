@@ -40,6 +40,7 @@ class LoginWindow : public QMainWindow {
   MainWindow window;
   BS::thread_pool* pool;
   DatabaseManager* database;
+  CryptographyStorage cryptoStorage;
 
   public:
   void tricklePointers(BS::thread_pool* pool, DatabaseManager* database);

@@ -14,6 +14,11 @@ class CryptographyStorage {
    * @param password a key, used as the database's cryptography key
    */
   CryptographyStorage(std::string user, DataProcessing::secureString password);
+
+  /**
+   * @brief Stores a username and password for database saving/loading and cryptography
+   */
+  CryptographyStorage();
 };
 
 #endif
