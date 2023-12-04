@@ -49,7 +49,6 @@ std::vector<PasswordEntry> DatabaseManager::desanitizeJSON(nlohmann::json jsonOb
 
 void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   nlohmann::json jsonData = sanitizeJSON();
-
   unsigned char key[credentials->key.length()];
   //DataProcessing::secureString
   for(int i=0; i < credentials->key.length(); i++)
@@ -65,11 +64,51 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
 
   std::string encryptedJsonData = "";
   unsigned char* ciphertext = (unsigned char*)encryptedJsonData.c_str();
+  std::vector<unsigned char> ciphertextData(plaintextLength);
+  Cryptography.encryptAES256(plaintext, plaintextLength, ciphertextData.data());
 
-  Cryptography.encryptAES256(plaintext, plaintextLength, ciphertext);
 
-  std::vector<PasswordEntry> entries = desanitizeJSON(jsonData);
-  for(int i = 0; i < entries.size(); i++) {
+  int cipherLen = plaintextLength + 16 - (plaintextLength % 16);
+  try{
+  std::ofstream outfile(credentials->user + ".db", std::ios::binary);
+  outfile.write((char*)ciphertextData.data(), cipherLen);
+  outfile.close();
+  }catch (const std::exception& e)
+  {
+std::ofstream outfile(credentials->user + ".db", std::ios::binary | std::ios::trunc);
+    outfile.write((char*)ciphertextData.data(), cipherLen);
+    outfile.close();
+  }
+
+  readDB(credentials, plaintextLength);
+}
+void DatabaseManager::readDB(CryptographyStorage* credentials, int plaintextlength) {
+  std::ifstream infile(credentials->user + ".db", std::ios::binary);
+  infile.seekg(0, std::ios::end);
+  int ciphertextLength = infile.tellg();
+  infile.seekg(0, std::ios::beg);
+
+  std::vector<unsigned char> ciphertextData(ciphertextLength);
+  infile.read((char*)ciphertextData.data(), ciphertextLength);
+  infile.close();
+
+         // Decrypt the JSON data
+  unsigned char key[credentials->key.length()];
+  for (int i = 0; i < credentials->key.length(); i++) {
+    key[i] = credentials->key[i];
+  }
+  Cryptography Cryptography(key);
+
+  unsigned char* plaintextData = (unsigned char*)malloc(ciphertextLength);
+  Cryptography.decryptAES256(ciphertextData.data(), plaintextlength, plaintextData);
+
+         // Deserialize the JSON data
+  //std::string notEncryptedJson((char*)plaintextData.data(), ciphertextLength);
+  //nlohmann::json jsonData = nlohmann::json::parse(notEncryptedJson);
+
+         // Process the JSON data
+  //std::vector<PasswordEntry> entries = desanitizeJSON(jsonData);
+  for (int i = 0; i < entries.size(); i++) {
     std::cout << "\n";
     std::cout << entries[i].name + " ";
     std::cout << entries[i].password + " ";
@@ -78,5 +117,13 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
     std::cout << entries[i].username + " ";
   }
   std::cout << "\n";
+
+
+
+ // for (int j=0; j < cipherLen; j++)
+ // {
+ //   if()
+ //     }
+ // delete[] plaintextData;
 }
 #endif

@@ -8,6 +8,7 @@
 #include "DatabaseObject.h"
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 namespace DataProcessing {
   class DatabaseManager;
@@ -55,5 +56,7 @@ class DatabaseManager {
    * @return nlohmann::json object containing all data from entries vector
    */
   inline nlohmann::json sanitizeJSON();
+
+  inline void readDB(CryptographyStorage* credentials, int plaintextlength);
 };
 #endif // DATABASEMANAGER_H
