@@ -57,6 +57,6 @@ class DatabaseManager {
    */
   inline nlohmann::json sanitizeJSON();
 
-  inline void readDB(CryptographyStorage* credentials, int plaintextlength);
+  inline void readDB(CryptographyStorage* credentials);
 };
 #endif // DATABASEMANAGER_H
