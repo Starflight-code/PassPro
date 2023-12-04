@@ -20,7 +20,7 @@
    <string>Dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="Logo.qrc">
+   <iconset>
     <normaloff>:/new/branding/PassPro Logo.png</normaloff>:/new/branding/PassPro Logo.png</iconset>
   </property>
   <widget class="QPushButton" name="Close">
@@ -62,13 +62,13 @@
     <string/>
    </property>
    <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
    <property name="dragEnabled">
     <bool>false</bool>
    </property>
    <property name="placeholderText">
-    <string>Entry Name</string>
+    <string>(Entry Name)</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -110,10 +110,10 @@
     <string/>
    </property>
    <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
    <property name="placeholderText">
-    <string>Username</string>
+    <string>(Username)</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="Password">
@@ -129,10 +129,10 @@
     <string/>
    </property>
    <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
    <property name="placeholderText">
-    <string>Password</string>
+    <string>(Password)</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -161,10 +161,10 @@
     <string/>
    </property>
    <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
    <property name="placeholderText">
-    <string>URL</string>
+    <string>(URL)</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -202,6 +202,15 @@
      <height>121</height>
     </rect>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="placeholderText">
+    <string>(Notes)</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="Delete">
    <property name="geometry">
@@ -217,8 +226,6 @@
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="Logo.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
