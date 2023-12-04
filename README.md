@@ -12,9 +12,10 @@ we do not have any developers on these platforms to verify PassPro functionality
 ## Requrements
 - CMAKE 3.5 or above
 - GCC or MinGw supporting QT 5.15.11
-- OpenSSL libraries
+- OpenSSL
 - QT 5.15.11
 - GNU Make
+- QT Creator (QT Creator build only)
 - VSCode (VSCode build only)
 - VSCode C++ Build Extensions (VSCode build only)
 
