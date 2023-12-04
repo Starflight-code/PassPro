@@ -2,6 +2,7 @@
 #define CRYPTOGRAPHY_CPP
 
 // #include "CryptographyStorage.h"
+#include <memory>
 #include <openssl/aes.h>
 #include <openssl/evp.h>
 #include <stdexcept>
@@ -16,12 +17,15 @@ class Cryptography {
     EVP_cleanup();
   }
 
+  private:
+  const unsigned char* key_;
   /**
    * @brief Encrypts the File using openssl
    * @param plaintext character pointer that is to be encrypted
    * @param plaintextLength int length of the message
    * @param ciphertext character pointer of the encrypted character
    */
+  public:
   void encryptAES256(const unsigned char* plaintext, int plaintextLength,
                     unsigned char* ciphertext)
 
@@ -64,15 +68,17 @@ class Cryptography {
    * @param plaintext character pointer that is to be decrypted
    */
   void decryptAES256(const unsigned char* ciphertext, int ciphertextLength,
-                     unsigned char* plaintext) {
+                                   unsigned char* plaintext) {
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
 
-    if(ctx == nullptr) {
+    if (ctx == nullptr) {
       throw std::runtime_error("Failed to create decryption context");
     }
 
-    if(EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) !=
-       1) {
+           // Use std::unique_ptr to manage memory for plaintextData
+    std::unique_ptr<unsigned char[]> plaintextData(new unsigned char[ciphertextLength]);
+
+    if (EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) != 1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to initialize decryption context");
     }
@@ -80,23 +86,25 @@ class Cryptography {
     int len;
     int plaintextLength;
 
-    if(EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertextLength) !=
-       1) {
+    if (EVP_DecryptUpdate(ctx, plaintextData.get(), &len, ciphertext, ciphertextLength) != 1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to decrypt data");
     }
     plaintextLength = len;
 
-    if(EVP_DecryptFinal_ex(ctx, plaintext + len, &len) != 1) {
+    if (EVP_DecryptFinal_ex(ctx, plaintextData.get() + len, &len) != 1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to finalize decryption");
     }
     plaintextLength += len;
 
+           // Copy the decrypted data to the provided plaintext buffer
+    std::copy(plaintextData.get(), plaintextData.get() + plaintextLength, plaintext);
+
     EVP_CIPHER_CTX_free(ctx);
+
+
   }
 
-  private:
-  const unsigned char* key_;
-};
+  };
 #endif
