@@ -14,11 +14,18 @@ class Cryptography {
     OpenSSL_add_all_algorithms();
   }
 
+  Cryptography(DataProcessing::secureString key) {
+    OpenSSL_add_all_algorithms();
+    keyString = key;
+    key_ = (const unsigned char*)keyString.c_str();
+  }
+
   ~Cryptography() {
     EVP_cleanup();
   }
 
   private:
+  DataProcessing::secureString keyString;
   const unsigned char* key_;
   /**
    * @brief Encrypts the File using openssl
