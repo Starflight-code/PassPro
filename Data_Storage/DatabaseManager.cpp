@@ -99,7 +99,7 @@ void DatabaseManager::readDB(CryptographyStorage* credentials, int plaintextleng
   }
   Cryptography Cryptography(key);
 
-  unsigned char* plaintextData = (unsigned char*)malloc(ciphertextLength);
+  unsigned char* plaintextData = (unsigned char*)malloc(plaintextlength);
   Cryptography.decryptAES256(ciphertextData.data(), plaintextlength, plaintextData);
 
          // Deserialize the JSON data
