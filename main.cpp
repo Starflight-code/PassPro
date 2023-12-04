@@ -26,6 +26,10 @@ int main(int argc, char* argv[]) {
   DatabaseManager data;
   // data.writeDB(); // uncomment for JSON DB sanitization/desanitization
   // testing
+
+  // Cryptography crypto((unsigned char*)DataProcessing::secureString("key").c_str());
+  // DataProcessing::secureString output = crypto.encrypt(DataProcessing::secureString("This is the input data for an AES-256 Cypher!"));
+  // output = crypto.decrypt(output);
   QApplication a(argc, argv);
   // MainWindow w;
   LoginWindow login;

@@ -2,6 +2,7 @@
 #define CRYPTOGRAPHY_CPP
 
 // #include "CryptographyStorage.h"
+#include "../Data_Structures/SecureString.cpp"
 #include <memory>
 #include <openssl/aes.h>
 #include <openssl/evp.h>
@@ -27,7 +28,7 @@ class Cryptography {
    */
   public:
   void encryptAES256(const unsigned char* plaintext, int plaintextLength,
-                    unsigned char* ciphertext)
+                     unsigned char* ciphertext)
 
   {
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
@@ -68,17 +69,17 @@ class Cryptography {
    * @param plaintext character pointer that is to be decrypted
    */
   void decryptAES256(const unsigned char* ciphertext, int ciphertextLength,
-                                   unsigned char* plaintext) {
+                     unsigned char* plaintext) {
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
 
-    if (ctx == nullptr) {
+    if(ctx == nullptr) {
       throw std::runtime_error("Failed to create decryption context");
     }
 
-           // Use std::unique_ptr to manage memory for plaintextData
+    // Use std::unique_ptr to manage memory for plaintextData
     std::unique_ptr<unsigned char[]> plaintextData(new unsigned char[ciphertextLength]);
 
-    if (EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) != 1) {
+    if(EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) != 1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to initialize decryption context");
     }
@@ -86,25 +87,63 @@ class Cryptography {
     int len;
     int plaintextLength;
 
-    if (EVP_DecryptUpdate(ctx, plaintextData.get(), &len, ciphertext, ciphertextLength) != 1) {
+    if(EVP_DecryptUpdate(ctx, plaintextData.get(), &len, ciphertext, ciphertextLength) != 1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to decrypt data");
     }
     plaintextLength = len;
 
-    if (EVP_DecryptFinal_ex(ctx, plaintextData.get() + len, &len) != 1) {
+    if(EVP_DecryptFinal_ex(ctx, plaintextData.get() + len, &len) != 1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to finalize decryption");
     }
     plaintextLength += len;
 
-           // Copy the decrypted data to the provided plaintext buffer
+    // Copy the decrypted data to the provided plaintext buffer
     std::copy(plaintextData.get(), plaintextData.get() + plaintextLength, plaintext);
 
     EVP_CIPHER_CTX_free(ctx);
-
-
   }
 
-  };
+  DataProcessing::secureString encrypt(DataProcessing::secureString string) {
+    int length = string.length();
+    int outputLength = length + 16 - (length % 16);
+    unsigned char* stringToEncrypt = (unsigned char*)string.c_str();
+    unsigned char* outputString = (unsigned char*)malloc(outputLength);
+
+    encryptAES256(stringToEncrypt, length, outputString);
+
+    return DataProcessing::secureString((const char*)outputString, outputLength);
+    /*char tempString[outputLength + 1];
+    memcpy(tempString, outputString, outputLength);
+    tempString[outputLength - 1] = '\0';*/
+
+    // return DataProcessing::secureString(tempString);
+  }
+
+  DataProcessing::secureString decrypt(DataProcessing::secureString string) {
+    int length = string.length();
+    unsigned char* stringToDecrypt = (unsigned char*)string.c_str();
+    unsigned char* outputString = (unsigned char*)malloc(length);
+
+    decryptAES256(stringToDecrypt, length, outputString);
+    DataProcessing::secureString returnString((const char*)outputString, length);
+    returnString = fixOutput(returnString);
+    return returnString;
+
+    /*char tempString[length + 1];
+    memcpy(tempString, outputString, length);
+    tempString[length - 1] = '\0';
+
+    return DataProcessing::secureString(tempString);*/
+  }
+
+  DataProcessing::secureString fixOutput(DataProcessing::secureString string) {
+    while(string[string.length() - 1] == '\000' && string[string.length() - 2] == '\000') {
+      string = string.substr(0, string.length() - 2);
+    }
+
+    return string;
+  }
+};
 #endif
