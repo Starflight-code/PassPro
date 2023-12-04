@@ -71,7 +71,7 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   std::cout << out2;
   unsigned char* plaintextData = (unsigned char*)malloc(cipherLen);
 
-  Cryptography.decryptAES256(ciphertextData.data(), cipherLen, plaintextData);
+  //Cryptography.decryptAES256(ciphertextData.data(), cipherLen, plaintextData);
 
 
   try{
@@ -85,13 +85,13 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
     outfile.close();
   }
 
-  readDB(credentials);
+  readDB(credentials, plaintextLength);
 }
-void DatabaseManager::readDB(CryptographyStorage* credentials) {
+void DatabaseManager::readDB(CryptographyStorage* credentials, int plaintextlength) {
   std::ifstream infile(credentials->user + ".db", std::ios::binary);
-  infile.seekg(0, std::ios::end);
+  infile.seekg(0, infile.end);
   int ciphertextLength = infile.tellg();
-  infile.seekg(0, std::ios::beg);
+  infile.seekg(0, infile.beg);
 
   std::vector<unsigned char> ciphertextData(ciphertextLength);
   infile.read((char*)ciphertextData.data(), ciphertextLength);
@@ -104,9 +104,10 @@ void DatabaseManager::readDB(CryptographyStorage* credentials) {
     key[i] = credentials->key[i];
   }
   Cryptography Cryptography(key);
+  int ciphertext = out.size();
 
-  unsigned char* plaintextData = (unsigned char*)malloc(ciphertextLength);
-  Cryptography.decryptAES256(ciphertextData.data(), ciphertextLength, plaintextData);
+  unsigned char* plaintextData = (unsigned char*)malloc(plaintextlength);
+  Cryptography.decryptAES256(ciphertextData.data(), ciphertext, plaintextData);
 
          // Deserialize the JSON data
   std::string notEncryptedJson((char*)plaintextData, ciphertextLength);
