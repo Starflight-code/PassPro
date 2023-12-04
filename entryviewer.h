@@ -20,15 +20,16 @@ class EntryViewer : public QMainWindow {
   public:
   explicit EntryViewer(QWidget* parent = nullptr);
   ~EntryViewer();
-  void onDatabaseUpdateFinished();
   int updateCell;
+  Ui::EntryViewer* ui;
 
   private slots:
   void on_Close_clicked();
-  void on_pushButton_2_clicked();
+  void on_ApplyAndClose_clicked();
+
+  void on_Delete_clicked();
 
   private:
-  Ui::EntryViewer* ui;
   CryptographyStorage* userCredentials;
   BS::thread_pool* pool;
   DatabaseManager* data;

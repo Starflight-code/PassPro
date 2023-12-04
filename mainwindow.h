@@ -42,6 +42,7 @@ class MainWindow : public QMainWindow {
 
   private slots:
   void on_tableWidget_cellClicked(int row, int column);
+  void on_Logout_clicked();
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);

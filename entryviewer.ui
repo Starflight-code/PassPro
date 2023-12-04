@@ -32,12 +32,12 @@
     <string>Close</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="ApplyAndClose">
    <property name="geometry">
     <rect>
      <x>240</x>
      <y>330</y>
-     <width>101</width>
+     <width>111</width>
      <height>24</height>
     </rect>
    </property>
@@ -197,6 +197,19 @@
      <width>271</width>
      <height>121</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Delete">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>330</y>
+     <width>61</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Delete</string>
    </property>
   </widget>
  </widget>

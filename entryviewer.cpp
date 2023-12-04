@@ -20,67 +20,6 @@ EntryViewer::EntryViewer(QWidget* parent)
 
 EntryViewer::~EntryViewer() { delete ui; }
 
-void EntryViewer::on_pushButton_2_clicked() {
-
-  if(updateCell == -1) {
-
-    data->addEntry(PasswordEntry(
-        ui->Password->text().toStdString(), ui->Name->text().toStdString(),
-        ui->URL->text().toStdString(), ui->Username->text().toStdString(),
-        ui->Notes->text().toStdString()));
-  } else {
-    entries->at(updateCell) = PasswordEntry(
-        ui->Password->text().toStdString(), ui->Name->text().toStdString(),
-        ui->URL->text().toStdString(), ui->Username->text().toStdString(),
-        ui->Notes->text().toStdString());
-    updateCell = -1;
-  }
-  auto saveTask = [](DatabaseManager* data, CryptographyStorage* credentials) {
-    data->writeDB(credentials);
-  };
-
-  pool->push_task(saveTask, data, userCredentials);
-
-  refreshTable();
-
-  /*const unsigned char exampleKey[] = {
-      0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
-      0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10};
-  Cryptography Cryptography(exampleKey);
-  try {
-    // Encrypt the new entry data
-    unsigned char encryptedName[256];
-    unsigned char encryptedUrl[256];
-    unsigned char encryptedPassword[256];
-    unsigned char encryptedUsername[256];
-    unsigned char encryptedNotes[256];
-    //unsigned char encryptedSearchableURL[256];
-
-         // Add the entry to the DatabaseObject
-  databaseObject.addEntry(newEntry);
-
-         // Sanitize the DatabaseObject
-  //nlohmann::json sanitizedData = databaseManager.sanitizeJSON();
-
-         // Convert the JSON to a string
-  //std::string jsonString = sanitizedData.dump();
-
-         // Assuming you have an instance of your Cryptography class named 'crypto'
-  //Cryptography crypto;
-
-  // Start the thread
-  // updateThread->start();*/
-
-  // Assuming you have a method to update the UI after the database is updated
-  onDatabaseUpdateFinished();
-
-  // Clear all fields and close the window
-  clearAll();
-  hide();
-}
-
-void EntryViewer::onDatabaseUpdateFinished() { update(); }
-
 void EntryViewer::on_Close_clicked() {
   clearAll();
   hide();
@@ -147,3 +86,44 @@ void EntryViewer::setUsernameText(const QString& text) {
 void EntryViewer::setNotesText(const QString& text) {
   ui->Notes->setText(text);
 }
+
+void EntryViewer::on_ApplyAndClose_clicked()
+{
+
+
+  if(updateCell == -1) {
+
+    data->addEntry(PasswordEntry(
+        ui->Password->text().toStdString(), ui->Name->text().toStdString(),
+        ui->URL->text().toStdString(), ui->Username->text().toStdString(),
+        ui->Notes->text().toStdString()));
+  } else {
+    entries->at(updateCell) = PasswordEntry(
+        ui->Password->text().toStdString(), ui->Name->text().toStdString(),
+        ui->URL->text().toStdString(), ui->Username->text().toStdString(),
+        ui->Notes->text().toStdString());
+    updateCell = -1;
+  }
+  auto saveTask = [](DatabaseManager* data, CryptographyStorage* credentials) {
+    data->writeDB(credentials);
+  };
+
+  pool->push_task(saveTask, data, userCredentials);
+
+  refreshTable();
+
+  clearAll();
+  hide();
+}
+
+
+void EntryViewer::on_Delete_clicked()
+{
+  if (updateCell == -1) {
+    return;
+  } else {
+    entries->erase(entries->begin() + updateCell);
+    refreshTable();
+  }
+}
+

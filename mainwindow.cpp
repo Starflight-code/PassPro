@@ -27,6 +27,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_pushButton_clicked() {
+  entry.ui->Close->show();
   entry.show();
   // ui->tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString("NAME")));
 
@@ -45,6 +46,7 @@ void MainWindow::on_tableWidget_cellClicked(int row, int column) {
   entry.setUsernameText(QString::fromStdString(entryObject.username));
   entry.setNotesText(QString::fromStdString(entryObject.notes));
   entry.updateCell = row;
+  entry.ui->Close->hide();
   entry.show();
 }
 
@@ -94,4 +96,8 @@ void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::threa
 
 void MainWindow::refresh() {
   populateTableWidget(*database->getEntries());
+}
+
+void MainWindow::on_Logout_clicked() {
+  exit(0);
 }
