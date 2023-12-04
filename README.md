@@ -12,13 +12,19 @@ we do not have any developers on these platforms to verify PassPro functionality
 ## Requrements
 - CMAKE 3.5 or above
 - GCC or MinGw supporting QT 5.15.11
-- OpenSSL libraries
+- OpenSSL
 - QT 5.15.11
 - GNU Make
+- QT Creator (QT Creator build only)
 - VSCode (VSCode build only)
 - VSCode C++ Build Extensions (VSCode build only)
 
-## Build Instructions
+## Build Instructions - QT Creator (Recommended)
+- Clone the repository
+- Open QT Creator and open the CMakeLists.txt file to open the project
+- Press the run button
+
+## Build Instructions - VSCode
 - Clone the repository
 - Open VSCode and navigate to the cloned project
 - Press build on the bottom
