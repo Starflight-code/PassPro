@@ -7,6 +7,8 @@
 #include "include/BS_thread_pool.hpp"
 #include "ui_entryviewer.h"
 #include <QMainWindow>
+#include <QStandardItemModel>
+#include <QtWidgets/QTableWidget>
 
 namespace Ui {
   class EntryViewer;
@@ -19,11 +21,10 @@ class EntryViewer : public QMainWindow {
   explicit EntryViewer(QWidget* parent = nullptr);
   ~EntryViewer();
   void onDatabaseUpdateFinished();
+  int updateCell;
 
   private slots:
   void on_Close_clicked();
-
-  private slots:
   void on_pushButton_2_clicked();
 
   private:
@@ -31,11 +32,14 @@ class EntryViewer : public QMainWindow {
   CryptographyStorage* userCredentials;
   BS::thread_pool* pool;
   DatabaseManager* data;
-  MainWindow* mainWindow;
+  QTableWidget* mainTable;
+  std::vector<PasswordEntry>* entries;
+
   void clearAll();
+  void refreshTable();
 
   public:
-  void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, MainWindow* window);
+  void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table);
   void setPasswordText(const QString& text);
   void setNameText(const QString& text);
   void setURLText(const QString& text);

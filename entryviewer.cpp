@@ -1,5 +1,4 @@
 #include "entryviewer.h"
-#include "mainwindow.h"
 
 DatabaseManager databaseManager;
 
@@ -11,6 +10,7 @@ public:
 EntryViewer::EntryViewer(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::EntryViewer) {
   ui->setupUi(this);
+  updateCell = -1;
 
   // connect(ui->pushButton_2, &QPushButton::clicked, this,
   //         &EntryViewer::on_pushButton_2_clicked);
@@ -22,18 +22,26 @@ EntryViewer::~EntryViewer() { delete ui; }
 
 void EntryViewer::on_pushButton_2_clicked() {
 
-  data->addEntry(PasswordEntry(
-      ui->Password->text().toStdString(), ui->Name->text().toStdString(),
-      ui->URL->text().toStdString(), ui->Username->text().toStdString(),
-      ui->Notes->text().toStdString()));
+  if(updateCell == -1) {
 
+    data->addEntry(PasswordEntry(
+        ui->Password->text().toStdString(), ui->Name->text().toStdString(),
+        ui->URL->text().toStdString(), ui->Username->text().toStdString(),
+        ui->Notes->text().toStdString()));
+  } else {
+    entries->at(updateCell) = PasswordEntry(
+        ui->Password->text().toStdString(), ui->Name->text().toStdString(),
+        ui->URL->text().toStdString(), ui->Username->text().toStdString(),
+        ui->Notes->text().toStdString());
+    updateCell = -1;
+  }
   auto saveTask = [](DatabaseManager* data, CryptographyStorage* credentials) {
     data->writeDB(credentials);
   };
 
   pool->push_task(saveTask, data, userCredentials);
 
-  mainWindow->refresh();
+  refreshTable();
 
   /*const unsigned char exampleKey[] = {
       0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
@@ -78,11 +86,12 @@ void EntryViewer::on_Close_clicked() {
   hide();
 }
 
-void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, MainWindow* window) {
+void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table) {
   this->userCredentials = userCredentials;
   this->pool = pool;
   this->data = database;
-  this->mainWindow = window;
+  this->mainTable = table;
+  this->entries = data->getEntries();
 };
 
 void EntryViewer::clearAll() {
@@ -92,6 +101,33 @@ void EntryViewer::clearAll() {
   ui->Username->setText("");
   ui->Notes->setText("");
 }
+
+void EntryViewer::refreshTable() {
+  mainTable->clearContents();
+
+  // Set table headers
+  QStringList headers({"Name", "Username", "URL"});
+  mainTable->setHorizontalHeaderLabels(headers);
+
+  // Set number of rows and columns
+  std::vector<PasswordEntry>* entries = data->getEntries();
+  mainTable->setRowCount(entries->size());
+  mainTable->setColumnCount(3);
+
+  // Populate each cell with corresponding data
+  for(int row = 0; row < entries->size(); ++row) {
+    const PasswordEntry& entry = entries->at(row);
+    mainTable->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.name)));
+    mainTable->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(entry.username)));
+    mainTable->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(entry.url)));
+  }
+
+  // Update and show the table
+  mainTable->resizeColumnsToContents();
+  mainTable->show();
+  mainTable->update();
+}
+
 void EntryViewer::setPasswordText(const QString& text) {
   ui->Password->setText(text);
 }

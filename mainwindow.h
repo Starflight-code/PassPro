@@ -4,11 +4,11 @@
 #include "Cryptography/Cryptography.cpp" // Include the header for your Cryptography class
 #include "Cryptography/CryptographyStorage.h"
 #include "Data_Storage/DatabaseManager.h"
-#include "Data_Storage/DatabaseObject.h" // Include the header for your DatabaseObject class
+#include "Data_Storage/DatabaseObject.h"   // Include the header for your DatabaseObject class
+#include "Data_Structures/PasswordEntry.h" // only in for testing and development
 #include "entryviewer.h"
 #include "include/BS_thread_pool.hpp"
 #include "ui_mainwindow.h"
-#include "Data_Structures/PasswordEntry.h" // only in for testing and development
 #include <QMainWindow>
 #include <QStandardItemModel>
 
@@ -28,19 +28,20 @@ class MainWindow : public QMainWindow {
 
   private slots:
   void on_pushButton_clicked();
+
   public:
-      void populateTableWidget(const std::vector<PasswordEntry>& entries);
+  void populateTableWidget(const std::vector<PasswordEntry>& entries);
+
   private:
   Ui::MainWindow* ui;
   EntryViewer entry;
   CryptographyStorage* userCredentials;
   BS::thread_pool* pool;
   DatabaseManager* database;
-  std::vector<PasswordEntry> entries;
+  std::vector<PasswordEntry>* entries;
 
   private slots:
   void on_tableWidget_cellClicked(int row, int column);
-
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);
