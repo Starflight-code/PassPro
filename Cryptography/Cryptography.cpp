@@ -105,6 +105,11 @@ class Cryptography {
     EVP_CIPHER_CTX_free(ctx);
   }
 
+  /**
+   * @brief Encrypts a string using the key in this instance (added upon construction)
+   * @param string a DataProcesssing::secureString to encrypt
+   * @return a encrypted DataProcessing::secureString
+   */
   DataProcessing::secureString encrypt(DataProcessing::secureString string) {
     int length = string.length();
     int outputLength = length + 16 - (length % 16);
@@ -121,6 +126,11 @@ class Cryptography {
     // return DataProcessing::secureString(tempString);
   }
 
+  /**
+   * @brief Decrypts a string using the key in this instance (added upon construction)
+   * @param string a DataProcesssing::secureString to decrypt
+   * @return a decrypted DataProcessing::secureString
+   */
   DataProcessing::secureString decrypt(DataProcessing::secureString string) {
     int length = string.length();
     unsigned char* stringToDecrypt = (unsigned char*)string.c_str();
@@ -138,6 +148,11 @@ class Cryptography {
     return DataProcessing::secureString(tempString);*/
   }
 
+  /**
+   * @brief Removes unnecessary data added to the end of the string during formatting
+   * @param string the string to process, removing extra '\000' characters
+   * @return DataProcessing::secureString without extra characters
+   */
   DataProcessing::secureString fixOutput(DataProcessing::secureString string) {
     while(string[string.length() - 1] == '\000' && string[string.length() - 2] == '\000') {
       string = string.substr(0, string.length() - 2);

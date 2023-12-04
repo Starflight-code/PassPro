@@ -27,9 +27,11 @@ int main(int argc, char* argv[]) {
   // data.writeDB(); // uncomment for JSON DB sanitization/desanitization
   // testing
 
-  // Cryptography crypto((unsigned char*)DataProcessing::secureString("key").c_str());
-  // DataProcessing::secureString output = crypto.encrypt(DataProcessing::secureString("This is the input data for an AES-256 Cypher!"));
-  // output = crypto.decrypt(output);
+  Cryptography crypto((unsigned char*)DataProcessing::secureString("key").c_str());
+  DataProcessing::secureString output = crypto.encrypt(DataProcessing::secureString("This is the input data for an AES-256 Cypher!"));
+  // output = "\331,G\323u\267l\340\212\242r\275)4j\203\216\244\272;\363Ĳh`<\255-\343)f\017\210\335O\334\346E;(b$Av\263Wc\233"
+  output = crypto.decrypt(output);
+  // output = "This is the input data for an AES-256 Cypher!"
   QApplication a(argc, argv);
   // MainWindow w;
   LoginWindow login;
