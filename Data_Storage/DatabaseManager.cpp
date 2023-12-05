@@ -58,14 +58,12 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   //   key[i] = credentials->key[i];
   // }
 
-  Cryptography Crypto(DataProcessing::secureString("key"));
-  Cryptography Crypto2(DataProcessing::secureString("key"));
+  Cryptography Crypto(DataProcessing::secureString(credentials->key));
 
   DataProcessing::secureString plain(jsonData.dump());
 
   // DataProcessing::secureString plain("This is the input data for an AES-256 Cypher!");
   DataProcessing::secureString encryptedText = Crypto.encrypt(plain);
-  DataProcessing::secureString decryptedText = Crypto2.decrypt(encryptedText);
 
   // DataProcessing::secureString encryptedText = Crypto.encrypt(plain);
   //  Cryptography.encryptAES256(plaintext, plaintextLength, ciphertextData.data());
@@ -100,7 +98,7 @@ void DatabaseManager::readDB(CryptographyStorage* credentials) {
   // for(int i = 0; i < credentials->key.length(); i++) {
   //   key[i] = credentials->key[i];
   // }
-  Cryptography Cryptography(DataProcessing::secureString("key"));
+  Cryptography Cryptography(DataProcessing::secureString(credentials->key));
   // int ciphertext = out.size();
 
   // unsigned char* plaintextData = (unsigned char*)malloc(plaintextlength);
