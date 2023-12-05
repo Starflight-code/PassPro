@@ -10,12 +10,16 @@
 
 class Cryptography {
   public:
-  Cryptography(const unsigned char* key) : key_(key) {
+  /*Cryptography(const unsigned char* key) : key_(key) {
     OpenSSL_add_all_algorithms();
-  }
+  }*/
 
   Cryptography(DataProcessing::secureString key) {
     OpenSSL_add_all_algorithms();
+    int padding = 32 - (key.length() % 32);
+    for(int i = 0; i < padding; i++) {
+      key.append("-");
+    }
     keyString = key;
     key_ = (const unsigned char*)keyString.c_str();
   }
@@ -43,8 +47,9 @@ class Cryptography {
     if(ctx == nullptr) {
       throw std::runtime_error("Failed to create encryption context");
     }
-
-    if(EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) !=
+    std::string initvec("59201958284927143241454385938592");
+    unsigned char* iv = (unsigned char*)initvec.c_str();
+    if(EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, iv) !=
        1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to initialize encryption context");
@@ -86,7 +91,9 @@ class Cryptography {
     // Use std::unique_ptr to manage memory for plaintextData
     std::unique_ptr<unsigned char[]> plaintextData(new unsigned char[ciphertextLength]);
 
-    if(EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, nullptr) != 1) {
+    std::string initvec("59201958284927143241454385938592");
+    unsigned char* iv = (unsigned char*)initvec.c_str();
+    if(EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, key_, iv) != 1) {
       EVP_CIPHER_CTX_free(ctx);
       throw std::runtime_error("Failed to initialize decryption context");
     }

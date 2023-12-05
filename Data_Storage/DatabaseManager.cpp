@@ -49,21 +49,23 @@ std::vector<PasswordEntry> DatabaseManager::desanitizeJSON(nlohmann::json jsonOb
 
 void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   nlohmann::json jsonData = sanitizeJSON();
-  //unsigned char key[credentials->key.length()];
-  // DataProcessing::secureString
-  //for(int i = 0; i < credentials->key.length(); i++) {
-  //  key[i] = credentials->key[i];
- // }
+  // unsigned char key[credentials->key.length()];
+  //  DataProcessing::secureString
+  // for(int i = 0; i < credentials->key.length(); i++) {
+  //   key[i] = credentials->key[i];
+  // }
 
-  Cryptography Crypto("key");
+  Cryptography Crypto(DataProcessing::secureString("key"));
+  Cryptography Crypto2(DataProcessing::secureString("key"));
 
-  //DataProcessing::secureString plain(jsonData.dump());
+  // DataProcessing::secureString plain(jsonData.dump());
 
-      DataProcessing::secureString plain("This is the input data for an AES-256 Cypher!");
-
+  DataProcessing::secureString plain("This is the input data for an AES-256 Cypher!");
   DataProcessing::secureString encryptedText = Crypto.encrypt(plain);
-  //Cryptography.encryptAES256(plaintext, plaintextLength, ciphertextData.data());
+  DataProcessing::secureString decryptedText = Crypto2.decrypt(encryptedText);
 
+  // DataProcessing::secureString encryptedText = Crypto.encrypt(plain);
+  //  Cryptography.encryptAES256(plaintext, plaintextLength, ciphertextData.data());
 
   // Cryptography.decryptAES256(ciphertextData.data(), cipherLen, plaintextData);
 
@@ -90,22 +92,22 @@ void DatabaseManager::readDB(CryptographyStorage* credentials) {
   infile.close();
   DataProcessing::secureString out((char*)ciphertextData.data(), ciphertextLength);
 
-  //std::cout << out;
-  // Decrypt the JSON data
-  //unsigned char key[credentials->key.length()];
-  //for(int i = 0; i < credentials->key.length(); i++) {
-  //  key[i] = credentials->key[i];
- // }
-  Cryptography Cryptography("key");
-  //int ciphertext = out.size();
+  // std::cout << out;
+  //  Decrypt the JSON data
+  // unsigned char key[credentials->key.length()];
+  // for(int i = 0; i < credentials->key.length(); i++) {
+  //   key[i] = credentials->key[i];
+  // }
+  Cryptography Cryptography(DataProcessing::secureString("key"));
+  // int ciphertext = out.size();
 
-  //unsigned char* plaintextData = (unsigned char*)malloc(plaintextlength);
+  // unsigned char* plaintextData = (unsigned char*)malloc(plaintextlength);
   DataProcessing::secureString plaintext = Cryptography.decrypt(out);
- // DataProcessing::secureString plaintext = Cryptography.decrypt("\331,G\323u\267l\340\212\242r\275)4j\203\216\244\272;\363Ĳh`<\255-\343)f\017\210\335O\334\346E;(b$Av\263Wc\233");
-  //Cryptography.decryptAES256(ciphertextData.data(), ciphertext, plaintextData);
+  // DataProcessing::secureString plaintext = Cryptography.decrypt("\331,G\323u\267l\340\212\242r\275)4j\203\216\244\272;\363Ĳh`<\255-\343)f\017\210\335O\334\346E;(b$Av\263Wc\233");
+  // Cryptography.decryptAES256(ciphertextData.data(), ciphertext, plaintextData);
 
   // Deserialize the JSON data
-  //std::string notEncryptedJson((char*)plaintextData, ciphertextLength);
+  // std::string notEncryptedJson((char*)plaintextData, ciphertextLength);
   nlohmann::json jsonData = nlohmann::json::parse(plaintext);
 
   // Process the JSON data
