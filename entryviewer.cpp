@@ -121,5 +121,10 @@ void EntryViewer::on_Delete_clicked() {
   } else {
     entries->erase(entries->begin() + updateCell);
     refreshTable();
+    auto saveTask = [](DatabaseManager* data, CryptographyStorage* credentials) {
+      data->writeDB(credentials);
+    };
+
+    pool->push_task(saveTask, data, userCredentials);
   }
 }
