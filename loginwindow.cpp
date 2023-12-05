@@ -17,7 +17,16 @@ void LoginWindow::submit() {
   this->hide();
   // window.tricklePointers
   window.tricklePointers(&cryptoStorage, pool, database);
-  window.show();
+
+  try {
+    database->readDB(&cryptoStorage);
+    window.refresh();
+    window.show();
+  } catch (...) {
+    window.show();
+
+  }
+
 }
 
 void LoginWindow::on_lineEdit_2_returnPressed() {
