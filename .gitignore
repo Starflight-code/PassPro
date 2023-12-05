@@ -72,3 +72,13 @@ CMakeLists.txt.user*
 *.dll
 *.exe
 
+# Project Specific
+PassPro/*
+PassPro\*
+build/*
+build\*
+.vscode/*
+.vscode\*
+.cache/*
+.cache\*
+.gitlab-ci.yml
