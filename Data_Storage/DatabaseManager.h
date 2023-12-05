@@ -49,7 +49,7 @@ class DatabaseManager {
    * @param jsonObject: A JSON object
    * @return std::vector<PasswordEntry> list of PasswordEntry objects
    */
-  inline std::vector<PasswordEntry> desanitizeJSON(nlohmann::json jsonObject);
+  inline void desanitizeJSON(nlohmann::json jsonObject);
 
   /**
    * @brief generateJSON: Generates JSON from embedded entries data
