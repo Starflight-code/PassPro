@@ -2,17 +2,18 @@
 #include "Data_Structures/SecureString.cpp"
 #include "include/BS_thread_pool.hpp"
 #include "loginwindow.h"
+#include "testing.cpp"
 #include <thread>
 
 #include <QApplication>
 
 int main(int argc, char* argv[]) {
-  /*if(argc == 2 && !strcmp(argv[1], "-test")) {
+  if(argc == 2 && !strcmp(argv[1], "-test")) {
     std::cout << "Running Test Suite\n";
     Testing::TestSuite testSuite;
     testSuite.runAllTests();
     return 0;
-  }*/
+  }
   DatabaseObject dbo;
   PasswordEntry entry("password", "name", " url", "username", "notes");
   PasswordEntry entry2("password2", "name2", " url2", "username2", "notes2");

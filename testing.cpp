@@ -1,3 +1,6 @@
+#undef assert // somehow this is defined elsewhere
+
+#include <functional>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -26,15 +29,21 @@ public:
 
     void finished() {
       bool testStatus = true;
+      std::vector<std::string> failedTests;
       for(int i = 0; i < testOutput.size(); i++) {
         std::string conditional = testOutput[i].testResult ? "Passed (✅)" : "Failed (❌)";
         testStatus = testStatus ? testOutput[i].testResult : testStatus; // checks if all tests have passed
-        std::cout << testOutput[i].testName + ": " + conditional + "\n";
+        if(!testOutput[i].testResult) {
+          failedTests.push_back(testOutput[i].testName + ": " + conditional + "\n");
+        }
       }
       if(testStatus) {
-        std::cout << "\nAll tests have passed! (✅)\n";
+        std::cout << "\nAll tests have passed! (" + std::to_string(testOutput.size()) + " ✅)\n";
       } else {
-        std::cout << "\nSome tests have failed! (❌)\n";
+        for(int i = 0; i < failedTests.size(); i++) {
+          std::cout << failedTests.at(i);
+        }
+        std::cout << "\n\nSome tests have failed! (❌)\n";
       }
     }
   };
