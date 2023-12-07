@@ -60,6 +60,7 @@ else()
             Data_Structures/PasswordEntry.h
             Data_Structures/PasswordEntry.cpp
             Data_Structures/SecureString.cpp
+            Logo.qrc
         )
     endif()
 endif()
