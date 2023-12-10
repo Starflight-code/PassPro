@@ -1,0 +1,3 @@
+[submodule "include/ClipboardXX"]
+	path = include/ClipboardXX
+	url = https://github.com/Arian8j2/ClipboardXX

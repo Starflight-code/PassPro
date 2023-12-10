@@ -9,6 +9,8 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QtWidgets/QTableWidget>
+#include "include/clipboardxx.hpp"
+#include <unistd.h>
 
 namespace Ui {
   class EntryViewer;
@@ -26,8 +28,13 @@ class EntryViewer : public QMainWindow {
   private slots:
   void on_Close_clicked();
   void on_ApplyAndClose_clicked();
-
   void on_Delete_clicked();
+
+  void on_passwordCopyBtn_clicked();
+
+  void on_urlCopyBtn_clicked();
+
+  void on_usernameCopyBtn_clicked();
 
   private:
   CryptographyStorage* userCredentials;
@@ -35,6 +42,7 @@ class EntryViewer : public QMainWindow {
   DatabaseManager* data;
   QTableWidget* mainTable;
   std::vector<PasswordEntry>* entries;
+  static void runClipboardUIAndClear(QToolButton* button);
 
   void clearAll();
   void refreshTable();

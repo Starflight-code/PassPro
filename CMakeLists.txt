@@ -69,6 +69,7 @@ target_link_libraries(PassPro PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     OpenSSL::SSL
     OpenSSL::Crypto
+    ClipboardXX
 )
 
 if(${QT_VERSION} VERSION_LESS 6.1.0)
@@ -93,5 +94,9 @@ install(TARGETS PassPro
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(PassPro)
 endif()
+
+#set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
+#set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
+add_subdirectory(include/ClipboardXX    EXCLUDE_FROM_ALL)
 
 set (CMAKE_STATIC_LINKER_FLAGS "-lcrypto -lssl -fstack-protector")
