@@ -134,8 +134,8 @@ void EntryViewer::on_Delete_clicked() {
  * @param button that will have its textasdaasda changed
  */
 void EntryViewer::runClipboardUIAndClear(QToolButton* button) {
-  auto sleepFor = [](int seconds){ // converts usleep input to seconds vs microseconds (default)
-    usleep(seconds*1000000);
+  auto sleepFor = [](int seconds) { // converts usleep input to seconds vs microseconds (default)
+    usleep(seconds * 1000000);
   };
   button->setText(QString("✅"));
   sleepFor(3);
@@ -145,35 +145,29 @@ void EntryViewer::runClipboardUIAndClear(QToolButton* button) {
   clipboard << "";
 }
 
-void EntryViewer::on_passwordCopyBtn_clicked()
-{
+void EntryViewer::on_passwordCopyBtn_clicked() {
   clipboardxx::clipboard clipboard;
   clipboard.copy(ui->Password->text().toStdString());
-  auto clipboardTask = [](Ui::EntryViewer* ui){
+  auto clipboardTask = [](Ui::EntryViewer* ui) {
     runClipboardUIAndClear(ui->passwordCopyBtn);
   };
   pool->push_task(clipboardTask, ui);
 }
 
-
-void EntryViewer::on_urlCopyBtn_clicked()
-{
+void EntryViewer::on_urlCopyBtn_clicked() {
   clipboardxx::clipboard clipboard;
   clipboard.copy(ui->URL->text().toStdString());
-  auto clipboardTask = [](Ui::EntryViewer* ui){
+  auto clipboardTask = [](Ui::EntryViewer* ui) {
     runClipboardUIAndClear(ui->urlCopyBtn);
   };
   pool->push_task(clipboardTask, ui);
 }
 
-
-void EntryViewer::on_usernameCopyBtn_clicked()
-{
+void EntryViewer::on_usernameCopyBtn_clicked() {
   clipboardxx::clipboard clipboard;
   clipboard.copy(ui->Username->text().toStdString());
-  auto clipboardTask = [](Ui::EntryViewer* ui){
+  auto clipboardTask = [](Ui::EntryViewer* ui) {
     runClipboardUIAndClear(ui->usernameCopyBtn);
   };
   pool->push_task(clipboardTask, ui);
 }
-

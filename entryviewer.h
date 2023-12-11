@@ -5,11 +5,11 @@
 #include "Data_Storage/DatabaseManager.cpp"
 #include "Data_Structures/PasswordEntry.h"
 #include "include/BS_thread_pool.hpp"
+#include "include/ClipboardXX/include/clipboardxx.hpp"
 #include "ui_entryviewer.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QtWidgets/QTableWidget>
-#include "include/clipboardxx.hpp"
 #include <unistd.h>
 
 namespace Ui {
