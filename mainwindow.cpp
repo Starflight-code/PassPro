@@ -61,6 +61,7 @@ void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::threa
 };
 
 void MainWindow::refresh() {
+  searchMode = false; // add search mode update to external refresh by entryviewer
   populateTableWidget(*database->getEntries());
 }
 
@@ -68,8 +69,45 @@ void MainWindow::on_Logout_clicked() {
   exit(0);
 }
 
-void MainWindow::on_lineEdit_returnPressed()
-{
+void MainWindow::searchFor(std::string query) {
+  query = trimString(query);
+  query = toLowerCase(query);
+  int length = query.length();
+  searchDBIndexes.clear();
+  for (int i = 0; i < entries->size(); i++) {
+    std::string user = entries->at(i).username.substr(0, length);
+    std::string name = entries->at(i).name.substr(0, length);
+    std::string sURL = entries->at(i).searchableURL.substr(0, length);
+    user = toLowerCase(user);
+    name = toLowerCase(name);
+    sURL = toLowerCase(sURL);
+    if (query == user || query == name || query == sURL) {
+      searchDBIndexes.push_back(i);
+    }
+  }
+  searchMode = true;
+  // refresh UI with searchDBIndexes values here
+}
 
+std::string MainWindow::toLowerCase(std::string str) {
+  for (int i = 0; i < str.length(); i++) {
+    str[i] = (char) tolower(str[i]);
+  }
+  return str;
+}
+
+std::string MainWindow::trimString(std::string str, char trimChar) {
+  while (str[0] != trimChar) {
+    str = str.substr(1, str.length() - 1); // removes the first character
+  }
+  while (str[str.length() - 1] == trimChar) {
+    str = str.substr(0, str.length() - 1); // removes the last character
+  }
+  return str;
+}
+
+void MainWindow::on_searchBar_returnPressed()
+{
+  searchFor(ui->searchBar->text().toStdString());
 }
 
