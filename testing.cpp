@@ -39,11 +39,13 @@ public:
       }
       if(testStatus) {
         std::cout << "\nAll tests have passed! (" + std::to_string(testOutput.size()) + " ✅)\n";
+        exit(0);
       } else {
         for(int i = 0; i < failedTests.size(); i++) {
           std::cout << failedTests.at(i);
         }
         std::cout << "\n\nSome tests have failed! (❌)\n";
+        exit(1);
       }
     }
   };
