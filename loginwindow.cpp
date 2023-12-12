@@ -8,25 +8,21 @@ LoginWindow::LoginWindow(QWidget* parent)
 LoginWindow::~LoginWindow() { delete ui; }
 
 void LoginWindow::submit() {
-  username = ui->lineEdit->text().toStdString();
-  // secure_string password(ui->lineEdit_2->text().toStdString());
-  //  TODO: Add database unlocking code
+  std::string username = ui->lineEdit->text().toStdString();
   DataProcessing::secureString password(ui->lineEdit_2->text().toStdString());
 
   cryptoStorage = CryptographyStorage(username, password);
-  this->hide();
-  // window.tricklePointers
   window.tricklePointers(&cryptoStorage, pool, database);
+
+  this->hide();
 
   try {
     database->readDB(&cryptoStorage);
     window.refresh();
     window.show();
-  } catch (...) {
+  } catch(...) {
     window.show();
-
   }
-
 }
 
 void LoginWindow::on_lineEdit_2_returnPressed() {
