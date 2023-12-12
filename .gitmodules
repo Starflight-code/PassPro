@@ -3,5 +3,5 @@
 	url = https://github.com/Arian8j2/ClipboardXX
 
 [submodule "include/clip"]
-	path= include/clip
+	path = include/clip
 	url = https://github.com/dacap/clip
