@@ -52,6 +52,16 @@ struct PasswordEntry {
   PasswordEntry(std::string password, std::string name, std::string url,
                 std::string username, std::string notes, std::string searchableURL);
 
+  /**
+   * @param password std::string: A string containg a user's password
+   * @param name std::string: A string containg the name for this entry
+   * @param url std::string: A string containg a url
+   * @param username std::string: A string containg a user's username
+   * @param notes std::string: A long string containg arbitrary text
+   */
+  PasswordEntry(std::string password, std::string name, std::string url,
+                std::string username, std::string notes);
+
   PasswordEntry(const PasswordEntry& otherEntry);
   PasswordEntry();
 

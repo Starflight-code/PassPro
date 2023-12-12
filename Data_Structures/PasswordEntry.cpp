@@ -15,6 +15,16 @@ PasswordEntry::PasswordEntry(std::string password, std::string name, std::string
   this->name = name;
   this->notes = notes;
   this->url = url;
+  this->searchableURL = searchableURL;
+}
+
+PasswordEntry::PasswordEntry(std::string password, std::string name, std::string url,
+                             std::string username, std::string notes) {
+  this->password = password;
+  this->username = username;
+  this->name = name;
+  this->notes = notes;
+  this->url = url;
   std::string preURL = (url);
   for(int i = 0; i < url.length(); i++) {
     preURL[i] = tolower(preURL[i]);
