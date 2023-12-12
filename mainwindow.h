@@ -44,6 +44,8 @@ class MainWindow : public QMainWindow {
   void on_tableWidget_cellClicked(int row, int column);
   void on_Logout_clicked();
 
+  void on_lineEdit_returnPressed();
+
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);
   void refresh();

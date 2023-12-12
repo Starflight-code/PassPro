@@ -67,3 +67,9 @@ void MainWindow::refresh() {
 void MainWindow::on_Logout_clicked() {
   exit(0);
 }
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+
+}
+
