@@ -9,7 +9,7 @@ std::string PasswordEntry::RemovePrepend(std::string baseString, std::string pre
 }
 
 PasswordEntry::PasswordEntry(std::string password, std::string name, std::string url,
-                             std::string username, std::string notes) {
+                             std::string username, std::string notes, std::string searchableURL) {
   this->password = password;
   this->username = username;
   this->name = name;

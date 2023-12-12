@@ -50,7 +50,7 @@ struct PasswordEntry {
    * "www." or "https://"
    */
   PasswordEntry(std::string password, std::string name, std::string url,
-                std::string username, std::string notes);
+                std::string username, std::string notes, std::string searchableURL);
 
   PasswordEntry(const PasswordEntry& otherEntry);
   PasswordEntry();

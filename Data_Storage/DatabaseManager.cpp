@@ -23,6 +23,7 @@ nlohmann::json DatabaseManager::sanitizeJSON() {
   j["notes"] = db.notes;
   j["usernames"] = db.username;
   j["passwords"] = db.password;
+  j["searchableURL"] = db.searchableURL;
   return j;
 }
 
@@ -42,7 +43,8 @@ void DatabaseManager::desanitizeJSON(nlohmann::json jsonObject) {
         jsonObject["names"][i],
         jsonObject["urls"][i],
         jsonObject["usernames"][i],
-        jsonObject["notes"][i]));
+        jsonObject["notes"][i],
+        jsonObject["searchableURL"][i]));
   }
   this->entries.clear();
   for(int i = 0; i < entries.size(); i++) {
