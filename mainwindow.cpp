@@ -70,7 +70,7 @@ void MainWindow::on_Logout_clicked() {
 }
 
 void MainWindow::searchFor(std::string query) {
-  query = trimString(query);
+  //query = trimString(query);
   query = toLowerCase(query);
   int length = query.length();
   searchDBIndexes.clear();
@@ -86,7 +86,12 @@ void MainWindow::searchFor(std::string query) {
     }
   }
   searchMode = true;
-  // refresh UI with searchDBIndexes values here
+  try {
+    populateTableWidget(searchDBIndexes);
+  } catch (...) {
+    messagebox.setText("404 entry not found");
+  }
+
 }
 
 std::string MainWindow::toLowerCase(std::string str) {
@@ -106,8 +111,39 @@ std::string MainWindow::trimString(std::string str, char trimChar) {
   return str;
 }
 
-void MainWindow::on_searchBar_returnPressed()
+void MainWindow::populateTableWidget(const std::vector<int>& entriesIndex)
 {
-  searchFor(ui->lineEdit->text().toStdString());
+  // Clear existing table content
+  ui->tableWidget->clearContents();
+
+         // Set table headers
+  QStringList headers({"Name", "Username", "URL"});
+  ui->tableWidget->setHorizontalHeaderLabels(headers);
+
+         // Set number of rows and columns
+  ui->tableWidget->setRowCount(entriesIndex.size());
+  ui->tableWidget->setColumnCount(3);
+
+         // Populate each cell with corresponding data based on entriesIndex
+  for (int row = 0; row < entriesIndex.size(); ++row)
+  {
+    int index = entriesIndex[row];
+    const PasswordEntry& entry = entries->at(index);
+
+    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(entry.name)));
+    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(entry.username)));
+    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(entry.url)));
+  }
+
+         // Update and show the table
+  ui->tableWidget->resizeColumnsToContents();
+  ui->tableWidget->show();
+  ui->tableWidget->update();
+}
+
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    searchFor(ui->lineEdit->text().toStdString());
 }
 

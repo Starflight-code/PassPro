@@ -11,6 +11,7 @@
 #include "ui_mainwindow.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -31,6 +32,7 @@ class MainWindow : public QMainWindow {
 
   public:
   void populateTableWidget(const std::vector<PasswordEntry>& entries);
+  void populateTableWidget(const std::vector<int>& entries);
 
   private:
   bool searchMode;
@@ -41,6 +43,7 @@ class MainWindow : public QMainWindow {
   DatabaseManager* database;
   std::vector<PasswordEntry>* entries;
   std::vector<int> searchDBIndexes;
+  QMessageBox messagebox;
 
   void searchFor(std::string query);
   static std::string trimString(std::string str, char trimChar = ' ');
@@ -49,7 +52,8 @@ class MainWindow : public QMainWindow {
   private slots:
   void on_tableWidget_cellClicked(int row, int column);
   void on_Logout_clicked();
-  void on_searchBar_returnPressed();
+
+  void on_lineEdit_returnPressed();
 
   public:
   void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database);
