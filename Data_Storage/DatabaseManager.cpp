@@ -66,24 +66,38 @@ void DatabaseManager::writeDB(CryptographyStorage* credentials) {
   }
 }
 void DatabaseManager::readDB(CryptographyStorage* credentials) {
-  std::ifstream infile(credentials->user + ".db", std::ios::binary);
-  infile.seekg(0, infile.end);           // Move read position to the end
-  int ciphertextLength = infile.tellg(); // Checks the current read position (file length)
-  infile.seekg(0, infile.beg);           // Moves read position to the beginning
+  try {
+    std::ifstream infile(credentials->user + ".db", std::ios::binary);
+    infile.seekg(0, infile.end);           // Move read position to the end
+    int ciphertextLength = infile.tellg(); // Checks the current read position (file length)
+    infile.seekg(0, infile.beg);           // Moves read position to the beginning
 
-  std::vector<unsigned char> ciphertextData(ciphertextLength);
-  infile.read((char*)ciphertextData.data(), ciphertextLength);
-  infile.close();
-  DataProcessing::secureString out((char*)ciphertextData.data(), ciphertextLength);
+    std::vector<unsigned char> ciphertextData(ciphertextLength);
+    infile.read((char*)ciphertextData.data(), ciphertextLength);
+    infile.close();
+    DataProcessing::secureString out((char*)ciphertextData.data(), ciphertextLength);
 
-  Cryptography Cryptography(DataProcessing::secureString(credentials->key));
+    Cryptography Cryptography(DataProcessing::secureString(credentials->key));
 
-  DataProcessing::secureString plaintext = Cryptography.decrypt(out);
+    try {
+      DataProcessing::secureString plaintext = Cryptography.decrypt(out);
+      nlohmann::json jsonData = nlohmann::json::parse(plaintext);
+      desanitizeJSON(jsonData);
+      credentials->valid = true;
+    } catch (...) {
+      credentials->valid = false;
+    }
+
+  } catch (...) {
+
+  }
+
+
 
   // Deserialize the JSON data
-  nlohmann::json jsonData = nlohmann::json::parse(plaintext);
+
 
   // Process the JSON data
-  desanitizeJSON(jsonData);
+
 }
 #endif

@@ -14,15 +14,27 @@ void LoginWindow::submit() {
   cryptoStorage = CryptographyStorage(username, password);
   window.tricklePointers(&cryptoStorage, pool, database);
 
-  this->hide();
 
-  try {
-    database->readDB(&cryptoStorage);
-    window.refresh();
-    window.show();
-  } catch(...) {
-    window.show();
+
+  database->readDB(&cryptoStorage);
+  if(cryptoStorage.valid){
+
+
+  this->hide();
+  window.refresh();
+  window.show();
   }
+  else
+  {
+
+  messagebox.setWindowTitle("Invalid Login");
+  messagebox.setText("Invalid Login: Username already exists");
+  messagebox.show();
+  ui->lineEdit->clear();
+  ui->lineEdit_2->clear();
+  }
+
+
 }
 
 void LoginWindow::on_lineEdit_2_returnPressed() {

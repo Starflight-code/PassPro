@@ -11,6 +11,7 @@
 #include <QMainWindow>
 #include <iostream>
 #include <string>
+#include <QMessageBox>
 
 namespace Ui {
   class LoginWindow;
@@ -37,6 +38,7 @@ class LoginWindow : public QMainWindow {
   BS::thread_pool* pool;
   DatabaseManager* database;
   CryptographyStorage cryptoStorage;
+  QMessageBox messagebox;
 
   public:
   void tricklePointers(BS::thread_pool* pool, DatabaseManager* database);
