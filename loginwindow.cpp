@@ -49,3 +49,9 @@ void LoginWindow::tricklePointers(BS::thread_pool* pool, DatabaseManager* databa
   this->pool = pool;
   this->database = database;
 };
+
+void LoginWindow::on_togglePassword_clicked() {
+  bool currentVisibility = ui->lineEdit_2->echoMode() != QLineEdit::Password;
+  ui->lineEdit_2->setEchoMode(currentVisibility ? QLineEdit::Password : QLineEdit::Normal);
+}
+

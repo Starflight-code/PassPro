@@ -29,6 +29,8 @@ class LoginWindow : public QMainWindow {
 
   void on_pushButton_clicked();
 
+  void on_togglePassword_clicked();
+
   private:
   void submit();
 
