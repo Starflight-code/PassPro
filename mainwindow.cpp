@@ -108,6 +108,6 @@ std::string MainWindow::trimString(std::string str, char trimChar) {
 
 void MainWindow::on_searchBar_returnPressed()
 {
-  searchFor(ui->searchBar->text().toStdString());
+  searchFor(ui->lineEdit->text().toStdString());
 }
 
