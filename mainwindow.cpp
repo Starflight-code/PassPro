@@ -14,15 +14,30 @@ void MainWindow::on_pushButton_clicked() {
 }
 
 void MainWindow::on_tableWidget_cellClicked(int row, int column) {
-  const PasswordEntry entryObject = entries->at(row);
-  entry.setPasswordText(QString::fromStdString(entryObject.password));
-  entry.setNameText(QString::fromStdString(entryObject.name));
-  entry.setURLText(QString::fromStdString(entryObject.url));
-  entry.setUsernameText(QString::fromStdString(entryObject.username));
-  entry.setNotesText(QString::fromStdString(entryObject.notes));
-  entry.updateCell = row;
-  entry.ui->Delete->show();
-  entry.show();
+  if(searchMode)
+  {
+    const PasswordEntry entryObject = entries->at(searchDBIndexes.at(row));
+    entry.setPasswordText(QString::fromStdString(entryObject.password));
+    entry.setNameText(QString::fromStdString(entryObject.name));
+    entry.setURLText(QString::fromStdString(entryObject.url));
+    entry.setUsernameText(QString::fromStdString(entryObject.username));
+    entry.setNotesText(QString::fromStdString(entryObject.notes));
+    entry.updateCell = row;
+    entry.ui->Delete->show();
+    entry.show();
+  }
+  else{
+    const PasswordEntry entryObject = entries->at(row);
+    entry.setPasswordText(QString::fromStdString(entryObject.password));
+    entry.setNameText(QString::fromStdString(entryObject.name));
+    entry.setURLText(QString::fromStdString(entryObject.url));
+    entry.setUsernameText(QString::fromStdString(entryObject.username));
+    entry.setNotesText(QString::fromStdString(entryObject.notes));
+    entry.updateCell = row;
+    entry.ui->Delete->show();
+    entry.show();
+  }
+
 }
 
 void MainWindow::populateTableWidget(const std::vector<PasswordEntry>& entries) {
@@ -113,12 +128,14 @@ std::string MainWindow::trimString(std::string str, char trimChar) {
 
 void MainWindow::populateTableWidget(const std::vector<int>& entriesIndex)
 {
+  ui->tableWidget->clear();
   // Clear existing table content
   ui->tableWidget->clearContents();
 
          // Set table headers
   QStringList headers({"Name", "Username", "URL"});
   ui->tableWidget->setHorizontalHeaderLabels(headers);
+
 
          // Set number of rows and columns
   ui->tableWidget->setRowCount(entriesIndex.size());
