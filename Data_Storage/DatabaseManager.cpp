@@ -83,21 +83,21 @@ void DatabaseManager::readDB(CryptographyStorage* credentials) {
       DataProcessing::secureString plaintext = Cryptography.decrypt(out);
       nlohmann::json jsonData = nlohmann::json::parse(plaintext);
       desanitizeJSON(jsonData);
-      credentials->valid = true;
-    } catch (...) {
-      credentials->valid = false;
+      credentials->status = credentials->valid;
+    } catch(...) {
+      credentials->status = credentials->invalid;
     }
-
-  } catch (...) {
-
+  } catch(const std::ios_base::failure& fail) {
+    credentials->status = credentials->noFile;
+    return;
+  } catch(const std::length_error& fail) {
+    credentials->status = credentials->noFile;
+    return;
+  } catch(...) {
   }
-
-
 
   // Deserialize the JSON data
 
-
   // Process the JSON data
-
 }
 #endif

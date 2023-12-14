@@ -42,13 +42,15 @@ class EntryViewer : public QMainWindow {
   DatabaseManager* data;
   QTableWidget* mainTable;
   std::vector<PasswordEntry>* entries;
-  static void runClipboardUIAndClear(QToolButton* button);
+  bool* searchMode;
+  std::vector<int>* searchDBIndexes;
 
+  static void runClipboardUIAndClear(QToolButton* button);
   void clearAll();
   void refreshTable();
 
   public:
-  void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table);
+  void tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table, bool* searchMode, std::vector<int>* searchDBIndexes);
   void setPasswordText(const QString& text);
   void setNameText(const QString& text);
   void setURLText(const QString& text);

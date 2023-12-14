@@ -14,8 +14,7 @@ void MainWindow::on_pushButton_clicked() {
 }
 
 void MainWindow::on_tableWidget_cellClicked(int row, int column) {
-  if(searchMode)
-  {
+  if(searchMode) {
     const PasswordEntry entryObject = entries->at(searchDBIndexes.at(row));
     entry.setPasswordText(QString::fromStdString(entryObject.password));
     entry.setNameText(QString::fromStdString(entryObject.name));
@@ -25,8 +24,7 @@ void MainWindow::on_tableWidget_cellClicked(int row, int column) {
     entry.updateCell = row;
     entry.ui->Delete->show();
     entry.show();
-  }
-  else{
+  } else {
     const PasswordEntry entryObject = entries->at(row);
     entry.setPasswordText(QString::fromStdString(entryObject.password));
     entry.setNameText(QString::fromStdString(entryObject.name));
@@ -37,7 +35,6 @@ void MainWindow::on_tableWidget_cellClicked(int row, int column) {
     entry.ui->Delete->show();
     entry.show();
   }
-
 }
 
 void MainWindow::populateTableWidget(const std::vector<PasswordEntry>& entries) {
@@ -71,7 +68,7 @@ void MainWindow::tricklePointers(CryptographyStorage* userCredentials, BS::threa
   this->pool = pool;
   this->database = database;
   this->entries = database->getEntries();
-  entry.tricklePointers(this->userCredentials, this->pool, this->database, ui->tableWidget);
+  entry.tricklePointers(this->userCredentials, this->pool, this->database, ui->tableWidget, &searchMode, &searchDBIndexes);
   refresh();
 };
 
@@ -85,65 +82,61 @@ void MainWindow::on_Logout_clicked() {
 }
 
 void MainWindow::searchFor(std::string query) {
-  //query = trimString(query);
+  query = trimString(query);
   query = toLowerCase(query);
   int length = query.length();
   searchDBIndexes.clear();
-  for (int i = 0; i < entries->size(); i++) {
+  for(int i = 0; i < entries->size(); i++) {
     std::string user = entries->at(i).username.substr(0, length);
     std::string name = entries->at(i).name.substr(0, length);
     std::string sURL = entries->at(i).searchableURL.substr(0, length);
     user = toLowerCase(user);
     name = toLowerCase(name);
     sURL = toLowerCase(sURL);
-    if (query == user || query == name || query == sURL) {
+    if(query == user || query == name || query == sURL) {
       searchDBIndexes.push_back(i);
     }
   }
   searchMode = true;
   try {
     populateTableWidget(searchDBIndexes);
-  } catch (...) {
+  } catch(...) {
     messagebox.setText("404 entry not found");
   }
-
 }
 
 std::string MainWindow::toLowerCase(std::string str) {
-  for (int i = 0; i < str.length(); i++) {
-    str[i] = (char) tolower(str[i]);
+  for(int i = 0; i < str.length(); i++) {
+    str[i] = (char)tolower(str[i]);
   }
   return str;
 }
 
 std::string MainWindow::trimString(std::string str, char trimChar) {
-  while (str[0] != trimChar) {
+  while(str[0] == trimChar) {
     str = str.substr(1, str.length() - 1); // removes the first character
   }
-  while (str[str.length() - 1] == trimChar) {
+  while(str[str.length() - 1] == trimChar) {
     str = str.substr(0, str.length() - 1); // removes the last character
   }
   return str;
 }
 
-void MainWindow::populateTableWidget(const std::vector<int>& entriesIndex)
-{
+void MainWindow::populateTableWidget(const std::vector<int>& entriesIndex) {
   ui->tableWidget->clear();
   // Clear existing table content
   ui->tableWidget->clearContents();
 
-         // Set table headers
+  // Set table headers
   QStringList headers({"Name", "Username", "URL"});
   ui->tableWidget->setHorizontalHeaderLabels(headers);
 
-
-         // Set number of rows and columns
+  // Set number of rows and columns
   ui->tableWidget->setRowCount(entriesIndex.size());
   ui->tableWidget->setColumnCount(3);
 
-         // Populate each cell with corresponding data based on entriesIndex
-  for (int row = 0; row < entriesIndex.size(); ++row)
-  {
+  // Populate each cell with corresponding data based on entriesIndex
+  for(int row = 0; row < entriesIndex.size(); ++row) {
     int index = entriesIndex[row];
     const PasswordEntry& entry = entries->at(index);
 
@@ -152,15 +145,16 @@ void MainWindow::populateTableWidget(const std::vector<int>& entriesIndex)
     ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(entry.url)));
   }
 
-         // Update and show the table
+  // Update and show the table
   ui->tableWidget->resizeColumnsToContents();
   ui->tableWidget->show();
   ui->tableWidget->update();
 }
 
-
-void MainWindow::on_lineEdit_returnPressed()
-{
-    searchFor(ui->lineEdit->text().toStdString());
+void MainWindow::on_lineEdit_returnPressed() {
+  if(ui->lineEdit->text().toStdString() == "") {
+    refresh();
+    return;
+  }
+  searchFor(ui->lineEdit->text().toStdString());
 }
-

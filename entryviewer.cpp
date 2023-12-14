@@ -25,12 +25,14 @@ void EntryViewer::on_Close_clicked() {
   hide();
 }
 
-void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table) {
+void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table, bool* searchMode, std::vector<int>* searchDBIndexes) {
   this->userCredentials = userCredentials;
   this->pool = pool;
   this->data = database;
   this->mainTable = table;
   this->entries = data->getEntries();
+  this->searchMode = searchMode;
+  this->searchDBIndexes = searchDBIndexes;
 };
 
 void EntryViewer::clearAll() {
@@ -42,6 +44,7 @@ void EntryViewer::clearAll() {
 }
 
 void EntryViewer::refreshTable() {
+  *searchMode = false;
   mainTable->clearContents();
 
   // Set table headers
@@ -119,6 +122,9 @@ void EntryViewer::on_Delete_clicked() {
   if(updateCell == -1) {
     return;
   } else {
+    if(searchMode) {
+      updateCell = searchDBIndexes->at(updateCell);
+    }
     entries->erase(entries->begin() + updateCell);
     refreshTable();
     auto saveTask = [](DatabaseManager* data, CryptographyStorage* credentials) {

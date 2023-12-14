@@ -14,27 +14,27 @@ void LoginWindow::submit() {
   cryptoStorage = CryptographyStorage(username, password);
   window.tricklePointers(&cryptoStorage, pool, database);
 
-
-
   database->readDB(&cryptoStorage);
-  if(cryptoStorage.valid){
+  if(cryptoStorage.status == cryptoStorage.valid) {
 
+    this->hide();
+    window.refresh();
+    window.show();
+  } else if(cryptoStorage.status == cryptoStorage.noFile) {
+    messagebox.setWindowTitle("Registration");
+    messagebox.setText("This username does not exist, continuing will result in a new user. ");
+    messagebox.show();
+    this->hide();
+    window.refresh();
+    window.show();
+  } else {
 
-  this->hide();
-  window.refresh();
-  window.show();
+    messagebox.setWindowTitle("Invalid Login");
+    messagebox.setText("Invalid Login: Username already exists");
+    messagebox.show();
+    ui->lineEdit->clear();
+    ui->lineEdit_2->clear();
   }
-  else
-  {
-
-  messagebox.setWindowTitle("Invalid Login");
-  messagebox.setText("Invalid Login: Username already exists");
-  messagebox.show();
-  ui->lineEdit->clear();
-  ui->lineEdit_2->clear();
-  }
-
-
 }
 
 void LoginWindow::on_lineEdit_2_returnPressed() {
@@ -54,4 +54,3 @@ void LoginWindow::on_togglePassword_clicked() {
   bool currentVisibility = ui->lineEdit_2->echoMode() != QLineEdit::Password;
   ui->lineEdit_2->setEchoMode(currentVisibility ? QLineEdit::Password : QLineEdit::Normal);
 }
-
