@@ -1,6 +1,7 @@
 #undef assert // somehow this is defined elsewhere
 
 #include "Cryptography/Cryptography.cpp"
+#include "Cryptography/CryptographyStorage.h"
 #include "Data_Structures/SecureString.cpp"
 #include <functional>
 #include <iostream>
@@ -36,7 +37,7 @@ public:
         std::string conditional = testOutput[i].testResult ? "Passed (✅)" : "Failed (❌)";
         testStatus = testStatus ? testOutput[i].testResult : testStatus; // checks if all tests have passed
         if(!testOutput[i].testResult) {
-          failedTests.push_back(testOutput[i].testName + ": " + conditional + "\n");
+          failedTests.push_back("Index " + std::to_string(i) + " | " + testOutput[i].testName + ": " + conditional + "\n");
         }
       }
       if(testStatus) {
@@ -46,7 +47,7 @@ public:
         for(int i = 0; i < failedTests.size(); i++) {
           std::cout << failedTests.at(i);
         }
-        std::cout << "\n\nSome tests have failed! (❌)\n";
+        std::cout << "\n\n" + std::to_string(failedTests.size()) + '/' + std::to_string(testOutput.size()) + " tests have failed! (❌)\n";
         exit(1);
       }
     }
@@ -69,9 +70,39 @@ public:
       }
       unit->assert("Encryption: No Throw", fail == false);
     }
+
+    void decryptionTest(UnitTester* unit) {
+      DataProcessing::secureString key = "0123456789ABCDEF0123456789ABCDEF";
+      DataProcessing::secureString text = "Hello, Catch2 Test!";
+      DataProcessing::secureString encryptedText;
+      DataProcessing::secureString decryptedText;
+
+      Cryptography crypto = Cryptography(key);
+      encryptedText = crypto.encrypt(text);
+      decryptedText = crypto.decrypt(encryptedText);
+      bool equal = true;
+      for(int i = 0; i < decryptedText.length(); i++) {
+        equal = equal ? decryptedText[i] == text[i] : false; // keep equal state if equal is false, otherwise set equal depending
+                                                             // on whether the two characters at index i are equal
+      }
+      unit->assert("Decryption: Must Be Equal", equal);
+    }
+
+    void cryptographyStorageConstructor(UnitTester* unit) {
+      std::string testUser = "testUser";
+      DataProcessing::secureString testPassword = "testPassword";
+
+      CryptographyStorage storage(testUser, testPassword);
+
+      unit->assert("CryptographyStorage: Username Constructor", storage.user == testUser);
+      unit->assert("CryptographyStorage: Password Constructor", storage.key == testPassword);
+    }
+
     void runAllTests() {
       UnitTester unit;
       encryptionTest(&unit);
+      decryptionTest(&unit);
+      cryptographyStorageConstructor(&unit);
       unit.finished();
     }
   };
