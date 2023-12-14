@@ -1,5 +1,7 @@
 #undef assert // somehow this is defined elsewhere
 
+#include "Cryptography/Cryptography.cpp"
+#include "Data_Structures/SecureString.cpp"
 #include <functional>
 #include <iostream>
 #include <string>
@@ -52,9 +54,24 @@ public:
 
   class TestSuite {
 public:
+    void encryptionTest(UnitTester* unit) {
+
+      DataProcessing::secureString key = "0123456789ABCDEF0123456789ABCDEF";
+      DataProcessing::secureString text = "Hello, Catch2 Test!";
+
+      Cryptography crypto = Cryptography(key);
+      bool fail;
+      try {
+        crypto.encrypt(text);
+        fail = false;
+      } catch(...) {
+        fail = true;
+      }
+      unit->assert("Encryption: No Throw", fail == false);
+    }
     void runAllTests() {
       UnitTester unit;
-      unit.assert("Test1", true);
+      encryptionTest(&unit);
       unit.finished();
     }
   };
