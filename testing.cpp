@@ -2,6 +2,7 @@
 
 #include "Cryptography/Cryptography.cpp"
 #include "Cryptography/CryptographyStorage.h"
+#include "Data_Structures/PasswordEntry.h"
 #include "Data_Structures/SecureString.cpp"
 #include <functional>
 #include <iostream>
@@ -98,11 +99,20 @@ public:
       unit->assert("CryptographyStorage: Password Constructor", storage.key == testPassword);
     }
 
+    void searchableURL(UnitTester* unit) {
+      PasswordEntry entry("securePassword", "Example", "www.example.com", "user123", "Some notes");
+      unit->assert("SearchableURL 1", entry.searchableURL == "example.com");
+
+      PasswordEntry entry2("anotherPassword", "Another Example", "example.org", "user456", "More notes");
+      unit->assert("SearchableURL 2", entry2.searchableURL == "example.org");
+    }
+
     void runAllTests() {
       UnitTester unit;
       encryptionTest(&unit);
       decryptionTest(&unit);
       cryptographyStorageConstructor(&unit);
+      searchableURL(&unit);
       unit.finished();
     }
   };
