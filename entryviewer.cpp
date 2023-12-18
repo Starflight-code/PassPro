@@ -122,7 +122,7 @@ void EntryViewer::on_Delete_clicked() {
   if(updateCell == -1) {
     return;
   } else {
-    if(searchMode) {
+    if(*searchMode) {
       updateCell = searchDBIndexes->at(updateCell);
     }
     entries->erase(entries->begin() + updateCell);
