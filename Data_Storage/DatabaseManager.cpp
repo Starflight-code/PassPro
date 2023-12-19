@@ -87,13 +87,9 @@ void DatabaseManager::readDB(CryptographyStorage* credentials) {
     } catch(...) {
       credentials->status = credentials->invalid;
     }
-  } catch(const std::ios_base::failure& fail) {
-    credentials->status = credentials->noFile;
-    return;
-  } catch(const std::length_error& fail) {
-    credentials->status = credentials->noFile;
-    return;
   } catch(...) {
+    credentials->status = credentials->noFile;
+    return;
   }
 
   // Deserialize the JSON data
