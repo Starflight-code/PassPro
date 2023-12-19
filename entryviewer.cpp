@@ -25,12 +25,14 @@ void EntryViewer::on_Close_clicked() {
   hide();
 }
 
-void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table) {
+void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table, bool* searchMode, std::vector<int>* searchDBIndexes) {
   this->userCredentials = userCredentials;
   this->pool = pool;
   this->data = database;
   this->mainTable = table;
   this->entries = data->getEntries();
+  this->searchMode = searchMode;
+  this->searchDBIndexes = searchDBIndexes;
 };
 
 void EntryViewer::clearAll() {
@@ -42,6 +44,7 @@ void EntryViewer::clearAll() {
 }
 
 void EntryViewer::refreshTable() {
+  *searchMode = false;
   mainTable->clearContents();
 
   // Set table headers
@@ -119,6 +122,9 @@ void EntryViewer::on_Delete_clicked() {
   if(updateCell == -1) {
     return;
   } else {
+    if(*searchMode) {
+      updateCell = searchDBIndexes->at(updateCell);
+    }
     entries->erase(entries->begin() + updateCell);
     refreshTable();
     auto saveTask = [](DatabaseManager* data, CryptographyStorage* credentials) {
@@ -127,4 +133,47 @@ void EntryViewer::on_Delete_clicked() {
 
     pool->push_task(saveTask, data, userCredentials);
   }
+}
+
+/**
+ * @brief EntryViewer::runClipboardUIAndClear clears the clipboard after 20 seconds and changes the button text for 3 seconds
+ * @param button that will have its textasdaasda changed
+ */
+void EntryViewer::runClipboardUIAndClear(QToolButton* button) {
+  auto sleepFor = [](int seconds) { // converts usleep input to seconds vs microseconds (default)
+    usleep(seconds * 1000000);
+  };
+  button->setText(QString("✅"));
+  sleepFor(3);
+  button->setText(QString("📋"));
+  sleepFor(17);
+  clipboardxx::clipboard clipboard;
+  clipboard << "";
+}
+
+void EntryViewer::on_passwordCopyBtn_clicked() {
+  clipboardxx::clipboard clipboard;
+  clipboard.copy(ui->Password->text().toStdString());
+  auto clipboardTask = [](Ui::EntryViewer* ui) {
+    runClipboardUIAndClear(ui->passwordCopyBtn);
+  };
+  pool->push_task(clipboardTask, ui);
+}
+
+void EntryViewer::on_urlCopyBtn_clicked() {
+  clipboardxx::clipboard clipboard;
+  clipboard.copy(ui->URL->text().toStdString());
+  auto clipboardTask = [](Ui::EntryViewer* ui) {
+    runClipboardUIAndClear(ui->urlCopyBtn);
+  };
+  pool->push_task(clipboardTask, ui);
+}
+
+void EntryViewer::on_usernameCopyBtn_clicked() {
+  clipboardxx::clipboard clipboard;
+  clipboard.copy(ui->Username->text().toStdString());
+  auto clipboardTask = [](Ui::EntryViewer* ui) {
+    runClipboardUIAndClear(ui->usernameCopyBtn);
+  };
+  pool->push_task(clipboardTask, ui);
 }

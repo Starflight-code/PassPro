@@ -121,9 +121,26 @@
      </property>
     </column>
    </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>20</y>
+      <width>161</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Search</string>
+    </property>
+   </widget>
    <zorder>tableWidget</zorder>
    <zorder>pushButton</zorder>
    <zorder>Logout</zorder>
+   <zorder>lineEdit</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

@@ -9,6 +9,16 @@ std::string PasswordEntry::RemovePrepend(std::string baseString, std::string pre
 }
 
 PasswordEntry::PasswordEntry(std::string password, std::string name, std::string url,
+                             std::string username, std::string notes, std::string searchableURL) {
+  this->password = password;
+  this->username = username;
+  this->name = name;
+  this->notes = notes;
+  this->url = url;
+  this->searchableURL = searchableURL;
+}
+
+PasswordEntry::PasswordEntry(std::string password, std::string name, std::string url,
                              std::string username, std::string notes) {
   this->password = password;
   this->username = username;
@@ -16,14 +26,17 @@ PasswordEntry::PasswordEntry(std::string password, std::string name, std::string
   this->notes = notes;
   this->url = url;
   std::string preURL = (url);
-  for(int i = 0; i < url.length(); i++) {
+  for(int i = 0; i < preURL.length(); i++) {
     preURL[i] = tolower(preURL[i]);
   }
-  RemovePrepend(preURL, "https://");
-  RemovePrepend(preURL, "http://");
-  RemovePrepend(preURL, "ssh://");
-  RemovePrepend(preURL, "www.");
-  this->searchableURL = url;
+  preURL = RemovePrepend(preURL, "https://");
+  preURL = RemovePrepend(preURL, "http://");
+  preURL = RemovePrepend(preURL, "tcp://");
+  preURL = RemovePrepend(preURL, "ssh://");
+  preURL = RemovePrepend(preURL, "www.");
+  preURL = RemovePrepend(preURL, "server.");
+  preURL = RemovePrepend(preURL, "about.");
+  this->searchableURL = preURL;
 }
 
 PasswordEntry::PasswordEntry(const PasswordEntry& otherEntry) {
@@ -59,11 +72,3 @@ bool PasswordEntry::equals(PasswordEntry otherEntry) {
   out = out ? this->url == otherEntry.url : false;
   return out;
 }
-
-// bool PasswordEntry::equals(const PasswordEntry otherEntry) {
-//   bool out = out ? this->name == otherEntry.name : false;
-//   out = out ? this->username == otherEntry.username : false;
-//   out = out ? this->password == otherEntry.password : false;
-//   out = out ? this->url == otherEntry.url : false;
-//   return out;
-// }

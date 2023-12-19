@@ -10,9 +10,6 @@
 
 class Cryptography {
   public:
-  /*Cryptography(const unsigned char* key) : key_(key) {
-    OpenSSL_add_all_algorithms();
-  }*/
 
   Cryptography(DataProcessing::secureString key) {
     OpenSSL_add_all_algorithms();
@@ -133,11 +130,6 @@ class Cryptography {
     encryptAES256(stringToEncrypt, length, outputString);
 
     return DataProcessing::secureString((const char*)outputString, outputLength);
-    /*char tempString[outputLength + 1];
-    memcpy(tempString, outputString, outputLength);
-    tempString[outputLength - 1] = '\0';*/
-
-    // return DataProcessing::secureString(tempString);
   }
 
   /**
@@ -154,12 +146,6 @@ class Cryptography {
     DataProcessing::secureString returnString((const char*)outputString, length);
     returnString = fixOutput(returnString);
     return returnString;
-
-    /*char tempString[length + 1];
-    memcpy(tempString, outputString, length);
-    tempString[length - 1] = '\0';
-
-    return DataProcessing::secureString(tempString);*/
   }
 
   /**

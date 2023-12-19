@@ -1,50 +1,52 @@
 #define CATCH_CONFIG_MAIN
 #include "../Cryptography/Cryptography.cpp"
 #include "../Cryptography/CryptographyStorage.h"
-#include "../Data Storage/DatabaseManager.h"
-#include "../Data Storage/DatabaseObject.h"
-#include "../Data Structures/PasswordEntry.h"
+#include "../Data_Storage/DatabaseManager.h"
+#include "../Data_Storage/DatabaseManager.cpp"
+#include "../Data_Storage/DatabaseObject.h"
+#include "../Data_Structures/PasswordEntry.h"
 // #include "Cryptography.h"
 #include "../include/catch.hpp"
 
-TEST_CASE("Cryptography Encryption and Decryption Test", "[Cryptography]") {
-  const unsigned char key[] = "0123456789ABCDEF0123456789ABCDEF";
-  const unsigned char plaintext[] = "Hello, Catch2 Test!";
-  const int plaintextLength = sizeof(plaintext) - 1; // excluding null terminator
-  unsigned char ciphertext[256];                     // Adjust the size accordingly
-  unsigned char decryptedText[256];                  // Adjust the size accordingly
+TEST_CASE("Cryptography - Encryption and Decryption", "[Cryptography]") {
+  // Create a Cryptography instance with a sample key
+  DataProcessing::secureString key = "sample_key";
+  Cryptography crypto(key);
 
-  Cryptography::CryptographyUtils crypto = Cryptography::CryptographyUtils();
+  SECTION("Encryption and Decryption of a string") {
+    DataProcessing::secureString originalString = "Hello, Catch2!";
 
-  SECTION("Encrypts plaintext") {
-    REQUIRE_NOTHROW(crypto.encrypt(plaintext, plaintextLength, ciphertext));
+    // Encrypt the original string
+    DataProcessing::secureString encryptedString = crypto.encrypt(originalString);
 
-    // Add additional checks if needed
+           // Decrypt the encrypted string
+    DataProcessing::secureString decryptedString = crypto.decrypt(encryptedString);
+
+           // Verify that the decrypted string matches the original string
+    REQUIRE(decryptedString == originalString);
   }
 
-  SECTION("Decrypts plaintext") {
-    // Encrypt the plaintext
-    crypto.encrypt(plaintext, plaintextLength, ciphertext);
-
-    // Decrypt the ciphertext
-    REQUIRE_THROWS_WITH(
-        crypto.decrypt(ciphertext, plaintextLength, decryptedText),
-        "Failed to finalize decryption");
-  }
+         // Add more test cases as needed
 }
 
-TEST_CASE("CryptographyStorage Constructor Test", "[CryptographyStorage]") {
-  const std::string testUser = "testUser";
-  const std::string testPassword = "testPassword";
+TEST_CASE("CryptographyStorage - Constructor with parameters", "[CryptographyStorage]") {
+  // Test the constructor with parameters
+  std::string username = "test_user";
+  DataProcessing::secureString password = "test_password";
+  CryptographyStorage storage(username, password);
 
-  CryptographyStorage storage(testUser, testPassword);
+         // Verify that the username and password are set correctly
+  REQUIRE(storage.user == username);
+  REQUIRE(storage.key == password);
+}
 
-  SECTION("Constructor initializes user and key") {
-    REQUIRE(storage.user == testUser);
-    REQUIRE(storage.key == testPassword);
+TEST_CASE("CryptographyStorage - Default Constructor", "[CryptographyStorage]") {
+  // Test the default constructor
+  CryptographyStorage storage;
 
-    // Add additional checks if needed
-  }
+         // Verify that the username is empty and the password is an empty secureString
+  REQUIRE(storage.user.empty());
+  REQUIRE(storage.key.empty());
 }
 TEST_CASE("PasswordObject and searchableURL Test") {
   SECTION("URL with www. prepended should have searchableURL without www.") {
@@ -57,34 +59,38 @@ TEST_CASE("PasswordObject and searchableURL Test") {
     REQUIRE(entry.searchableURL == "example.org");
   }
 }
-TEST_CASE("DatabaseObject add and DatabaseManager JSON Sanitization and Desanitization Test", "[DatabaseManager]") {
+TEST_CASE("DatabaseManager - sanitizeJSON and desanitizeJSON", "[DatabaseManager]") {
   // Create a DatabaseManager instance
   DatabaseManager dbManager;
-  DatabaseObject db1;
-  DatabaseObject db2;
+  DatabaseObject db;
 
-  SECTION("Sanitizes and Desanitizes JSON") {
-    // Manually add some entries to the manager for testing
-    PasswordEntry entry1("Entry1", "http://example.com", "user1", "pass1", "Note1");
-    PasswordEntry entry2("Entry2", "http://example2.com", "user2", "pass2", "Note2");
+         // Create sample entries
+  PasswordEntry entry1("pass1", "name1", "url1", "user1", "note1", "s_url1");
+  PasswordEntry entry2("pass2", "name2", "url2", "user2", "note2", "s_url2");
 
-    // Assuming you don't have a method to add entries,
-    // you can add them directly to the entries vector
-    db1.addEntry(entry1);
-    db2.addEntry(entry2);
+         // Add sample entries to the manager
+  db.addEntry(entry1);
+  db.addEntry(entry2);
 
-    // Call the sanitization method
-    dbManager.writeDB();
+         // Test sanitizeJSON
+  nlohmann::json sanitizedJson = dbManager.sanitizeJSON();
 
-    // Retrieve the entries after desanitization using the getter method
-    const std::vector<PasswordEntry>& desanitizedEntries = dbManager.getEntries();
+         // Verify the structure of the sanitized JSON
+  REQUIRE(sanitizedJson["names"][0] == "name1");
+  REQUIRE(sanitizedJson["names"][1] == "name2");
+  REQUIRE(sanitizedJson["urls"][0] == "url1");
+  REQUIRE(sanitizedJson["urls"][1] == "url2");
+  // Add more checks based on your data structure
 
-    // Verify that the desanitized entries match the original entries
-    REQUIRE(desanitizedEntries.size() == 2);
-    REQUIRE(desanitizedEntries[0].equals(entry1));
-    REQUIRE(desanitizedEntries[1].equals(entry2));
-  }
+         // Test desanitizeJSON
+  dbManager.desanitizeJSON(sanitizedJson);
+
+         // Verify that the entries in the manager match the original entries
+  REQUIRE(dbManager.getEntries()->at(0) == entry1);
+  REQUIRE(dbManager.getEntries()->at(1) == entry2);
+  // Add more checks based on your data structure
 }
+
 TEST_CASE("Memory Leak Test for PasswordEntry", "[MemoryLeak]") {
   PasswordEntry* entry = new PasswordEntry("example", "http://example.com", "user", "pass", "note");
   // Perform any actions that would typically happen in your application

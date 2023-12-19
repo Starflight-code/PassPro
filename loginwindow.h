@@ -11,6 +11,7 @@
 #include <QMainWindow>
 #include <iostream>
 #include <string>
+#include <QMessageBox>
 
 namespace Ui {
   class LoginWindow;
@@ -22,15 +23,13 @@ class LoginWindow : public QMainWindow {
   public:
   explicit LoginWindow(QWidget* parent = nullptr);
   ~LoginWindow();
-  // using secure_string = std::basic_string<char, std::char_traits<char>,
-  //                                         CryptoPP::AllocatorWithCleanup<char>>;
-  std::string username;
-  // secure_string password;
 
   private slots:
   void on_lineEdit_2_returnPressed();
 
   void on_pushButton_clicked();
+
+  void on_togglePassword_clicked();
 
   private:
   void submit();
@@ -41,6 +40,7 @@ class LoginWindow : public QMainWindow {
   BS::thread_pool* pool;
   DatabaseManager* database;
   CryptographyStorage cryptoStorage;
+  QMessageBox messagebox;
 
   public:
   void tricklePointers(BS::thread_pool* pool, DatabaseManager* database);
