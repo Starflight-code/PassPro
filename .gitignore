@@ -79,6 +79,8 @@ build/*
 build\*
 .vscode/*
 .vscode\*
+.vs/*
+.vs\*
 .cache/*
 .cache\*
 .gitlab-ci.yml

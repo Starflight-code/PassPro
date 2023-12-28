@@ -6,7 +6,7 @@
 - MacOS
 - Windows (x64)
 
-Note: PassPro may still build and run as intended on unsupported platforms. Unfortunantly, 
+Note: PassPro may still build and run as intended on unsupported platforms. Unfortunately,
 we do not have any developers on these platforms to verify PassPro functionality.
 
 ## Requrements
