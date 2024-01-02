@@ -1,14 +1,14 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include "../Cryptography/CryptographyStorage.h"
 #include "../Cryptography/Cryptography.cpp"
+#include "../Cryptography/CryptographyStorage.h"
 #include "../Data_Structures/PasswordEntry.h"
 #include "../include/json.hpp"
 #include "DatabaseObject.h"
+#include <fstream>
 #include <iostream>
 #include <vector>
-#include <fstream>
 
 namespace DataProcessing {
   class DatabaseManager;
@@ -43,7 +43,6 @@ class DatabaseManager {
   /// @brief Vector containing current database of PasswordEntry objects
   std::vector<PasswordEntry> entries;
 
-
   /**
    * @brief desanitizeJSON: Generates a vector of PasswordEntry information from JSON data
    * @param jsonObject: A JSON object
@@ -57,6 +56,10 @@ class DatabaseManager {
    */
   inline nlohmann::json sanitizeJSON();
 
+  /**
+   * @brief reads a file from the disk, attempts decryption and import into the program.
+   * @param credentials the file path and decryption key to use when reading
+   */
   inline void readDB(CryptographyStorage* credentials);
 };
 #endif // DATABASEMANAGER_H

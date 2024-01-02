@@ -31,6 +31,10 @@ class DatabaseObject {
    */
   void addEntry(PasswordEntry entry);
 
+  /**
+   * @brief addEntry: adds all data from a password entry object to a set of parallel vectors
+   * @param entry: a PasswordEntry instance pointer
+   */
   void addEntry(PasswordEntry* entry);
 
   /**

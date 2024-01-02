@@ -8,8 +8,8 @@ LoginWindow::LoginWindow(QWidget* parent)
 LoginWindow::~LoginWindow() { delete ui; }
 
 void LoginWindow::submit() {
-  std::string username = ui->lineEdit->text().toStdString();
-  DataProcessing::secureString password(ui->lineEdit_2->text().toStdString());
+  std::string username = ui->username->text().toStdString();
+  DataProcessing::secureString password(ui->password->text().toStdString());
 
   cryptoStorage = CryptographyStorage(username, password);
   window.tricklePointers(&cryptoStorage, pool, database);
@@ -32,16 +32,16 @@ void LoginWindow::submit() {
     messagebox.setWindowTitle("Invalid Login");
     messagebox.setText("Invalid Login: Username already exists");
     messagebox.show();
-    ui->lineEdit->clear();
-    ui->lineEdit_2->clear();
+    ui->username->clear();
+    ui->password->clear();
   }
 }
 
-void LoginWindow::on_lineEdit_2_returnPressed() {
+void LoginWindow::on_password_returnPressed() {
   submit();
 }
 
-void LoginWindow::on_pushButton_clicked() {
+void LoginWindow::on_submitButton_clicked() {
   submit();
 }
 
@@ -51,6 +51,6 @@ void LoginWindow::tricklePointers(BS::thread_pool* pool, DatabaseManager* databa
 };
 
 void LoginWindow::on_togglePassword_clicked() {
-  bool currentVisibility = ui->lineEdit_2->echoMode() != QLineEdit::Password;
-  ui->lineEdit_2->setEchoMode(currentVisibility ? QLineEdit::Password : QLineEdit::Normal);
+  bool currentVisibility = ui->password->echoMode() != QLineEdit::Password;
+  ui->password->setEchoMode(currentVisibility ? QLineEdit::Password : QLineEdit::Normal);
 }

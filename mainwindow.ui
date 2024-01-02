@@ -24,7 +24,7 @@
     <normaloff>:/new/branding/PassPro Logo.png</normaloff>:/new/branding/PassPro Logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="newEntry">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -121,7 +121,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="searchBar">
     <property name="geometry">
      <rect>
       <x>620</x>
@@ -138,9 +138,9 @@
     </property>
    </widget>
    <zorder>tableWidget</zorder>
-   <zorder>pushButton</zorder>
+   <zorder>newEntry</zorder>
    <zorder>Logout</zorder>
-   <zorder>lineEdit</zorder>
+   <zorder>searchBar</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

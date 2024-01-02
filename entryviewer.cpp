@@ -10,23 +10,11 @@ EntryViewer::EntryViewer(QWidget* parent)
 
 EntryViewer::~EntryViewer() { delete ui; }
 
-/**
- * @brief handles on close button pressed event, clears UI boxes and hides UI
- */
 void EntryViewer::on_Close_clicked() {
   clearAll();
   hide();
 }
 
-/**
- * @brief Adds pointers from higher level classes, allows interaction with shared resources
- * @param userCredentials a pointer to CryptographyStorage object
- * @param pool a pointer to an initialized BS::thread_pool instance
- * @param database a pointer to a DatabaseManager object
- * @param table a pointer to the QWidgetTable of the MainWindow UI
- * @param searchMode a pointer to a boolean value, specifies if the UI is diplaying search results
- * @param searchDBIndexes a pointer to a std::vector<int>, showing indexes of search matches
- */
 void EntryViewer::tricklePointers(CryptographyStorage* userCredentials, BS::thread_pool* pool, DatabaseManager* database, QTableWidget* table, bool* searchMode, std::vector<int>* searchDBIndexes) {
   this->userCredentials = userCredentials;
   this->pool = pool;

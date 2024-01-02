@@ -8,7 +8,7 @@ MainWindow::~MainWindow() {
   delete ui;
 }
 
-void MainWindow::on_pushButton_clicked() {
+void MainWindow::on_newEntry_clicked() {
   entry.ui->Delete->hide();
   entry.show();
 }
@@ -151,10 +151,10 @@ void MainWindow::populateTableWidget(const std::vector<int>& entriesIndex) {
   ui->tableWidget->update();
 }
 
-void MainWindow::on_lineEdit_returnPressed() {
-  if(ui->lineEdit->text().toStdString() == "") {
+void MainWindow::on_searchBar_returnPressed() {
+  if(ui->searchBar->text().toStdString() == "") {
     refresh();
     return;
   }
-  searchFor(ui->lineEdit->text().toStdString());
+  searchFor(ui->searchBar->text().toStdString());
 }
